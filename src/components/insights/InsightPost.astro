@@ -1,0 +1,151 @@
+---
+import { render } from 'astro:content';
+import InsightCard from '../InsightCard.astro';
+import { t, type Locale } from '../../i18n';
+import { insightCategoryPath, type InsightEntry } from '../../lib/insights';
+import { formatPublishDate } from '../../lib/publish';
+import { estimateReadingTime } from '../../lib/seo';
+
+interface Props {
+  entry: InsightEntry;
+  locale: Locale;
+  body: string;
+  related: InsightEntry[];
+}
+
+const { entry, locale, body, related } = Astro.props;
+const { Content } = await render(entry);
+const m = t(locale);
+const hubPath = insightCategoryPath(locale, entry.data.category);
+const hubLabel = entry.data.category.replace(/-/g, ' ');
+const readingTime = estimateReadingTime(body, locale);
+---
+
+<article class="section">
+  <div class="container insight-post">
+    <nav class="insight-breadcrumb" aria-label="Breadcrumb">
+      <a href={locale === 'vi' ? '/vi' : '/en'}>{locale === 'vi' ? 'Trang chủ' : 'Home'}</a>
+      <span aria-hidden="true">/</span>
+      <a href={locale === 'vi' ? '/vi/blog' : '/en/insights'}>
+        {locale === 'vi' ? 'Kiến thức' : 'Insights'}
+      </a>
+      <span aria-hidden="true">/</span>
+      <a href={hubPath}>{hubLabel}</a>
+    </nav>
+
+    {
+      entry.data.heroImage && (
+        <figure class="insight-hero">
+          <img
+            src={entry.data.heroImage}
+            alt={entry.data.title}
+            width="1200"
+            height="630"
+            loading="eager"
+            decoding="async"
+          />
+        </figure>
+      )
+    }
+
+    <div class="prose insight-article">
+      <p class="insight-meta">
+        <a href={hubPath}>{hubLabel}</a>
+        · {formatPublishDate(entry.data.publishDate, locale)}
+        · {readingTime}
+      </p>
+      <h1>{entry.data.title}</h1>
+      <p class="insight-lead">{entry.data.description}</p>
+      <Content />
+    </div>
+
+    {
+      related.length > 0 && (
+        <section class="insight-related" aria-labelledby="related-heading">
+          <h2 id="related-heading">{m.insights.relatedTitle}</h2>
+          <div class="insight-related-grid">
+            {related.map((item) => (
+              <InsightCard entry={item} locale={locale} />
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </div>
+</article>
+
+<style>
+  .insight-post {
+    max-width: 760px;
+  }
+
+  .insight-breadcrumb {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.5rem;
+    font-size: 0.85rem;
+    color: var(--color-muted);
+    margin-bottom: 1.25rem;
+  }
+
+  .insight-breadcrumb a {
+    color: var(--color-muted);
+    text-decoration: none;
+  }
+
+  .insight-breadcrumb a:hover {
+    color: var(--color-primary);
+    text-decoration: underline;
+  }
+
+  .insight-hero {
+    margin: 0 0 1.5rem;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+  }
+
+  .insight-hero img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1200 / 630;
+    object-fit: cover;
+  }
+
+  .insight-meta {
+    font-size: 0.9rem;
+    color: var(--color-muted);
+  }
+
+  .insight-lead {
+    font-size: 1.1rem;
+    color: var(--color-muted);
+  }
+
+  .insight-article :global(h2) {
+    margin-top: 2rem;
+  }
+
+  .insight-article :global(p),
+  .insight-article :global(li) {
+    line-height: 1.75;
+  }
+
+  .insight-related {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-border);
+  }
+
+  .insight-related h2 {
+    font-size: 1.15rem;
+    margin: 0 0 1rem;
+  }
+
+  .insight-related-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+</style>

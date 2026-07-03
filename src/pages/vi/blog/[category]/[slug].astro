@@ -2,14 +2,17 @@
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import Header from '../../../../components/Header.astro';
 import Footer from '../../../../components/Footer.astro';
+import ArticleStructuredData from '../../../../components/ArticleStructuredData.astro';
+import InsightPost from '../../../../components/insights/InsightPost.astro';
 import {
+  findTranslationAlternate,
   getInsightSlug,
+  getPublishedInsights,
   getPublishedInsightsForLocale,
+  getRelatedInsights,
   insightPostPath,
 } from '../../../../lib/insights';
-import { formatPublishDate } from '../../../../lib/publish';
-import { pageUrl } from '../../../../lib/site-map';
-import { render } from 'astro:content';
+import { insightMetaKeywords, resolveInsightOgImage } from '../../../../lib/seo';
 import '../../../../styles/global.css';
 
 export async function getStaticPaths() {
@@ -24,10 +27,12 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { Content } = await render(entry);
+const published = await getPublishedInsights();
 const slug = getInsightSlug(entry);
 const url = insightPostPath('vi', entry.data.category, slug);
-const hubPath = pageUrl('vi', `blog/${entry.data.category}`);
+const alternate = findTranslationAlternate(entry, published);
+const related = getRelatedInsights(entry, published);
+const body = entry.body ?? '';
 ---
 
 <BaseLayout
@@ -35,39 +40,18 @@ const hubPath = pageUrl('vi', `blog/${entry.data.category}`);
   description={entry.data.description}
   locale="vi"
   canonicalPath={url}
+  image={resolveInsightOgImage(entry.data)}
+  ogType="article"
+  keywords={insightMetaKeywords(entry.data)}
+  alternateHref={alternate ? insightPostPath(alternate.data.locale, alternate.data.category, getInsightSlug(alternate)) : undefined}
+  article={{
+    publishedTime: entry.data.publishDate,
+    section: entry.data.section,
+    tags: entry.data.tags,
+  }}
 >
+  <ArticleStructuredData slot="head" entry={entry} body={body} />
   <Header slot="header" locale="vi" />
-  <article class="section">
-    <div class="container prose insight-article">
-      <p class="insight-meta">
-        <a href={hubPath}>{entry.data.category}</a>
-        · {formatPublishDate(entry.data.publishDate, 'vi')}
-      </p>
-      <h1>{entry.data.title}</h1>
-      <p class="insight-lead">{entry.data.description}</p>
-      <Content />
-    </div>
-  </article>
+  <InsightPost entry={entry} locale="vi" body={body} related={related} />
   <Footer slot="footer" locale="vi" />
 </BaseLayout>
-
-<style>
-  .insight-meta {
-    font-size: 0.9rem;
-    color: var(--color-muted);
-  }
-
-  .insight-lead {
-    font-size: 1.1rem;
-    color: var(--color-muted);
-  }
-
-  .insight-article :global(h2) {
-    margin-top: 2rem;
-  }
-
-  .insight-article :global(p),
-  .insight-article :global(li) {
-    line-height: 1.75;
-  }
-</style>

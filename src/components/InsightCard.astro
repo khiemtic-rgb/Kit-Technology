@@ -15,6 +15,19 @@ const href = insightPostPath(locale, entry.data.category, slug);
 ---
 
 <a class="insight-card" href={href}>
+  {
+    entry.data.heroImage && (
+      <img
+        class="insight-card-image"
+        src={entry.data.heroImage}
+        alt=""
+        width="400"
+        height="210"
+        loading="lazy"
+        decoding="async"
+      />
+    )
+  }
   <span class="insight-card-meta">{formatPublishDate(entry.data.publishDate, locale)}</span>
   <h3 class="insight-card-title">{entry.data.title}</h3>
   <p class="insight-card-desc">{entry.data.description}</p>
@@ -23,13 +36,29 @@ const href = insightPostPath(locale, entry.data.category, slug);
 <style>
   .insight-card {
     display: block;
-    padding: 1.25rem;
+    padding: 0;
     border-radius: var(--radius);
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     text-decoration: none;
     color: inherit;
     transition: box-shadow 0.15s, transform 0.15s;
+    overflow: hidden;
+  }
+
+  .insight-card-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 400 / 210;
+    object-fit: cover;
+  }
+
+  .insight-card-title,
+  .insight-card-desc,
+  .insight-card-meta {
+    margin-left: 1.25rem;
+    margin-right: 1.25rem;
   }
 
   .insight-card:hover {
@@ -40,9 +69,10 @@ const href = insightPostPath(locale, entry.data.category, slug);
 
   .insight-card-meta {
     display: block;
+    margin-top: 1rem;
+    margin-bottom: 0.35rem;
     font-size: 0.85rem;
     color: var(--color-muted);
-    margin-bottom: 0.35rem;
   }
 
   .insight-card-title {
@@ -53,7 +83,7 @@ const href = insightPostPath(locale, entry.data.category, slug);
   }
 
   .insight-card-desc {
-    margin: 0;
+    margin: 0 1.25rem 1.25rem;
     font-size: 0.92rem;
     color: var(--color-muted);
     line-height: 1.5;

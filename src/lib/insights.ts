@@ -64,3 +64,33 @@ export function getInsightSlug(entry: InsightEntry): string {
   const parts = entry.id.replace(/\\/g, '/').split('/');
   return parts[parts.length - 1]!.replace(/\.md$/, '');
 }
+
+export function findTranslationAlternate(
+  entry: InsightEntry,
+  all: InsightEntry[],
+  cutoff = getPublishCutoff(),
+): InsightEntry | undefined {
+  return all.find(
+    ({ data, id }) =>
+      id !== entry.id &&
+      data.translationId === entry.data.translationId &&
+      data.locale !== entry.data.locale &&
+      isPublished(data.publishDate, data.draft, cutoff),
+  );
+}
+
+export function getRelatedInsights(
+  entry: InsightEntry,
+  all: InsightEntry[],
+  limit = 3,
+): InsightEntry[] {
+  return all
+    .filter(
+      ({ id, data }) =>
+        id !== entry.id &&
+        data.locale === entry.data.locale &&
+        data.category === entry.data.category,
+    )
+    .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime())
+    .slice(0, limit);
+}

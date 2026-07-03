@@ -8,5 +8,7 @@
   "publishDate": "2026-07-04",
   "body": "## AI First không chỉ là slogan\n\nAI First có nghĩa là mọi quyết định sản phẩm — từ kiến trúc dữ liệu, API, UX đến vận hành — đều xem xét AI có thể tạo giá trị ở đâu.\n\n## Tại KIT Technology\n\nChúng tôi dùng AI để hỗ trợ phát triển, tối ưu vận hành nhà thuốc và xây dựng trợ lý thông minh trong Novixa.\n\n## Bước tiếp theo\n\nĐọc thêm về **AI Agent**, **RAG** và **Quy trình phát triển tại KIT** trong chuyên mục Technology.",
   "tags": ["ai-first", "kit-technology"],
+  "keywords": ["ai first", "kit technology", "novixa", "chuyển đổi số"],
+  "heroImageUrl": "https://example.com/dalle-output.webp",
   "draft": false
 }

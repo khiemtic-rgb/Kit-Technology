@@ -1,0 +1,14 @@
+---
+import type { InsightEntry } from '../lib/insights';
+import { buildInsightStructuredData } from '../lib/seo';
+
+interface Props {
+  entry: InsightEntry;
+  body: string;
+}
+
+const { entry, body } = Astro.props;
+const structuredData = buildInsightStructuredData(entry, body);
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
