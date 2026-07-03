@@ -9,10 +9,10 @@ import { getArticleContent } from '../../content';
 import { t } from '../../i18n';
 import {
   getPublishedByCategory,
+  getPublishedBySection,
   getPublishedInsightsForLocale,
-  type InsightCategory,
 } from '../../lib/insights';
-import { isInsightCategoryHub, isInsightsHub, pageKeyToInsightCategory } from '../../lib/insight-hubs';
+import { insightHubFilter, isInsightCategoryHub, isInsightsHub } from '../../lib/insight-hubs';
 import { getHubChildren, getPage, getStaticSlugs, pageUrl } from '../../lib/site-map';
 import '../../styles/global.css';
 
@@ -31,13 +31,13 @@ const article = getArticleContent('en', page.key);
 const isContact = page.key === 'company-contact';
 
 let insightEntries = [];
-if (isInsightsHub(page.key)) {
+const hubFilter = insightHubFilter(page.key);
+if (hubFilter?.type === 'all') {
   insightEntries = await getPublishedInsightsForLocale('en');
-} else if (page.key === 'faq') {
-  insightEntries = await getPublishedByCategory('en', 'faq');
-} else if (isInsightCategoryHub(page.key)) {
-  const category = pageKeyToInsightCategory(page.key);
-  if (category) insightEntries = await getPublishedByCategory('en', category as InsightCategory);
+} else if (hubFilter?.type === 'category') {
+  insightEntries = await getPublishedByCategory('en', hubFilter.category);
+} else if (hubFilter?.type === 'section') {
+  insightEntries = await getPublishedBySection('en', hubFilter.section);
 }
 ---
 

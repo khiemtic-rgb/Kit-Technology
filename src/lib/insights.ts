@@ -50,6 +50,16 @@ export async function getPublishedByCategory(
   );
 }
 
+export async function getPublishedBySection(
+  locale: Locale,
+  section: InsightEntry['data']['section'],
+  cutoff = getPublishCutoff(),
+): Promise<InsightEntry[]> {
+  return (await getPublishedInsightsForLocale(locale, cutoff)).filter(
+    ({ data }) => data.section === section,
+  );
+}
+
 export function getInsightSlug(entry: InsightEntry): string {
   const parts = entry.id.replace(/\\/g, '/').split('/');
   return parts[parts.length - 1]!.replace(/\.md$/, '');
