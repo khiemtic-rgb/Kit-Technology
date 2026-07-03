@@ -14,6 +14,8 @@
     "astro": "astro",
     "content:stubs": "npx tsx scripts/generate-content-stubs.ts",
     "content:queue": "npx tsx scripts/process-content-queue.ts",
+    "content:publish": "npx tsx --env-file=.env scripts/auto-publish.ts",
+    "content:publish:test": "npx tsx --env-file=.env scripts/auto-publish.ts --id=tech-cloud-native --locale=vi --force",
     "content:status": "npx tsx scripts/content-status.ts"
   },
   "dependencies": {

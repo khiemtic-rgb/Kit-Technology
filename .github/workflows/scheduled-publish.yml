@@ -10,6 +10,7 @@ on:
     paths:
       - 'src/content/insights/**'
       - 'content-queue/**'
+      - 'scripts/**'
       - 'src/lib/content-plan.ts'
       - '.github/workflows/scheduled-publish.yml'
 
@@ -35,7 +36,13 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Import content queue (Notion / Make)
+      - name: Auto-publish articles and hero images (OpenAI)
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          PUBLISH_DATE: ${{ vars.PUBLISH_DATE }}
+        run: npm run content:publish
+
+      - name: Import manual content queue (optional)
         run: npm run content:queue
 
       - name: Show editorial schedule
@@ -46,15 +53,15 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add src/content/insights
+          git add src/content/insights public/images/insights
           if [ -d content-queue/processed ]; then
             git add content-queue/processed
           fi
           if git diff --staged --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
-            echo "No content queue changes to commit."
+            echo "No content changes to commit."
           else
-            git commit -m "Import scheduled Knowledge Hub content"
+            git commit -m "Publish scheduled Knowledge Hub content"
             git push
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
@@ -89,4 +96,4 @@ jobs:
       - name: Publish summary
         if: always()
         run: |
-          echo "Build completed. If deploy failed, check Cloudflare API token or rely on Cloudflare Pages auto-build."
+          echo "Build completed. Set OPENAI_API_KEY for auto article + DALL-E hero images."
