@@ -68,7 +68,7 @@ export const pages: PageEntry[] = [
 
   // Solutions
   p('solutions', 'giai-phap', 'solutions', 'Giải pháp', 'Solutions', 'Giải pháp theo ngành và quy mô doanh nghiệp.', undefined, true),
-  p('sol-healthcare', 'giai-phap/healthcare', 'solutions/healthcare', 'Healthcare', 'Healthcare'),
+  p('sol-healthcare', 'giai-phap/healthcare', 'solutions/healthcare', 'Healthcare', 'Healthcare', 'Giải pháp chuyển đổi số cho ngành y tế và nhà thuốc.', 'Digital solutions for healthcare and pharmacies.'),
   p('sol-retail', 'giai-phap/retail', 'solutions/retail', 'Retail', 'Retail'),
   p('sol-ai', 'giai-phap/ai-transformation', 'solutions/ai-transformation', 'AI Transformation', 'AI Transformation'),
   p('sol-enterprise', 'giai-phap/enterprise-platform', 'solutions/enterprise-platform', 'Enterprise Platform', 'Enterprise Platform'),

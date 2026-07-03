@@ -11,9 +11,9 @@ import {
   getPublishedByCategory,
   getPublishedBySection,
   getPublishedInsightsForLocale,
-  type InsightCategory,
 } from '../../lib/insights';
 import { insightHubFilter, isInsightCategoryHub, isInsightsHub } from '../../lib/insight-hubs';
+import { pageInsightFilter } from '../../lib/page-insights';
 import { getHubChildren, getPage, getStaticSlugs, pageUrl } from '../../lib/site-map';
 import '../../styles/global.css';
 
@@ -33,13 +33,25 @@ const isContact = page.key === 'company-contact';
 
 let insightEntries = [];
 const hubFilter = insightHubFilter(page.key);
+const pageFilter = pageInsightFilter(page.key);
+
 if (hubFilter?.type === 'all') {
   insightEntries = await getPublishedInsightsForLocale('vi');
 } else if (hubFilter?.type === 'category') {
   insightEntries = await getPublishedByCategory('vi', hubFilter.category);
 } else if (hubFilter?.type === 'section') {
   insightEntries = await getPublishedBySection('vi', hubFilter.section);
+} else if (pageFilter?.type === 'category') {
+  insightEntries = await getPublishedByCategory('vi', pageFilter.category);
+} else if (pageFilter?.type === 'section') {
+  insightEntries = await getPublishedBySection('vi', pageFilter.section);
 }
+
+const showInsightGrid =
+  insightEntries.length > 0 ||
+  isInsightsHub(page.key) ||
+  isInsightCategoryHub(page.key) ||
+  page.key === 'faq';
 ---
 
 <BaseLayout
@@ -80,7 +92,13 @@ if (hubFilter?.type === 'all') {
       {article && <ArticleBody article={article} />}
 
       {
-        insightEntries.length > 0 || isInsightsHub(page.key) || isInsightCategoryHub(page.key) || page.key === 'faq' ? (
+        pageFilter && insightEntries.length > 0 && (
+          <h2 class="insight-related-title">{m.insights.relatedTitle}</h2>
+        )
+      }
+
+      {
+        showInsightGrid ? (
           <InsightGrid
             entries={insightEntries}
             locale="vi"
@@ -94,7 +112,7 @@ if (hubFilter?.type === 'all') {
       }
 
       {
-        !page.hub && !article && !isContact && (
+        !page.hub && !article && !isContact && insightEntries.length === 0 && (
           <div class="card prose">
             <p>{m.content.comingSoon}</p>
             {
@@ -113,3 +131,12 @@ if (hubFilter?.type === 'all') {
   </section>
   <Footer slot="footer" locale="vi" />
 </BaseLayout>
+
+<style>
+  .insight-related-title {
+    margin: 1.75rem 0 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text);
+  }
+</style>

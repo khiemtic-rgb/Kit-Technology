@@ -116,7 +116,8 @@
   },
   "insights": {
     "emptyCategory": "Bài viết sẽ được xuất bản theo lịch Knowledge Hub. Quay lại sau hoặc liên hệ nếu cần tư vấn sớm.",
-    "scheduledNote": "Lịch xuất bản tự động — mỗi ngày có bài mới trong 90 ngày."
+    "scheduledNote": "Lịch xuất bản tự động — mỗi ngày có bài mới trong 90 ngày.",
+    "relatedTitle": "Bài viết liên quan"
   },
   "contact": {
     "title": "Liên hệ",

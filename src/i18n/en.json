@@ -73,7 +73,8 @@
   },
   "insights": {
     "emptyCategory": "Articles publish on the Knowledge Hub schedule. Check back soon or contact us for early guidance.",
-    "scheduledNote": "Automatic publishing schedule — new articles daily for 90 days."
+    "scheduledNote": "Automatic publishing schedule — new articles daily for 90 days.",
+    "relatedTitle": "Related articles"
   },
   "contact": {
     "title": "Contact",
