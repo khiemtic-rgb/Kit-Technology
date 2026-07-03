@@ -1,4 +1,4 @@
-# Kit Technology — Website kittechnology.vn
+# Kit Technology — Website kittech.vn
 
 > Repo độc lập: `E:\Kit-Technology`
 > Deploy: Cloudflare Pages (root `/`, output `dist`)
@@ -31,7 +31,7 @@ Website công ty mẹ **Kit Technology** — giới thiệu công ty, portfolio 
 ## CHƯA LÀM
 
 - Push GitHub repo riêng + remote origin
-- Deploy Cloudflare Pages + DNS kittechnology.vn
+- Deploy Cloudflare Pages + DNS kittech.vn
 - Cloudflare Web Analytics token (set `PUBLIC_CF_WEB_ANALYTICS_TOKEN` trên CF Pages)
 - Logo PNG thật (hiện dùng SVG placeholder)
 

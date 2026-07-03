@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kittechnology.vn/sitemap-index.xml
+Sitemap: https://kittech.vn/sitemap-index.xml

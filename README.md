@@ -2,7 +2,7 @@
 
 Site giới thiệu **Kit Technology** — công ty công nghệ mẹ của [Novixa](https://novixa.vn).
 
-- **Domain dự kiến:** [kittechnology.vn](https://kittechnology.vn)
+- **Domain:** [kittech.vn](https://kittech.vn)
 - **Ngôn ngữ:** Tiếng Việt (`/vi/…`) và English (`/en/…`).
 - **Stack:** Astro 6 (static site)
 
@@ -23,12 +23,18 @@ npm run build
 npm run preview
 ```
 
-## Deploy (Cloudflare Pages)
+## Deploy (Cloudflare Workers — static assets)
 
-1. Push repo lên GitHub (repo riêng `Kit-Technology`).
-2. Import project → **Root directory:** `/` (repo root)
-3. Build: `npm run build` — Output: `dist`
-4. Gán domain `kittechnology.vn` / `www.kittechnology.vn` trong DNS.
+Site tĩnh Astro 6 deploy qua **Wrangler** (không cần `@astrojs/cloudflare` adapter).
+
+1. Push repo lên GitHub
+2. Cloudflare → **Workers & Pages** → **Import repository** → chọn repo
+3. **Build command:** `npm run build`
+4. **Deploy command:** `npx wrangler deploy`
+5. Env: `NODE_VERSION` = `22`
+6. Gán domain `kittech.vn` trong tab **Domains**
+
+File cấu hình: `wrangler.jsonc` (upload thư mục `dist/`).
 
 ## Cấu trúc
 

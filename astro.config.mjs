@@ -3,7 +3,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://kittechnology.vn',
+  site: 'https://kittech.vn',
   trailingSlash: 'never',
   integrations: [sitemap()],
   i18n: {
