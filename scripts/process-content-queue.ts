@@ -78,18 +78,19 @@ function processQueueFile(filePath: string) {
 }
 
 if (!fs.existsSync(queueDir)) {
-  console.log('No content-queue directory — nothing to import.');
-  process.exit(0);
-}
-
-const files = fs.readdirSync(queueDir).filter((name) => name.endsWith('.json'));
-if (files.length === 0) {
-  console.log('content-queue is empty — nothing to import.');
-  process.exit(0);
+  fs.mkdirSync(queueDir, { recursive: true });
 }
 
 const processedDir = path.join(queueDir, 'processed');
 fs.mkdirSync(processedDir, { recursive: true });
+
+const files = fs
+  .readdirSync(queueDir)
+  .filter((name) => name.endsWith('.json') && !name.startsWith('.'));
+if (files.length === 0) {
+  console.log('content-queue is empty — nothing to import.');
+  process.exit(0);
+}
 
 for (const file of files) {
   const fullPath = path.join(queueDir, file);
