@@ -5,12 +5,12 @@ import Footer from '../../components/Footer.astro';
 import { t } from '../../i18n';
 import '../../styles/global.css';
 
-const m = t('vi');
+const m = t('en');
 const p = m.products;
 ---
 
-<BaseLayout title={p.title} description={p.intro} canonicalPath="/vi/san-pham">
-  <Header slot="header" />
+<BaseLayout title={p.title} description={p.intro} locale="en" canonicalPath="/en/products">
+  <Header slot="header" locale="en" />
   <section class="section">
     <div class="container">
       <h1 class="section-title">{p.title}</h1>
@@ -35,10 +35,10 @@ const p = m.products;
         <h3>{p.comingTitle}</h3>
         <p>{p.comingDesc}</p>
         <p style="margin-top: 1rem">
-          <a class="btn btn-secondary" href="/vi/lien-he">{p.contactCta}</a>
+          <a class="btn btn-secondary" href="/en/contact">{p.contactCta}</a>
         </p>
       </div>
     </div>
   </section>
-  <Footer slot="footer" />
+  <Footer slot="footer" locale="en" />
 </BaseLayout>

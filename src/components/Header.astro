@@ -1,20 +1,29 @@
 ---
-import { t } from '../i18n';
+import { t, type Locale } from '../i18n';
+import { getAlternateLocalePath, getLocaleFromPath, localePaths } from '../lib/routes';
 
-const m = t('vi');
-const base = '/vi';
+interface Props {
+  locale?: Locale;
+}
+
+const { locale: localeProp } = Astro.props;
 const path = Astro.url.pathname;
+const locale = localeProp ?? getLocaleFromPath(path);
+const m = t(locale);
+const paths = localePaths[locale];
+const alternatePath = getAlternateLocalePath(path);
+const alternateLabel = locale === 'vi' ? m.nav.langEn : m.nav.langVi;
 
 const links = [
-  { href: base, label: m.nav.home, active: path === base || path === `${base}/` },
-  { href: `${base}/ve-chung-toi`, label: m.nav.about, active: path.startsWith(`${base}/ve-chung-toi`) },
-  { href: `${base}/san-pham`, label: m.nav.products, active: path.startsWith(`${base}/san-pham`) },
+  { href: paths.home, label: m.nav.home, active: path === paths.home || path === `${paths.home}/` },
+  { href: paths.about, label: m.nav.about, active: path.startsWith(paths.about) },
+  { href: paths.products, label: m.nav.products, active: path.startsWith(paths.products) },
 ];
 ---
 
 <header class="site-header">
   <div class="container header-inner">
-    <a href={base} class="logo">
+    <a href={paths.home} class="logo">
       <img class="logo-img" src="/images/logo.svg" alt={m.meta.siteName} width="180" height="40" decoding="async" />
     </a>
 
@@ -39,8 +48,10 @@ const links = [
           </a>
         ))
       }
-      <a href={`${base}/lien-he`} class="nav-cta">{m.nav.contact}</a>
-      <span class="lang-soon" title={m.nav.langEnSoon}>{m.nav.langEn}</span>
+      <a href={paths.contact} class="nav-cta">{m.nav.contact}</a>
+      <a class="lang-switch" href={alternatePath} hreflang={locale === 'vi' ? 'en' : 'vi'} lang={locale === 'vi' ? 'en' : 'vi'}>
+        {alternateLabel}
+      </a>
     </nav>
   </div>
 </header>
@@ -153,13 +164,17 @@ const links = [
     text-decoration: none;
   }
 
-  .lang-soon {
+  .lang-switch {
     font-size: 0.8rem;
-    color: var(--color-border);
-    cursor: not-allowed;
-    border: 1px dashed var(--color-border);
-    padding: 0.25rem 0.5rem;
+    border: 1px solid var(--color-border);
+    padding: 0.25rem 0.55rem;
     border-radius: 6px;
+    font-weight: 600;
+  }
+
+  .lang-switch:hover {
+    border-color: var(--color-primary);
+    text-decoration: none;
   }
 
   @media (max-width: 768px) {
@@ -200,7 +215,7 @@ const links = [
       margin-top: 0.5rem;
     }
 
-    .lang-soon {
+    .lang-switch {
       align-self: flex-start;
       margin-top: 0.5rem;
     }

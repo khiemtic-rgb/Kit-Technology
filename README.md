@@ -3,7 +3,7 @@
 Site giới thiệu **Kit Technology** — công ty công nghệ mẹ của [Novixa](https://novixa.vn).
 
 - **Domain dự kiến:** [kittechnology.vn](https://kittechnology.vn)
-- **Ngôn ngữ:** Tiếng Việt (`/vi/…`). Khung i18n sẵn; **English chưa publish**.
+- **Ngôn ngữ:** Tiếng Việt (`/vi/…`) và English (`/en/…`).
 - **Stack:** Astro 6 (static site)
 
 ## Chạy local
@@ -36,11 +36,9 @@ npm run preview
 Kit-Technology/
   src/
     i18n/vi.json         # Chuỗi UI tiếng Việt
-    pages/vi/            # Trang công khai
-      index.astro        # Trang chủ
-      ve-chung-toi.astro # Về Kit Technology
-      san-pham.astro     # Sản phẩm (Novixa)
-      lien-he.astro      # Liên hệ
+    i18n/en.json         # Chuỗi UI English
+    pages/vi/            # Trang tiếng Việt
+    pages/en/            # Trang English
   public/images/         # Logo SVG, OG banner
 ```
 
@@ -52,6 +50,10 @@ Kit-Technology/
 | `/vi/ve-chung-toi` | Sứ mệnh, tầm nhìn |
 | `/vi/san-pham` | Novixa và lộ trình sản phẩm |
 | `/vi/lien-he` | Form liên hệ |
+| `/en` | Home — company overview |
+| `/en/about` | Mission & vision |
+| `/en/products` | Novixa & product roadmap |
+| `/en/contact` | Contact form |
 
 ## Liên hệ & form
 

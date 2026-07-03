@@ -3,6 +3,7 @@ import '../styles/global.css';
 import CloudflareAnalytics from '../components/CloudflareAnalytics.astro';
 import { t, type Locale } from '../i18n';
 import { absoluteUrl, DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from '../lib/site';
+import { getAlternateLocalePath } from '../lib/routes';
 
 interface Props {
   title: string;
@@ -26,6 +27,10 @@ const pageDescription = description ?? m.meta.description;
 const fullTitle = title === m.meta.siteName ? `${title} — ${m.meta.tagline}` : `${title} — ${m.meta.siteName}`;
 const ogImage = absoluteUrl(image ?? DEFAULT_OG_IMAGE);
 const canonical = canonicalPath ? absoluteUrl(canonicalPath) : new URL(Astro.url.pathname, SITE_URL).href;
+const ogLocale = locale === 'en' ? 'en_US' : 'vi_VN';
+const alternateLocale: Locale = locale === 'vi' ? 'en' : 'vi';
+const alternatePath = getAlternateLocalePath(Astro.url.pathname);
+const keywords = 'keywords' in m.meta ? m.meta.keywords : undefined;
 ---
 
 <!doctype html>
@@ -34,17 +39,20 @@ const canonical = canonicalPath ? absoluteUrl(canonicalPath) : new URL(Astro.url
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={pageDescription} />
-    <meta name="keywords" content={m.meta.keywords} />
+    {keywords && <meta name="keywords" content={keywords} />}
     <meta name="author" content={SITE_NAME} />
     {noIndex && <meta name="robots" content="noindex, nofollow" />}
     <meta name="theme-color" content="#0f766e" />
     <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang={locale} href={canonical} />
+    <link rel="alternate" hreflang={alternateLocale} href={absoluteUrl(alternatePath)} />
+    <link rel="alternate" hreflang="x-default" href={absoluteUrl('/vi')} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/images/logo.svg" />
     <title>{fullTitle}</title>
 
     <meta property="og:site_name" content={SITE_NAME} />
-    <meta property="og:locale" content="vi_VN" />
+    <meta property="og:locale" content={ogLocale} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
     <meta property="og:title" content={fullTitle} />

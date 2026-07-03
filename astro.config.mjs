@@ -8,7 +8,7 @@ export default defineConfig({
   integrations: [sitemap()],
   i18n: {
     defaultLocale: 'vi',
-    locales: ['vi'],
+    locales: ['vi', 'en'],
     routing: {
       prefixDefaultLocale: true,
     },

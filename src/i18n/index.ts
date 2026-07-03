@@ -1,13 +1,15 @@
+import en from './en.json';
 import vi from './vi.json';
 
-export type Locale = 'vi';
+export type Locale = 'vi' | 'en';
 
 export const defaultLocale: Locale = 'vi';
-export const locales: Locale[] = ['vi'];
+export const locales: Locale[] = ['vi', 'en'];
+
+const messages = { vi, en } as const;
 
 export function t(locale: Locale = 'vi') {
-  if (locale === 'vi') return vi;
-  return vi;
+  return messages[locale] ?? messages.vi;
 }
 
 export type Messages = typeof vi;

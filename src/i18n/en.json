@@ -2,12 +2,93 @@
   "meta": {
     "siteName": "Kit Technology",
     "tagline": "Technology for smarter business",
-    "description": "Kit Technology — vertical SaaS for Vietnamese businesses. Flagship product: Novixa pharmacy management platform."
+    "description": "Kit Technology — vertical SaaS for Vietnamese businesses. Flagship product: Novixa, a next-generation pharmacy management platform.",
+    "keywords": "kit technology, saas vietnam, novixa, pharmacy software, vertical saas"
   },
   "nav": {
     "home": "Home",
     "about": "About",
     "products": "Products",
-    "contact": "Contact"
+    "contact": "Contact",
+    "menuOpen": "Open menu",
+    "menuClose": "Close menu",
+    "langVi": "Tiếng Việt",
+    "langEn": "English"
+  },
+  "home": {
+    "heroTitle": "Building technology solutions for Vietnamese businesses",
+    "heroSubtitle": "Kit Technology develops vertical SaaS — focused on real operations, transparent data, and scalability. First product: Novixa for pharmacies.",
+    "ctaContact": "Partner with us",
+    "ctaProducts": "View products",
+    "focusTitle": "Development focus",
+    "focus1Title": "Vertical SaaS",
+    "focus1Desc": "No generic software — each product solves concrete operational problems for a specific industry.",
+    "focus2Title": "Modern architecture",
+    "focus2Desc": "Cloud-native, API-first, separate marketing site and product core — independent security and updates.",
+    "focus3Title": "Hands-on rollout",
+    "focus3Desc": "Data migration, training, and go-live support — customers are not left to deploy alone.",
+    "portfolioTitle": "Featured product",
+    "portfolioLead": "Novixa — pharmacy management by Kit Technology.",
+    "portfolioCta": "Explore Novixa",
+    "valuesTitle": "Core values",
+    "value1Title": "Practical",
+    "value1Desc": "Features that solve daily problems — not flashy demos.",
+    "value2Title": "Transparent",
+    "value2Desc": "Clear data and trustworthy reports — decisions based on numbers.",
+    "value3Title": "Sustainable",
+    "value3Desc": "Long-term roadmap, continuous updates from real user feedback."
+  },
+  "about": {
+    "title": "About Kit Technology",
+    "p1": "Kit Technology is a Vietnamese technology company specializing in vertical SaaS — starting in pharmacy with the Novixa brand.",
+    "p2": "We believe SMEs need deep digital tools, not bulky multi-industry ERPs. Each product is designed around real operational workflows.",
+    "p3": "Our team combines enterprise software experience with pharmacy operations — from POS and FEFO batch inventory to customer care.",
+    "missionTitle": "Mission",
+    "mission": "Bring digital technology closer to Vietnamese businesses — easy to deploy, easy to use, with measurable impact.",
+    "visionTitle": "Vision",
+    "vision": "Become a trusted technology partner for vertical industries — each product a benchmark in its segment."
+  },
+  "products": {
+    "title": "Products",
+    "intro": "SaaS solutions developed by Kit Technology — each product has its own website and operations team.",
+    "novixaName": "Novixa",
+    "novixaTagline": "Smart pharmacy solutions",
+    "novixaDesc": "Next-generation pharmacy platform: full ERP with POS, FEFO batch inventory, customer CRM, ordering app, and real-time reporting. For GPP pharmacies and small chains in Vietnam.",
+    "novixaFeatures": [
+      "POS sales & shift management",
+      "Batch inventory, FEFO & expiry alerts",
+      "CRM & customer app (OTP, loyalty)",
+      "Real-time revenue and inventory reports"
+    ],
+    "novixaCta": "Visit novixa.vn",
+    "novixaUrl": "https://novixa.vn/en",
+    "comingTitle": "Roadmap",
+    "comingDesc": "Kit Technology is exploring additional vertical solutions. Contact us to discuss partnership or investment in new products.",
+    "contactCta": "Contact us"
+  },
+  "contact": {
+    "title": "Contact",
+    "intro": "Interested in partnership, investment, or our products? Send a message — we will respond as soon as possible.",
+    "channelsTitle": "Contact channels",
+    "formTitle": "Send a message",
+    "name": "Full name",
+    "email": "Email",
+    "phone": "Phone",
+    "message": "Message",
+    "submit": "Send message",
+    "phoneLabel": "Hotline",
+    "phoneDisplay": "0984.660.399",
+    "phoneTel": "+84984660399",
+    "emailLabel": "Email",
+    "emailAddress": "khiemtic@gmail.com",
+    "formNote": "Form submissions are sent to Kit Technology email.",
+    "successTitle": "Message sent",
+    "successMessage": "Thank you! We will reply via the phone number or email you provided.",
+    "formSubject": "Contact from kittechnology.vn"
+  },
+  "footer": {
+    "rights": "All rights reserved by Kit Technology.",
+    "parentNote": "Parent company of Novixa — Smart Pharmacy Solutions.",
+    "novixaLink": "novixa.vn"
   }
 }

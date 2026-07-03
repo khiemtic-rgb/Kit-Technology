@@ -1,7 +1,14 @@
 ---
-import { t } from '../i18n';
+import { t, type Locale } from '../i18n';
+import { getLocaleFromPath } from '../lib/routes';
 
-const m = t('vi');
+interface Props {
+  locale?: Locale;
+}
+
+const { locale: localeProp } = Astro.props;
+const locale = localeProp ?? getLocaleFromPath(Astro.url.pathname);
+const m = t(locale);
 const year = new Date().getFullYear();
 ---
 
@@ -10,7 +17,7 @@ const year = new Date().getFullYear();
     <p><strong>{m.meta.siteName}</strong> — {m.meta.tagline}</p>
     <p class="muted">{m.footer.parentNote}</p>
     <p class="muted">
-      <a class="footer-link" href="https://novixa.vn">{m.footer.novixaLink}</a>
+      <a class="footer-link" href={m.products.novixaUrl}>{m.footer.novixaLink}</a>
     </p>
     <p class="muted">© {year} {m.footer.rights}</p>
   </div>

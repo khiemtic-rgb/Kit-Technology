@@ -5,7 +5,7 @@ import Footer from '../../components/Footer.astro';
 import { t } from '../../i18n';
 import '../../styles/global.css';
 
-const m = t('vi');
+const m = t('en');
 const c = m.contact;
 const sent = Astro.url.searchParams.get('sent') === '1';
 
@@ -17,8 +17,8 @@ const telLink = c.phoneTel ? `tel:${c.phoneTel.replace(/\s/g, '')}` : '';
 const hasPhone = Boolean(c.phoneTel?.trim());
 ---
 
-<BaseLayout title={c.title} description={c.intro} canonicalPath="/vi/lien-he">
-  <Header slot="header" />
+<BaseLayout title={c.title} description={c.intro} locale="en" canonicalPath="/en/contact">
+  <Header slot="header" locale="en" />
   <section class="section">
     <div class="container">
       <h1 class="section-title">{c.title}</h1>
@@ -88,5 +88,5 @@ const hasPhone = Boolean(c.phoneTel?.trim());
       </div>
     </div>
   </section>
-  <Footer slot="footer" />
+  <Footer slot="footer" locale="en" />
 </BaseLayout>

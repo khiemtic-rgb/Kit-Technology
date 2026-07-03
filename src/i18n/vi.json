@@ -12,8 +12,8 @@
     "contact": "Liên hệ",
     "menuOpen": "Mở menu",
     "menuClose": "Đóng menu",
-    "langEn": "English",
-    "langEnSoon": "English — sắp có"
+    "langVi": "Tiếng Việt",
+    "langEn": "English"
   },
   "home": {
     "heroTitle": "Xây dựng giải pháp công nghệ cho doanh nghiệp Việt",
@@ -63,7 +63,8 @@
     "novixaCta": "Truy cập novixa.vn",
     "novixaUrl": "https://novixa.vn/vi",
     "comingTitle": "Lộ trình",
-    "comingDesc": "Kit Technology đang nghiên cứu thêm các giải pháp theo ngành dọc khác. Liên hệ nếu bạn muốn trao đổi hợp tác hoặc đầu tư sản phẩm mới."
+    "comingDesc": "Kit Technology đang nghiên cứu thêm các giải pháp theo ngành dọc khác. Liên hệ nếu bạn muốn trao đổi hợp tác hoặc đầu tư sản phẩm mới.",
+    "contactCta": "Liên hệ"
   },
   "contact": {
     "title": "Liên hệ",
@@ -82,7 +83,8 @@
     "emailAddress": "khiemtic@gmail.com",
     "formNote": "Nội dung form được gửi tới email Kit Technology.",
     "successTitle": "Đã gửi tin nhắn",
-    "successMessage": "Cảm ơn bạn! Chúng tôi sẽ phản hồi qua số điện thoại hoặc email bạn cung cấp."
+    "successMessage": "Cảm ơn bạn! Chúng tôi sẽ phản hồi qua số điện thoại hoặc email bạn cung cấp.",
+    "formSubject": "Liên hệ từ kittechnology.vn"
   },
   "footer": {
     "rights": "Bản quyền thuộc Kit Technology.",
