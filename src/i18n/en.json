@@ -1,0 +1,13 @@
+{
+  "meta": {
+    "siteName": "Kit Technology",
+    "tagline": "Technology for smarter business",
+    "description": "Kit Technology — vertical SaaS for Vietnamese businesses. Flagship product: Novixa pharmacy management platform."
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "products": "Products",
+    "contact": "Contact"
+  }
+}

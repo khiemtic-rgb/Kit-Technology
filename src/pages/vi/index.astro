@@ -1,0 +1,93 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { t } from '../../i18n';
+import '../../styles/global.css';
+
+const m = t('vi');
+---
+
+<BaseLayout
+  title={m.meta.siteName}
+  description={m.meta.description}
+  canonicalPath="/vi"
+>
+  <Header slot="header" />
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <h1>{m.home.heroTitle}</h1>
+        <p class="hero-lead">{m.home.heroSubtitle}</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="/vi/lien-he">{m.home.ctaContact}</a>
+          <a class="btn btn-secondary" href="/vi/san-pham">{m.home.ctaProducts}</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <img
+          src="/images/og-banner.svg"
+          alt="Kit Technology — công nghệ số cho vận hành hiệu quả"
+          width="1200"
+          height="630"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">{m.home.focusTitle}</h2>
+      <div class="card-grid">
+        <article class="card">
+          <h3>{m.home.focus1Title}</h3>
+          <p>{m.home.focus1Desc}</p>
+        </article>
+        <article class="card">
+          <h3>{m.home.focus2Title}</h3>
+          <p>{m.home.focus2Desc}</p>
+        </article>
+        <article class="card">
+          <h3>{m.home.focus3Title}</h3>
+          <p>{m.home.focus3Desc}</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="trust-band">
+    <div class="container">
+      <h2>{m.home.portfolioTitle}</h2>
+      <p>{m.home.portfolioLead}</p>
+      <p style="margin-top: 1.25rem">
+        <a class="btn btn-accent" href={m.products.novixaUrl} target="_blank" rel="noopener noreferrer">
+          {m.home.portfolioCta}
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">{m.home.valuesTitle}</h2>
+      <div class="card-grid">
+        <article class="card">
+          <h3>{m.home.value1Title}</h3>
+          <p>{m.home.value1Desc}</p>
+        </article>
+        <article class="card">
+          <h3>{m.home.value2Title}</h3>
+          <p>{m.home.value2Desc}</p>
+        </article>
+        <article class="card">
+          <h3>{m.home.value3Title}</h3>
+          <p>{m.home.value3Desc}</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>

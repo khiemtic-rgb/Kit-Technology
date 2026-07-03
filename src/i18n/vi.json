@@ -1,0 +1,92 @@
+{
+  "meta": {
+    "siteName": "Kit Technology",
+    "tagline": "Công nghệ số cho vận hành hiệu quả",
+    "description": "Kit Technology — công ty công nghệ phát triển giải pháp SaaS theo ngành dọc. Sản phẩm tiêu biểu: Novixa — nền tảng quản trị nhà thuốc thế hệ mới.",
+    "keywords": "kit technology, công ty công nghệ, saas việt nam, novixa, phần mềm nhà thuốc, giải pháp số"
+  },
+  "nav": {
+    "home": "Trang chủ",
+    "about": "Về chúng tôi",
+    "products": "Sản phẩm",
+    "contact": "Liên hệ",
+    "menuOpen": "Mở menu",
+    "menuClose": "Đóng menu",
+    "langEn": "English",
+    "langEnSoon": "English — sắp có"
+  },
+  "home": {
+    "heroTitle": "Xây dựng giải pháp công nghệ cho doanh nghiệp Việt",
+    "heroSubtitle": "Kit Technology phát triển phần mềm SaaS theo ngành dọc — tập trung vào vận hành thực tế, dữ liệu minh bạch và khả năng mở rộng. Sản phẩm đầu tiên: Novixa cho nhà thuốc.",
+    "ctaContact": "Liên hệ hợp tác",
+    "ctaProducts": "Xem sản phẩm",
+    "focusTitle": "Trọng tâm phát triển",
+    "focus1Title": "SaaS theo ngành dọc",
+    "focus1Desc": "Không làm phần mềm chung chung — mỗi sản phẩm giải quyết bài toán vận hành cụ thể của một ngành.",
+    "focus2Title": "Kiến trúc hiện đại",
+    "focus2Desc": "Cloud-native, API-first, tách biệt marketing site và lõi sản phẩm — bảo mật và cập nhật độc lập.",
+    "focus3Title": "Đồng hành triển khai",
+    "focus3Desc": "Hỗ trợ migrate dữ liệu, training và go-live — khách hàng không phải tự triển khai một mình.",
+    "portfolioTitle": "Sản phẩm nổi bật",
+    "portfolioLead": "Novixa — giải pháp quản trị nhà thuốc do Kit Technology phát triển và vận hành.",
+    "portfolioCta": "Khám phá Novixa",
+    "valuesTitle": "Giá trị cốt lõi",
+    "value1Title": "Thực chiến",
+    "value1Desc": "Ưu tiên tính năng giải quyết vấn đề hàng ngày — không demo hào nhoáng.",
+    "value2Title": "Minh bạch",
+    "value2Desc": "Dữ liệu rõ ràng, báo cáo đáng tin — quyết định dựa trên số liệu.",
+    "value3Title": "Bền vững",
+    "value3Desc": "Phát triển lộ trình dài hạn, cập nhật liên tục theo phản hồi người dùng thật."
+  },
+  "about": {
+    "title": "Về Kit Technology",
+    "p1": "Kit Technology là công ty công nghệ Việt Nam, chuyên phát triển giải pháp phần mềm SaaS theo ngành dọc — bắt đầu từ lĩnh vực dược với thương hiệu Novixa.",
+    "p2": "Chúng tôi tin rằng doanh nghiệp vừa và nhỏ cần công cụ số chuyên sâu, không phải ERP đa ngành cồng kềnh. Mỗi sản phẩm được thiết kế quanh quy trình vận hành thực tế của ngành.",
+    "p3": "Đội ngũ kết hợp kinh nghiệm phát triển phần mềm doanh nghiệp và hiểu biết về vận hành nhà thuốc — từ POS, tồn kho lô FEFO đến chăm sóc khách hàng.",
+    "missionTitle": "Sứ mệnh",
+    "mission": "Đưa công nghệ số đến gần hơn với doanh nghiệp Việt — dễ triển khai, dễ sử dụng, mang lại hiệu quả đo lường được.",
+    "visionTitle": "Tầm nhìn",
+    "vision": "Trở thành đối tác công nghệ tin cậy cho các ngành dọc — mỗi sản phẩm là chuẩn mực vận hành trong phân khúc mình phục vụ."
+  },
+  "products": {
+    "title": "Sản phẩm",
+    "intro": "Các giải pháp SaaS do Kit Technology phát triển — mỗi sản phẩm có website và đội vận hành riêng.",
+    "novixaName": "Novixa",
+    "novixaTagline": "Giải pháp dược thông minh",
+    "novixaDesc": "Nền tảng quản trị nhà thuốc thế hệ mới: ERP toàn diện với POS, tồn kho lô FEFO, CRM khách hàng, app đặt hàng và báo cáo real-time. Dành cho nhà thuốc GPP và chuỗi nhỏ tại Việt Nam.",
+    "novixaFeatures": [
+      "POS bán hàng & quản lý ca",
+      "Tồn kho theo lô, FEFO & cảnh báo cận date",
+      "CRM & app khách hàng (OTP, loyalty)",
+      "Báo cáo doanh thu, tồn kho real-time"
+    ],
+    "novixaCta": "Truy cập novixa.vn",
+    "novixaUrl": "https://novixa.vn/vi",
+    "comingTitle": "Lộ trình",
+    "comingDesc": "Kit Technology đang nghiên cứu thêm các giải pháp theo ngành dọc khác. Liên hệ nếu bạn muốn trao đổi hợp tác hoặc đầu tư sản phẩm mới."
+  },
+  "contact": {
+    "title": "Liên hệ",
+    "intro": "Quan tâm hợp tác, đầu tư hoặc tìm hiểu sản phẩm? Gửi tin nhắn — chúng tôi phản hồi sớm nhất có thể.",
+    "channelsTitle": "Kênh liên hệ",
+    "formTitle": "Gửi tin nhắn",
+    "name": "Họ tên",
+    "email": "Email",
+    "phone": "Số điện thoại",
+    "message": "Nội dung",
+    "submit": "Gửi tin nhắn",
+    "phoneLabel": "Hotline",
+    "phoneDisplay": "0984.660.399",
+    "phoneTel": "+84984660399",
+    "emailLabel": "Email",
+    "emailAddress": "khiemtic@gmail.com",
+    "formNote": "Nội dung form được gửi tới email Kit Technology.",
+    "successTitle": "Đã gửi tin nhắn",
+    "successMessage": "Cảm ơn bạn! Chúng tôi sẽ phản hồi qua số điện thoại hoặc email bạn cung cấp."
+  },
+  "footer": {
+    "rights": "Bản quyền thuộc Kit Technology.",
+    "parentNote": "Công ty mẹ của Novixa — Smart Pharmacy Solutions.",
+    "novixaLink": "novixa.vn"
+  }
+}

@@ -1,0 +1,36 @@
+---
+description: Kit Technology corporate website — Astro static site
+globs: **/*
+alwaysApply: true
+---
+
+# Kit Technology Site
+
+Website giới thiệu **Kit Technology** (công ty mẹ của Novixa). Repo độc lập tại `E:\Kit-Technology`.
+
+## Stack & chạy local
+
+- Astro (static site)
+- `npm install && npm run dev` → http://localhost:4322
+- Build: `npm run build` → output `dist/`
+
+## Cấu trúc quan trọng
+
+| Path | Vai trò |
+|------|---------|
+| `src/pages/vi/` | Trang công khai (tiếng Việt) |
+| `src/i18n/vi.json` | Chuỗi UI + liên hệ |
+| `public/images/` | Logo SVG, OG banner |
+
+## Quy tắc khi sửa
+
+1. Dự án tách biệt — không import từ PharmaCore hay novixa-site
+2. Novixa là sản phẩm con — link ra `https://novixa.vn/vi`
+3. Form email: Formsubmit → `khiemtic@gmail.com`
+4. i18n: chỉ `/vi` live; EN skeleton trong `en.json`, chưa publish route
+5. Deploy: Cloudflare Pages, repo root
+
+## Domain & liên hệ
+
+- Domain dự kiến: kittechnology.vn
+- Hotline: 0984.660.399 | Email: khiemtic@gmail.com

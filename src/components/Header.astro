@@ -1,0 +1,213 @@
+---
+import { t } from '../i18n';
+
+const m = t('vi');
+const base = '/vi';
+const path = Astro.url.pathname;
+
+const links = [
+  { href: base, label: m.nav.home, active: path === base || path === `${base}/` },
+  { href: `${base}/ve-chung-toi`, label: m.nav.about, active: path.startsWith(`${base}/ve-chung-toi`) },
+  { href: `${base}/san-pham`, label: m.nav.products, active: path.startsWith(`${base}/san-pham`) },
+];
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href={base} class="logo">
+      <img class="logo-img" src="/images/logo.svg" alt={m.meta.siteName} width="180" height="40" decoding="async" />
+    </a>
+
+    <button
+      type="button"
+      class="nav-toggle"
+      aria-expanded="false"
+      aria-controls="site-nav"
+      data-nav-toggle
+    >
+      <span class="sr-only">{m.nav.menuOpen}</span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+      <span class="nav-toggle-bar" aria-hidden="true"></span>
+    </button>
+
+    <nav id="site-nav" class="nav" data-nav>
+      {
+        links.map((link) => (
+          <a href={link.href} class:list={{ active: link.active }}>
+            {link.label}
+          </a>
+        ))
+      }
+      <a href={`${base}/lien-he`} class="nav-cta">{m.nav.contact}</a>
+      <span class="lang-soon" title={m.nav.langEnSoon}>{m.nav.langEn}</span>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector('[data-nav-toggle]');
+  const nav = document.querySelector('[data-nav]');
+
+  toggle?.addEventListener('click', () => {
+    const open = nav?.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  nav?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      nav.classList.remove('is-open');
+      toggle?.setAttribute('aria-expanded', 'false');
+    });
+  });
+</script>
+
+<style>
+  .site-header {
+    background: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem 0;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    flex-shrink: 0;
+  }
+
+  .logo:hover {
+    text-decoration: none;
+  }
+
+  .logo-img {
+    width: auto;
+    height: 40px;
+    max-width: min(200px, 50vw);
+    object-fit: contain;
+  }
+
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    background: var(--color-surface);
+    cursor: pointer;
+  }
+
+  .nav-toggle-bar {
+    display: block;
+    width: 20px;
+    height: 2px;
+    margin-inline: auto;
+    background: var(--color-primary);
+    border-radius: 2px;
+  }
+
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 1rem;
+    font-size: 0.92rem;
+  }
+
+  .nav a {
+    color: var(--color-muted);
+    text-decoration: none;
+    padding: 0.35rem 0;
+  }
+
+  .nav a:hover,
+  .nav a.active {
+    color: var(--color-primary);
+  }
+
+  .nav-cta {
+    background: var(--color-primary);
+    color: #fff !important;
+    padding: 0.45rem 1rem !important;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+
+  .nav-cta:hover {
+    background: var(--color-primary-dark);
+    text-decoration: none;
+  }
+
+  .lang-soon {
+    font-size: 0.8rem;
+    color: var(--color-border);
+    cursor: not-allowed;
+    border: 1px dashed var(--color-border);
+    padding: 0.25rem 0.5rem;
+    border-radius: 6px;
+  }
+
+  @media (max-width: 768px) {
+    .nav-toggle {
+      display: flex;
+    }
+
+    .nav {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      padding: 0.75rem 1rem 1rem;
+      background: var(--color-surface);
+      border-bottom: 1px solid var(--color-border);
+      box-shadow: var(--shadow);
+    }
+
+    .nav.is-open {
+      display: flex;
+    }
+
+    .nav a {
+      padding: 0.65rem 0;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .nav a:last-of-type {
+      border-bottom: none;
+    }
+
+    .nav-cta {
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+
+    .lang-soon {
+      align-self: flex-start;
+      margin-top: 0.5rem;
+    }
+
+    .header-inner {
+      position: relative;
+      flex-wrap: wrap;
+    }
+  }
+</style>

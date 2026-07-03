@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" fill="none" role="img" aria-label="Kit Technology">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="630" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ecfdf5"/>
+      <stop offset="0.5" stop-color="#f8fafc"/>
+      <stop offset="1" stop-color="#fef3c7"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="80" y="120" width="120" height="120" rx="24" fill="#0f766e"/>
+  <path d="M110 220V140h30l30 50 30-50h30v80" stroke="#fff" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="170" cy="155" r="14" fill="#f59e0b"/>
+  <text x="240" y="175" font-family="Segoe UI, system-ui, sans-serif" font-size="64" font-weight="700" fill="#0f172a">Kit Technology</text>
+  <text x="240" y="245" font-family="Segoe UI, system-ui, sans-serif" font-size="32" fill="#64748b">CÙng ngh« s— cho v≠n h‡nh hi«u qu£</text>
+  <rect x="240" y="300" width="280" height="56" rx="28" fill="#0f766e"/>
+  <text x="380" y="338" text-anchor="middle" font-family="Segoe UI, system-ui, sans-serif" font-size="22" font-weight="600" fill="#fff">SaaS theo ng‡nh dÕc</text>
+  <rect x="540" y="300" width="220" height="56" rx="28" fill="#fff" stroke="#e2e8f0" stroke-width="2"/>
+  <text x="650" y="338" text-anchor="middle" font-family="Segoe UI, system-ui, sans-serif" font-size="22" font-weight="600" fill="#0f766e">Novixa ∑ D∞„c</text>
+  <text x="240" y="420" font-family="Segoe UI, system-ui, sans-serif" font-size="24" fill="#475569">Ph·t tri√n gi£i ph·p phßn m¡m cho doanh nghi«p Vi«t Nam</text>
+</svg>

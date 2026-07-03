@@ -1,0 +1,68 @@
+---
+import '../styles/global.css';
+import CloudflareAnalytics from '../components/CloudflareAnalytics.astro';
+import { t, type Locale } from '../i18n';
+import { absoluteUrl, DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from '../lib/site';
+
+interface Props {
+  title: string;
+  description?: string;
+  locale?: Locale;
+  image?: string;
+  canonicalPath?: string;
+  noIndex?: boolean;
+}
+
+const {
+  title,
+  description,
+  locale = 'vi',
+  image,
+  canonicalPath,
+  noIndex = false,
+} = Astro.props;
+const m = t(locale);
+const pageDescription = description ?? m.meta.description;
+const fullTitle = title === m.meta.siteName ? `${title} — ${m.meta.tagline}` : `${title} — ${m.meta.siteName}`;
+const ogImage = absoluteUrl(image ?? DEFAULT_OG_IMAGE);
+const canonical = canonicalPath ? absoluteUrl(canonicalPath) : new URL(Astro.url.pathname, SITE_URL).href;
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={pageDescription} />
+    <meta name="keywords" content={m.meta.keywords} />
+    <meta name="author" content={SITE_NAME} />
+    {noIndex && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="theme-color" content="#0f766e" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/images/logo.svg" />
+    <title>{fullTitle}</title>
+
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:locale" content="vi_VN" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:image" content={ogImage} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <CloudflareAnalytics />
+  </head>
+  <body>
+    <slot name="header" />
+    <main>
+      <slot />
+    </main>
+    <slot name="footer" />
+  </body>
+</html>
