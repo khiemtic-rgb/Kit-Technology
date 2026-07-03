@@ -1,0 +1,278 @@
+---
+import { pageUrl } from '../lib/site-map';
+import type { Locale } from '../i18n';
+
+interface Props {
+  locale?: Locale;
+}
+
+const { locale = 'vi' } = Astro.props;
+
+const slides = [
+  {
+    src: '/images/banner-1.png',
+    alt:
+      locale === 'vi'
+        ? 'KIT Technology — AI-Powered Digital Platforms, nền tảng Novixa'
+        : 'KIT Technology — AI-Powered Digital Platforms',
+  },
+  {
+    src: '/images/banner-2.png',
+    alt:
+      locale === 'vi'
+        ? 'KIT Technology — Kiến tạo giải pháp dẫn lối tương lai'
+        : 'KIT Technology — Building solutions for the future',
+  },
+  {
+    src: '/images/banner-3.png',
+    alt:
+      locale === 'vi'
+        ? 'KIT Technology — Đồng hành chuyển đổi số cùng doanh nghiệp'
+        : 'KIT Technology — Digital transformation partner',
+  },
+];
+
+const productsHref = pageUrl(locale, locale === 'vi' ? 'san-pham' : 'products');
+const contactHref = locale === 'vi' ? '/vi/lien-he' : '/en/contact';
+const ctaProducts = locale === 'vi' ? 'Khám phá sản phẩm' : 'Explore products';
+const ctaConsult = locale === 'vi' ? 'Đặt lịch tư vấn' : 'Book a consultation';
+---
+
+<section class="hero-banner" aria-label="Banner" data-hero-banner>
+  <div class="hero-banner-track">
+    {
+      slides.map((slide, index) => (
+        <div
+          class="hero-banner-slide"
+          class:list={{ 'is-active': index === 0 }}
+          data-slide={index}
+          aria-hidden={index !== 0}
+        >
+          <img class="hero-banner-img" src={slide.src} alt={slide.alt} width="1920" height="600" decoding="async" fetchpriority={index === 0 ? 'high' : 'auto'} />
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="hero-banner-overlay">
+    <div class="container hero-banner-actions">
+      <a class="btn btn-primary" href={productsHref}>{ctaProducts}</a>
+      <a class="btn btn-secondary hero-banner-btn-light" href={contactHref}>{ctaConsult}</a>
+    </div>
+  </div>
+
+  <div class="hero-banner-controls container">
+    <button type="button" class="hero-banner-arrow" data-prev aria-label={locale === 'vi' ? 'Banner trước' : 'Previous slide'}>
+      ‹
+    </button>
+    <div class="hero-banner-dots" role="tablist" aria-label={locale === 'vi' ? 'Chọn banner' : 'Choose slide'}>
+      {
+        slides.map((_, index) => (
+          <button
+            type="button"
+            class="hero-banner-dot"
+            class:list={{ 'is-active': index === 0 }}
+            data-dot={index}
+            role="tab"
+            aria-selected={index === 0}
+            aria-label={`${locale === 'vi' ? 'Banner' : 'Slide'} ${index + 1}`}
+          />
+        ))
+      }
+    </div>
+    <button type="button" class="hero-banner-arrow" data-next aria-label={locale === 'vi' ? 'Banner sau' : 'Next slide'}>
+      ›
+    </button>
+  </div>
+</section>
+
+<script>
+  const root = document.querySelector('[data-hero-banner]');
+  if (root) {
+    const slides = Array.from(root.querySelectorAll('[data-slide]'));
+    const dots = Array.from(root.querySelectorAll('[data-dot]'));
+    const prev = root.querySelector('[data-prev]');
+    const next = root.querySelector('[data-next]');
+    let current = 0;
+    let timer: ReturnType<typeof setInterval> | undefined;
+    const delay = 5500;
+
+    const show = (index: number) => {
+      current = (index + slides.length) % slides.length;
+      slides.forEach((slide, i) => {
+        const active = i === current;
+        slide.classList.toggle('is-active', active);
+        slide.setAttribute('aria-hidden', active ? 'false' : 'true');
+      });
+      dots.forEach((dot, i) => {
+        const active = i === current;
+        dot.classList.toggle('is-active', active);
+        dot.setAttribute('aria-selected', active ? 'true' : 'false');
+      });
+    };
+
+    const start = () => {
+      stop();
+      timer = setInterval(() => show(current + 1), delay);
+    };
+
+    const stop = () => {
+      if (timer) clearInterval(timer);
+    };
+
+    prev?.addEventListener('click', () => {
+      show(current - 1);
+      start();
+    });
+    next?.addEventListener('click', () => {
+      show(current + 1);
+      start();
+    });
+    dots.forEach((dot) => {
+      dot.addEventListener('click', () => {
+        const index = Number(dot.getAttribute('data-dot'));
+        show(index);
+        start();
+      });
+    });
+
+    root.addEventListener('mouseenter', stop);
+    root.addEventListener('mouseleave', start);
+    root.addEventListener('focusin', stop);
+    root.addEventListener('focusout', start);
+
+    start();
+  }
+</script>
+
+<style>
+  .hero-banner {
+    position: relative;
+    width: 100%;
+    background: #0f172a;
+    overflow: hidden;
+  }
+
+  .hero-banner-track {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 21 / 7;
+    min-height: 220px;
+    max-height: min(52vh, 520px);
+  }
+
+  @media (min-width: 768px) {
+    .hero-banner-track {
+      min-height: 280px;
+    }
+  }
+
+  .hero-banner-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 1s ease;
+    pointer-events: none;
+  }
+
+  .hero-banner-slide.is-active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .hero-banner-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transform: scale(1);
+    transition: transform 6s ease;
+  }
+
+  .hero-banner-slide.is-active .hero-banner-img {
+    animation: heroKenBurns 6s ease forwards;
+  }
+
+  @keyframes heroKenBurns {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.06);
+    }
+  }
+
+  .hero-banner-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 3.5rem;
+    background: linear-gradient(to top, rgba(15, 23, 42, 0.55) 0%, transparent 45%);
+    pointer-events: none;
+  }
+
+  .hero-banner-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    pointer-events: auto;
+  }
+
+  .hero-banner-btn-light {
+    background: rgba(255, 255, 255, 0.95);
+    border-color: transparent;
+  }
+
+  .hero-banner-controls {
+    position: absolute;
+    bottom: 0.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 2;
+  }
+
+  .hero-banner-dots {
+    display: flex;
+    gap: 0.4rem;
+  }
+
+  .hero-banner-dot {
+    width: 10px;
+    height: 10px;
+    padding: 0;
+    border: none;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.45);
+    cursor: pointer;
+    transition: width 0.25s, background 0.25s;
+  }
+
+  .hero-banner-dot.is-active {
+    width: 28px;
+    background: #5eead4;
+  }
+
+  .hero-banner-arrow {
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.45);
+    color: #fff;
+    font-size: 1.35rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-banner-arrow:hover {
+    background: rgba(15, 118, 110, 0.85);
+    border-color: transparent;
+  }
+</style>

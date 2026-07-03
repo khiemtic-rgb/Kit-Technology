@@ -440,6 +440,36 @@ img {
   color: #94a3b8;
 }
 
+.hero-products-section {
+  padding-top: 1.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.hero-product-row-light {
+  margin-top: 0;
+}
+
+.hero-product-card-light {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
+  box-shadow: var(--shadow);
+}
+
+.hero-product-card-light strong {
+  color: var(--color-primary-dark);
+}
+
+.hero-product-card-light span {
+  color: var(--color-muted);
+}
+
+.hero-product-card-light:hover {
+  border-color: var(--color-primary);
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
 .section-alt {
   background: #f1f5f9;
 }

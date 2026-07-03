@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import HeroBanner from '../../components/HeroBanner.astro';
 import { t } from '../../i18n';
 import { pageUrl } from '../../lib/site-map';
 import '../../styles/global.css';
@@ -13,19 +14,14 @@ const h = m.home;
 <BaseLayout title={m.meta.siteName} description={m.meta.description} locale="en" canonicalPath="/en">
   <Header slot="header" locale="en" />
 
-  <section class="hero hero-kit">
-    <div class="container hero-kit-inner">
-      <p class="hero-badge">{h.heroBadge}</p>
-      <h1>{h.heroTitle}</h1>
-      <p class="hero-lead">{h.heroSubtitle}</p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href={pageUrl('en', 'products')}>{h.ctaProducts}</a>
-        <a class="btn btn-secondary" href="/en/contact">{h.ctaConsult}</a>
-      </div>
-      <div class="hero-product-row">
+  <HeroBanner locale="en" />
+
+  <section class="section hero-products-section">
+    <div class="container">
+      <div class="hero-product-row hero-product-row-light">
         {
           h.heroProducts.map((item) => (
-            <a class="hero-product-card" href={item.href}>
+            <a class="hero-product-card hero-product-card-light" href={item.href}>
               <strong>{item.name}</strong>
               <span>{item.tagline}</span>
             </a>
