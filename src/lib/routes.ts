@@ -20,15 +20,15 @@ export function getAlternateLocalePath(pathname: string): string {
   const locale = getLocaleFromPath(pathname);
   const slug = getSlugFromPath(pathname);
   if (!slug) return locale === 'vi' ? '/en' : '/vi';
-  if (slug === 'lien-he') return locale === 'vi' ? '/en/contact' : '/vi/lien-he';
-  if (slug === 'contact') return locale === 'vi' ? '/en/contact' : '/vi/lien-he';
+  if (slug === 'lien-he') return locale === 'vi' ? '/en/company/contact' : '/vi/gioi-thieu/lien-he';
+  if (slug === 'contact') return locale === 'vi' ? '/en/company/contact' : '/vi/gioi-thieu/lien-he';
   const page = getPage(locale, slug);
   if (!page) return locale === 'vi' ? '/en' : '/vi';
   return getAlternatePath(locale, slug);
 }
 
 export function contactPath(locale: Locale): string {
-  return locale === 'vi' ? '/vi/lien-he' : '/en/contact';
+  return locale === 'vi' ? '/vi/lien-he' : '/en/company/contact';
 }
 
 export { getStaticSlugs, getPage };

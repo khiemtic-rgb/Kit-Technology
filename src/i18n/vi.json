@@ -133,7 +133,18 @@
     "formNote": "Nội dung form được gửi tới email KIT Technology.",
     "successTitle": "Đã gửi tin nhắn",
     "successMessage": "Cảm ơn bạn! Chúng tôi sẽ phản hồi qua số điện thoại hoặc email bạn cung cấp.",
-    "formSubject": "Liên hệ từ kittech.vn"
+    "formSubject": "Liên hệ từ kittech.vn",
+    "addressLabel": "Địa chỉ",
+    "addressLines": ["Hà Nội", "Thái Nguyên"],
+    "mapTitle": "Bản đồ",
+    "mapNote": "Văn phòng Hà Nội — liên hệ trước khi ghé thăm.",
+    "mapEmbedUrl": "https://maps.google.com/maps?q=Hanoi%2C%20Vietnam&output=embed",
+    "demoCta": "Đăng ký Demo",
+    "demoFormTitle": "Đăng ký Demo sản phẩm",
+    "demoIntro": "Để lại thông tin — chúng tôi sẽ liên hệ demo Novixa hoặc giải pháp phù hợp.",
+    "demoSubmit": "Gửi đăng ký Demo",
+    "demoPlaceholder": "Tên doanh nghiệp, nhu cầu demo, sản phẩm quan tâm…",
+    "demoFormSubject": "Đăng ký Demo từ kittech.vn"
   },
   "footer": {
     "since": "Since 2015",

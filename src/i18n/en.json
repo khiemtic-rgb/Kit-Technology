@@ -89,7 +89,18 @@
     "formNote": "Form submissions are sent to KIT Technology email.",
     "successTitle": "Message sent",
     "successMessage": "Thank you! We will reply via the phone number or email you provided.",
-    "formSubject": "Contact from kittech.vn"
+    "formSubject": "Contact from kittech.vn",
+    "addressLabel": "Address",
+    "addressLines": ["Hanoi", "Thai Nguyen"],
+    "mapTitle": "Map",
+    "mapNote": "Hanoi office — please contact us before visiting.",
+    "mapEmbedUrl": "https://maps.google.com/maps?q=Hanoi%2C%20Vietnam&output=embed",
+    "demoCta": "Request a Demo",
+    "demoFormTitle": "Product demo request",
+    "demoIntro": "Leave your details — we will contact you for a Novixa or platform demo.",
+    "demoSubmit": "Submit demo request",
+    "demoPlaceholder": "Company name, demo needs, products of interest…",
+    "demoFormSubject": "Demo request from kittech.vn"
   },
   "footer": {
     "since": "Since 2015",

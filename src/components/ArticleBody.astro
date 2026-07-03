@@ -1,0 +1,156 @@
+---
+import type { ArticleContent } from '../content/types';
+
+interface Props {
+  article: ArticleContent;
+}
+
+const { article } = Astro.props;
+---
+
+<article class="article-body prose">
+  {article.subtitle && <p class="article-lead">{article.subtitle}</p>}
+
+  {
+    article.blocks.map((block) => {
+      switch (block.type) {
+        case 'lead':
+          return <p class="article-lead">{block.text}</p>;
+        case 'heading':
+          return <h2>{block.text}</h2>;
+        case 'paragraph':
+          return <p>{block.text}</p>;
+        case 'list':
+          return (
+            <ul>
+              {block.items.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          );
+        case 'pillars':
+          return (
+            <ul class="pillar-list">
+              {block.items.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          );
+        case 'values':
+          return (
+            <div class="value-grid">
+              {block.items.map((item) => (
+                <div class="value-card">
+                  <h3>{item.title}</h3>
+                  <p>{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          );
+        case 'cards':
+          return (
+            <div class="card-grid">
+              {block.items.map((item) => (
+                <article class="card">
+                  <h3>{item.title}</h3>
+                  <p>{item.desc}</p>
+                </article>
+              ))}
+            </div>
+          );
+        case 'tech-grid':
+          return (
+            <div class="tech-grid-blocks">
+              {block.groups.map((group) => (
+                <div class="tech-group card">
+                  <h3>{group.name}</h3>
+                  <ul class="tech-icons">
+                    {group.items.map((item) => (
+                      <li>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          );
+        case 'topics':
+          return (
+            <ul class="topic-grid article-topics">
+              {block.items.map((item) => (
+                <li class="topic-card">{item}</li>
+              ))}
+            </ul>
+          );
+        default:
+          return null;
+      }
+    })
+  }
+</article>
+
+<style>
+  .article-lead {
+    font-size: 1.12rem;
+    color: var(--color-primary-dark);
+    font-weight: 600;
+    margin: 0 0 1.5rem;
+    max-width: 62ch;
+  }
+
+  .pillar-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem;
+  }
+
+  .pillar-list li {
+    padding: 0.45rem 0.85rem;
+    background: #ecfdf5;
+    color: var(--color-primary-dark);
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .value-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+    margin: 0.5rem 0 1rem;
+  }
+
+  .value-card h3 {
+    margin: 0 0 0.35rem;
+    color: var(--color-primary);
+    font-size: 1.05rem;
+  }
+
+  .value-card p {
+    margin: 0;
+    color: var(--color-muted);
+  }
+
+  .tech-grid-blocks {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    margin-top: 0.5rem;
+  }
+
+  .tech-group h3 {
+    margin: 0 0 0.75rem;
+    font-size: 1rem;
+    color: var(--color-primary);
+  }
+
+  .tech-group .tech-icons {
+    margin: 0;
+  }
+
+  .article-topics {
+    margin: 1rem 0;
+  }
+</style>

@@ -2,8 +2,11 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
-import { getHubChildren, getPage, getStaticSlugs, pageUrl } from '../../lib/site-map';
+import ArticleBody from '../../components/ArticleBody.astro';
+import ContactSection from '../../components/ContactSection.astro';
+import { getArticleContent } from '../../content';
 import { t } from '../../i18n';
+import { getHubChildren, getPage, getStaticSlugs, pageUrl } from '../../lib/site-map';
 import '../../styles/global.css';
 
 export function getStaticPaths() {
@@ -17,14 +20,21 @@ if (!page) throw new Error(`Unknown page: ${slug}`);
 const m = t('en');
 const url = pageUrl('en', slug);
 const children = page.hub ? getHubChildren('en', page.key) : [];
+const article = getArticleContent('en', page.key);
+const isContact = page.key === 'company-contact';
 ---
 
-<BaseLayout title={page.title.en} description={page.intro?.en} locale="en" canonicalPath={url}>
+<BaseLayout
+  title={page.title.en}
+  description={page.intro?.en ?? article?.subtitle}
+  locale="en"
+  canonicalPath={url}
+>
   <Header slot="header" locale="en" />
   <section class="section">
     <div class="container">
       <h1 class="section-title">{page.title.en}</h1>
-      {page.intro?.en && <p class="section-intro">{page.intro.en}</p>}
+      {page.intro?.en && !article && <p class="section-intro">{page.intro.en}</p>}
 
       {
         page.key === 'novixa' && (
@@ -49,8 +59,14 @@ const children = page.hub ? getHubChildren('en', page.key) : [];
         )
       }
 
+      {article && <ArticleBody article={article} />}
+
       {
-        !page.hub && (
+        isContact && <ContactSection locale="en" canonicalPath={url} />
+      }
+
+      {
+        !page.hub && !article && !isContact && (
           <div class="card prose">
             <p>{m.content.comingSoon}</p>
             {

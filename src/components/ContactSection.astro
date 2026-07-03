@@ -1,0 +1,146 @@
+---
+import { t, type Locale } from '../i18n';
+
+interface Props {
+  locale?: Locale;
+  canonicalPath: string;
+}
+
+const { locale = 'vi', canonicalPath } = Astro.props;
+const m = t(locale);
+const c = m.contact;
+const sent = Astro.url.searchParams.get('sent') === '1';
+const isDemo = Astro.url.searchParams.get('demo') === '1';
+
+const nextUrl = new URL(Astro.url);
+nextUrl.searchParams.set('sent', '1');
+nextUrl.hash = 'contact-form';
+
+const telLink = c.phoneTel ? `tel:${c.phoneTel.replace(/\s/g, '')}` : '';
+const hasPhone = Boolean(c.phoneTel?.trim());
+const formSubject = isDemo ? c.demoFormSubject : c.formSubject;
+---
+
+<div class="contact-page">
+  {
+    sent && (
+      <div class="contact-alert" role="status">
+        <strong>{c.successTitle}</strong>
+        <p>{c.successMessage}</p>
+      </div>
+    )
+  }
+
+  <div class="contact-grid">
+    <aside class="card">
+      <h2 class="contact-block-title">{c.channelsTitle}</h2>
+
+      {
+        hasPhone && (
+          <div class="contact-channel">
+            <span class="contact-channel-label">{c.phoneLabel}</span>
+            <a class="contact-channel-value" href={telLink}>
+              {c.phoneDisplay || c.phoneTel}
+            </a>
+          </div>
+        )
+      }
+
+      <div class="contact-channel">
+        <span class="contact-channel-label">{c.emailLabel}</span>
+        <a class="contact-channel-value" href={`mailto:${c.emailAddress}`}>
+          {c.emailAddress}
+        </a>
+      </div>
+
+      <div class="contact-channel">
+        <span class="contact-channel-label">{c.addressLabel}</span>
+        <p class="contact-channel-value contact-address">{c.addressLines.join(' · ')}</p>
+      </div>
+
+      <p style="margin-top: 1rem">
+        <a class="btn btn-secondary" href={`${canonicalPath}?demo=1#contact-form`}>
+          {c.demoCta}
+        </a>
+      </p>
+    </aside>
+
+    <div class="card contact-form-wrap" id="contact-form">
+      <h2 class="contact-block-title">{isDemo ? c.demoFormTitle : c.formTitle}</h2>
+      {isDemo && <p class="contact-form-note" style="margin-top: 0">{c.demoIntro}</p>}
+      <form
+        class="contact-form"
+        method="POST"
+        action={`https://formsubmit.co/${encodeURIComponent(c.emailAddress)}`}
+      >
+        <input type="hidden" name="_subject" value={formSubject} />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_next" value={nextUrl.toString()} />
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+
+        <label for="name">{c.name} *</label>
+        <input id="name" name="name" type="text" required autocomplete="name" />
+
+        <label for="phone">{c.phone} *</label>
+        <input id="phone" name="phone" type="tel" required autocomplete="tel" inputmode="tel" />
+
+        <label for="email">{c.email}</label>
+        <input id="email" name="email" type="email" autocomplete="email" />
+
+        <label for="message">{c.message} *</label>
+        <textarea id="message" name="message" required placeholder={isDemo ? c.demoPlaceholder : undefined}></textarea>
+
+        <button class="btn btn-primary" type="submit">{isDemo ? c.demoSubmit : c.submit}</button>
+        <p class="contact-form-note">{c.formNote}</p>
+      </form>
+    </div>
+  </div>
+
+  <div class="card contact-map-wrap">
+    <h2 class="contact-block-title">{c.mapTitle}</h2>
+    <p class="contact-form-note">{c.mapNote}</p>
+    <div class="contact-map">
+      <iframe
+        title={c.mapTitle}
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        src={c.mapEmbedUrl}
+      />
+    </div>
+  </div>
+</div>
+
+<style>
+  .contact-page {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .contact-address {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .contact-map-wrap {
+    margin-top: 0.25rem;
+  }
+
+  .contact-map {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    margin-top: 0.75rem;
+  }
+
+  .contact-map iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+</style>

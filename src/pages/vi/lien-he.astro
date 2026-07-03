@@ -2,91 +2,22 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
+import ContactSection from '../../components/ContactSection.astro';
 import { t } from '../../i18n';
 import '../../styles/global.css';
 
 const m = t('vi');
 const c = m.contact;
-const sent = Astro.url.searchParams.get('sent') === '1';
-
-const nextUrl = new URL(Astro.url);
-nextUrl.searchParams.set('sent', '1');
-nextUrl.hash = 'contact-form';
-
-const telLink = c.phoneTel ? `tel:${c.phoneTel.replace(/\s/g, '')}` : '';
-const hasPhone = Boolean(c.phoneTel?.trim());
 ---
 
-<BaseLayout title={c.title} description={c.intro} canonicalPath="/vi/lien-he">
-  <Header slot="header" />
+<BaseLayout title={c.title} description={c.intro} locale="vi" canonicalPath="/vi/lien-he">
+  <Header slot="header" locale="vi" />
   <section class="section">
     <div class="container">
       <h1 class="section-title">{c.title}</h1>
       <p class="section-intro">{c.intro}</p>
-
-      {
-        sent && (
-          <div class="contact-alert" role="status">
-            <strong>{c.successTitle}</strong>
-            <p>{c.successMessage}</p>
-          </div>
-        )
-      }
-
-      <div class="contact-grid">
-        <aside class="card">
-          <h2 class="contact-block-title">{c.channelsTitle}</h2>
-
-          {
-            hasPhone && (
-              <div class="contact-channel">
-                <span class="contact-channel-label">{c.phoneLabel}</span>
-                <a class="contact-channel-value" href={telLink}>
-                  {c.phoneDisplay || c.phoneTel}
-                </a>
-              </div>
-            )
-          }
-
-          <div class="contact-channel">
-            <span class="contact-channel-label">{c.emailLabel}</span>
-            <a class="contact-channel-value" href={`mailto:${c.emailAddress}`}>
-              {c.emailAddress}
-            </a>
-          </div>
-        </aside>
-
-        <div class="card contact-form-wrap" id="contact-form">
-          <h2 class="contact-block-title">{c.formTitle}</h2>
-          <form
-            class="contact-form"
-            method="POST"
-            action={`https://formsubmit.co/${encodeURIComponent(c.emailAddress)}`}
-          >
-            <input type="hidden" name="_subject" value={c.formSubject} />
-            <input type="hidden" name="_captcha" value="false" />
-            <input type="hidden" name="_template" value="table" />
-            <input type="hidden" name="_next" value={nextUrl.toString()} />
-            <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
-
-            <label for="name">{c.name} *</label>
-            <input id="name" name="name" type="text" required autocomplete="name" />
-
-            <label for="phone">{c.phone} *</label>
-            <input id="phone" name="phone" type="tel" required autocomplete="tel" inputmode="tel" />
-
-            <label for="email">{c.email}</label>
-            <input id="email" name="email" type="email" autocomplete="email" />
-
-            <label for="message">{c.message} *</label>
-            <textarea id="message" name="message" required></textarea>
-
-            <button class="btn btn-primary" type="submit">{c.submit}</button>
-            <p class="contact-form-note">{c.formNote}</p>
-          </form>
-        </div>
-      </div>
+      <ContactSection locale="vi" canonicalPath="/vi/lien-he" />
     </div>
   </section>
-  <Footer slot="footer" />
+  <Footer slot="footer" locale="vi" />
 </BaseLayout>
