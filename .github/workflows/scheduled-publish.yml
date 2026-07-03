@@ -6,6 +6,7 @@ on:
     - cron: '0 23 * * *'
   workflow_dispatch:
   push:
+    branches: [main]
     paths:
       - 'src/content/insights/**'
       - 'content-queue/**'
@@ -56,14 +57,12 @@ jobs:
         run: npm run build
 
       - name: Deploy to Cloudflare
-        if: ${{ secrets.CLOUDFLARE_API_TOKEN != '' && secrets.CLOUDFLARE_ACCOUNT_ID != '' }}
-        run: npm run cf:deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-
-      - name: Cloudflare secrets missing
-        if: ${{ secrets.CLOUDFLARE_API_TOKEN == '' || secrets.CLOUDFLARE_ACCOUNT_ID == '' }}
         run: |
-          echo "::warning::Skip Cloudflare deploy — add CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID in GitHub Secrets."
-          echo "Site may still update if Cloudflare Pages auto-builds on push to main."
+          if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
+            echo "::warning::Skip Cloudflare deploy — add CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID in GitHub Secrets."
+            exit 0
+          fi
+          npm run cf:deploy
