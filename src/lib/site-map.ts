@@ -90,13 +90,18 @@ export const pages: PageEntry[] = [
   p('proj-mobile', 'du-an/mobile-app', 'projects/mobile-app', 'Mobile App', 'Mobile App'),
   p('proj-ai', 'du-an/ai-automation', 'projects/ai-automation', 'AI Automation', 'AI Automation'),
 
-  // Blog / Insights
-  p('blog', 'blog', 'insights', 'Blog', 'Insights', 'AI, engineering và chuyển đổi số.', undefined, true),
+  // Blog / Insights (Knowledge Hub)
+  p('blog', 'blog', 'insights', 'Kiến thức', 'Insights', 'Tri thức về AI, engineering và chuyển đổi số.', 'Knowledge on AI, engineering, and digital transformation.', true),
   p('blog-ai', 'blog/ai', 'insights/ai', 'AI', 'AI'),
   p('blog-health', 'blog/healthcare', 'insights/healthcare', 'Healthcare', 'Healthcare'),
   p('blog-dx', 'blog/digital-transformation', 'insights/digital-transformation', 'Digital Transformation', 'Digital Transformation'),
   p('blog-eng', 'blog/engineering', 'insights/engineering', 'Engineering', 'Engineering'),
-  p('blog-news', 'blog/company-news', 'insights/company-news', 'Company News', 'Company News'),
+  p('blog-news', 'blog/company-news', 'insights/company-news', 'Company', 'Company'),
+  p('blog-business', 'blog/business', 'insights/business', 'Business', 'Business'),
+  p('blog-tech-cat', 'blog/technology', 'insights/technology', 'Technology', 'Technology'),
+  p('blog-sol-cat', 'blog/solutions', 'insights/solutions', 'Solutions', 'Solutions'),
+  p('blog-prod-cat', 'blog/products', 'insights/products', 'Products', 'Products'),
+  p('faq', 'faq', 'faq', 'FAQ', 'FAQ', 'Câu hỏi thường gặp về Novixa và KIT Technology.', 'Frequently asked questions about Novixa and KIT Technology.', true),
 
   // Careers
   p('careers', 'tuyen-dung', 'careers', 'Careers', 'Careers', 'Cơ hội nghề nghiệp tại KIT Technology.'),
@@ -173,10 +178,13 @@ export const mainNav: Record<Locale, NavGroup[]> = {
       items: [
         { label: 'AI', href: pageUrl('vi', 'blog/ai') },
         { label: 'Healthcare', href: pageUrl('vi', 'blog/healthcare') },
-        { label: 'Digital Transformation', href: pageUrl('vi', 'blog/digital-transformation') },
-        { label: 'Engineering Blog', href: pageUrl('vi', 'blog/engineering') },
-        { label: 'Engineering', href: pageUrl('vi', 'ky-thuat') },
-        { label: 'Company News', href: pageUrl('vi', 'blog/company-news') },
+        { label: 'Business', href: pageUrl('vi', 'blog/business') },
+        { label: 'Technology', href: pageUrl('vi', 'blog/technology') },
+        { label: 'Solutions', href: pageUrl('vi', 'blog/solutions') },
+        { label: 'Products', href: pageUrl('vi', 'blog/products') },
+        { label: 'Engineering', href: pageUrl('vi', 'blog/engineering') },
+        { label: 'Company', href: pageUrl('vi', 'blog/company-news') },
+        { label: 'FAQ', href: pageUrl('vi', 'faq') },
       ],
     },
     {
@@ -234,10 +242,13 @@ export const mainNav: Record<Locale, NavGroup[]> = {
       items: [
         { label: 'AI', href: pageUrl('en', 'insights/ai') },
         { label: 'Healthcare', href: pageUrl('en', 'insights/healthcare') },
-        { label: 'Digital Transformation', href: pageUrl('en', 'insights/digital-transformation') },
-        { label: 'Engineering Blog', href: pageUrl('en', 'insights/engineering') },
-        { label: 'Engineering', href: pageUrl('en', 'engineering') },
-        { label: 'Company News', href: pageUrl('en', 'insights/company-news') },
+        { label: 'Business', href: pageUrl('en', 'insights/business') },
+        { label: 'Technology', href: pageUrl('en', 'insights/technology') },
+        { label: 'Solutions', href: pageUrl('en', 'insights/solutions') },
+        { label: 'Products', href: pageUrl('en', 'insights/products') },
+        { label: 'Engineering', href: pageUrl('en', 'insights/engineering') },
+        { label: 'Company', href: pageUrl('en', 'insights/company-news') },
+        { label: 'FAQ', href: pageUrl('en', 'faq') },
       ],
     },
     {

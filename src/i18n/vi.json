@@ -98,14 +98,13 @@
     "caseTimeline": ["Ý tưởng", "Prototype", "MVP", "Pilot", "Commercial"],
     "caseCta": "Xem dự án Novixa",
     "caseHref": "/vi/du-an/novixa",
-    "blogTitle": "Insights",
+    "blogTitle": "Kiến thức",
     "blogTopics": [
       { "label": "AI", "href": "/vi/blog/ai" },
-      { "label": "Chuyển đổi số", "href": "/vi/blog/digital-transformation" },
-      { "label": "Nhà thuốc", "href": "/vi/blog/healthcare" },
-      { "label": "Flutter", "href": "/vi/cong-nghe/flutter" },
-      { "label": "Cloud", "href": "/vi/cong-nghe/cloud" },
-      { "label": "SaaS", "href": "/vi/san-pham" }
+      { "label": "Healthcare", "href": "/vi/blog/healthcare" },
+      { "label": "Technology", "href": "/vi/blog/technology" },
+      { "label": "Novixa", "href": "/vi/blog/products" },
+      { "label": "FAQ", "href": "/vi/faq" }
     ],
     "blogCta": "Xem tất cả bài viết"
   },
@@ -114,6 +113,10 @@
     "backHub": "Quay lại",
     "relatedTitle": "Liên quan",
     "novixaExternal": "Tìm hiểu thêm trên novixa.vn"
+  },
+  "insights": {
+    "emptyCategory": "Bài viết sẽ được xuất bản theo lịch Knowledge Hub. Quay lại sau hoặc liên hệ nếu cần tư vấn sớm.",
+    "scheduledNote": "Lịch xuất bản tự động — mỗi ngày có bài mới trong 90 ngày."
   },
   "contact": {
     "title": "Liên hệ",

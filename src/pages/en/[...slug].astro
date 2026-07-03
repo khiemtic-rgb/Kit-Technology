@@ -4,8 +4,15 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import ArticleBody from '../../components/ArticleBody.astro';
 import ContactSection from '../../components/ContactSection.astro';
+import InsightGrid from '../../components/InsightGrid.astro';
 import { getArticleContent } from '../../content';
 import { t } from '../../i18n';
+import {
+  getPublishedByCategory,
+  getPublishedInsightsForLocale,
+  type InsightCategory,
+} from '../../lib/insights';
+import { isInsightCategoryHub, isInsightsHub, pageKeyToInsightCategory } from '../../lib/insight-hubs';
 import { getHubChildren, getPage, getStaticSlugs, pageUrl } from '../../lib/site-map';
 import '../../styles/global.css';
 
@@ -22,6 +29,16 @@ const url = pageUrl('en', slug);
 const children = page.hub ? getHubChildren('en', page.key) : [];
 const article = getArticleContent('en', page.key);
 const isContact = page.key === 'company-contact';
+
+let insightEntries = [];
+if (isInsightsHub(page.key)) {
+  insightEntries = await getPublishedInsightsForLocale('en');
+} else if (page.key === 'faq') {
+  insightEntries = await getPublishedByCategory('en', 'faq');
+} else if (isInsightCategoryHub(page.key)) {
+  const category = pageKeyToInsightCategory(page.key);
+  if (category) insightEntries = await getPublishedByCategory('en', category as InsightCategory);
+}
 ---
 
 <BaseLayout
@@ -60,6 +77,16 @@ const isContact = page.key === 'company-contact';
       }
 
       {article && <ArticleBody article={article} />}
+
+      {
+        insightEntries.length > 0 || isInsightsHub(page.key) || isInsightCategoryHub(page.key) || page.key === 'faq' ? (
+          <InsightGrid
+            entries={insightEntries}
+            locale="en"
+            emptyMessage={m.insights.emptyCategory}
+          />
+        ) : null
+      }
 
       {
         isContact && <ContactSection locale="en" canonicalPath={url} />

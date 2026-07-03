@@ -1,0 +1,50 @@
+name: Scheduled Knowledge Hub publish
+
+on:
+  schedule:
+    # 06:00 ICT (UTC+7) daily
+    - cron: '0 23 * * *'
+  workflow_dispatch:
+  push:
+    paths:
+      - 'src/content/insights/**'
+      - 'content-queue/**'
+      - 'src/lib/content-plan.ts'
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - run: npm ci
+
+      - name: Import content queue (Notion / Make)
+        run: npm run content:queue
+
+      - name: Show editorial schedule
+        run: npm run content:status
+
+      - name: Commit imported articles
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/content/insights content-queue/processed
+          git diff --staged --quiet || git commit -m "Import scheduled Knowledge Hub content"
+          git push
+
+      - name: Build static site
+        run: npm run build
+
+      - name: Deploy to Cloudflare
+        run: npm run cf:deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}

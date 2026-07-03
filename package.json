@@ -11,13 +11,17 @@
     "preview": "astro preview --host localhost --port 4322",
     "deploy": "npm run build && wrangler deploy --config wrangler.jsonc",
     "cf:deploy": "wrangler deploy --config wrangler.jsonc",
-    "astro": "astro"
+    "astro": "astro",
+    "content:stubs": "npx tsx scripts/generate-content-stubs.ts",
+    "content:queue": "npx tsx scripts/process-content-queue.ts",
+    "content:status": "npx tsx scripts/content-status.ts"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.0",
     "astro": "^6.4.7"
   },
   "devDependencies": {
+    "tsx": "^4.20.3",
     "wrangler": "^4.54.0"
   }
 }

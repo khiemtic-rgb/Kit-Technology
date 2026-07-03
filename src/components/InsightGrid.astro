@@ -1,0 +1,36 @@
+---
+import InsightCard from './InsightCard.astro';
+import type { InsightEntry } from '../lib/insights';
+import type { Locale } from '../i18n';
+
+interface Props {
+  entries: InsightEntry[];
+  locale: Locale;
+  emptyMessage: string;
+}
+
+const { entries, locale, emptyMessage } = Astro.props;
+---
+
+{
+  entries.length > 0 ? (
+    <div class="insight-grid">
+      {entries.map((entry) => (
+        <InsightCard entry={entry} locale={locale} />
+      ))}
+    </div>
+  ) : (
+    <div class="card prose">
+      <p>{emptyMessage}</p>
+    </div>
+  )
+}
+
+<style>
+  .insight-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    margin-top: 1.5rem;
+  }
+</style>

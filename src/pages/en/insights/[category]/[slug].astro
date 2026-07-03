@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import Header from '../../../../components/Header.astro';
+import Footer from '../../../../components/Footer.astro';
+import {
+  getInsightSlug,
+  getPublishedInsightsForLocale,
+  insightPostPath,
+} from '../../../../lib/insights';
+import { formatPublishDate } from '../../../../lib/publish';
+import { pageUrl } from '../../../../lib/site-map';
+import { render } from 'astro:content';
+import '../../../../styles/global.css';
+
+export async function getStaticPaths() {
+  const posts = await getPublishedInsightsForLocale('en');
+  return posts.map((entry) => ({
+    params: {
+      category: entry.data.category,
+      slug: getInsightSlug(entry),
+    },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const slug = getInsightSlug(entry);
+const url = insightPostPath('en', entry.data.category, slug);
+const hubPath = pageUrl('en', `insights/${entry.data.category}`);
+---
+
+<BaseLayout
+  title={entry.data.title}
+  description={entry.data.description}
+  locale="en"
+  canonicalPath={url}
+>
+  <Header slot="header" locale="en" />
+  <article class="section">
+    <div class="container prose insight-article">
+      <p class="insight-meta">
+        <a href={hubPath}>{entry.data.category}</a>
+        · {formatPublishDate(entry.data.publishDate, 'en')}
+      </p>
+      <h1>{entry.data.title}</h1>
+      <p class="insight-lead">{entry.data.description}</p>
+      <Content />
+    </div>
+  </article>
+  <Footer slot="footer" locale="en" />
+</BaseLayout>
+
+<style>
+  .insight-meta {
+    font-size: 0.9rem;
+    color: var(--color-muted);
+  }
+
+  .insight-lead {
+    font-size: 1.1rem;
+    color: var(--color-muted);
+  }
+
+  .insight-article :global(h2) {
+    margin-top: 2rem;
+  }
+
+  .insight-article :global(p),
+  .insight-article :global(li) {
+    line-height: 1.75;
+  }
+</style>

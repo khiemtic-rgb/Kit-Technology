@@ -71,6 +71,10 @@
     "relatedTitle": "Related",
     "novixaExternal": "Learn more on novixa.vn"
   },
+  "insights": {
+    "emptyCategory": "Articles publish on the Knowledge Hub schedule. Check back soon or contact us for early guidance.",
+    "scheduledNote": "Automatic publishing schedule — new articles daily for 90 days."
+  },
   "contact": {
     "title": "Contact",
     "intro": "Partnership, investment, or consultation? Send a message — we will respond as soon as possible.",
