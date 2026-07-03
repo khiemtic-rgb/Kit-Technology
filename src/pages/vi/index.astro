@@ -3,91 +3,141 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import { t } from '../../i18n';
+import { pageUrl } from '../../lib/site-map';
 import '../../styles/global.css';
 
 const m = t('vi');
+const h = m.home;
 ---
 
-<BaseLayout
-  title={m.meta.siteName}
-  description={m.meta.description}
-  canonicalPath="/vi"
->
-  <Header slot="header" />
-  <section class="hero">
-    <div class="container hero-grid">
-      <div class="hero-content">
-        <h1>{m.home.heroTitle}</h1>
-        <p class="hero-lead">{m.home.heroSubtitle}</p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="/vi/lien-he">{m.home.ctaContact}</a>
-          <a class="btn btn-secondary" href="/vi/san-pham">{m.home.ctaProducts}</a>
-        </div>
+<BaseLayout title={m.meta.siteName} description={m.meta.description} locale="vi" canonicalPath="/vi">
+  <Header slot="header" locale="vi" />
+
+  <section class="hero hero-kit">
+    <div class="container hero-kit-inner">
+      <p class="hero-badge">{h.heroBadge}</p>
+      <h1>{h.heroTitle}</h1>
+      <p class="hero-lead">{h.heroSubtitle}</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href={pageUrl('vi', 'san-pham')}>{h.ctaProducts}</a>
+        <a class="btn btn-secondary" href="/vi/lien-he">{h.ctaConsult}</a>
       </div>
-      <div class="hero-visual">
-        <img
-          src="/images/og-banner.svg"
-          alt="Kit Technology — công nghệ số cho vận hành hiệu quả"
-          width="1200"
-          height="630"
-          loading="eager"
-          fetchpriority="high"
-        />
+      <div class="hero-product-row">
+        {
+          h.heroProducts.map((item) => (
+            <a class="hero-product-card" href={item.href}>
+              <strong>{item.name}</strong>
+              <span>{item.tagline}</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <h2 class="section-title">{h.whatWeDoTitle}</h2>
+      <div class="card-grid">
+        {
+          h.whatWeDo.map((item) => (
+            <a class="card card-link" href={item.href}>
+              <h3>{item.title}</h3>
+              <p>{item.desc}</p>
+            </a>
+          ))
+        }
       </div>
     </div>
   </section>
 
   <section class="section">
     <div class="container">
-      <h2 class="section-title">{m.home.focusTitle}</h2>
-      <div class="card-grid">
-        <article class="card">
-          <h3>{m.home.focus1Title}</h3>
-          <p>{m.home.focus1Desc}</p>
-        </article>
-        <article class="card">
-          <h3>{m.home.focus2Title}</h3>
-          <p>{m.home.focus2Desc}</p>
-        </article>
-        <article class="card">
-          <h3>{m.home.focus3Title}</h3>
-          <p>{m.home.focus3Desc}</p>
-        </article>
+      <h2 class="section-title">{h.featuredTitle}</h2>
+      <article class="featured-novixa">
+        <div class="featured-novixa-content">
+          <p class="featured-label">{h.featuredName}</p>
+          <p class="featured-desc">{h.featuredDesc}</p>
+          <div class="tag-row">
+            {h.featuredTags.map((tag) => <span class="tag">{tag}</span>)}
+          </div>
+          <p style="margin-top: 1.25rem">
+            <a class="btn btn-accent" href={h.featuredUrl} target="_blank" rel="noopener noreferrer">
+              {h.featuredCta}
+            </a>
+          </p>
+        </div>
+        <div class="featured-visual" aria-hidden="true">
+          <div class="mock-panel mock-dashboard">Dashboard</div>
+          <div class="mock-panel mock-mobile">Mobile · POS · AI</div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <h2 class="section-title">{h.processTitle}</h2>
+      <p class="section-intro">{h.processNote}</p>
+      <ol class="process-steps">
+        {h.processSteps.map((step) => <li>{step}</li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">{h.techTitle}</h2>
+      <ul class="tech-icons">
+        {h.techStack.map((name) => <li>{name}</li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section-dark">
+    <div class="container">
+      <h2 class="section-title section-title-light">{h.whyTitle}</h2>
+      <div class="stat-grid">
+        {
+          h.whyItems.map((item) => (
+            <div class="stat-card">
+              <p class="stat-value">{item.value}</p>
+              <p class="stat-label">{item.label}</p>
+            </div>
+          ))
+        }
       </div>
     </div>
   </section>
 
-  <section class="trust-band">
+  <section class="section">
     <div class="container">
-      <h2>{m.home.portfolioTitle}</h2>
-      <p>{m.home.portfolioLead}</p>
-      <p style="margin-top: 1.25rem">
-        <a class="btn btn-accent" href={m.products.novixaUrl} target="_blank" rel="noopener noreferrer">
-          {m.home.portfolioCta}
-        </a>
+      <h2 class="section-title">{h.caseTitle}</h2>
+      <p class="section-intro">{h.caseSubtitle}</p>
+      <ol class="timeline">
+        {h.caseTimeline.map((step) => <li>{step}</li>)}
+      </ol>
+      <p style="margin-top: 1.5rem">
+        <a class="btn btn-primary" href={h.caseHref}>{h.caseCta}</a>
       </p>
     </div>
   </section>
 
-  <section class="section">
+  <section class="section section-alt">
     <div class="container">
-      <h2 class="section-title">{m.home.valuesTitle}</h2>
-      <div class="card-grid">
-        <article class="card">
-          <h3>{m.home.value1Title}</h3>
-          <p>{m.home.value1Desc}</p>
-        </article>
-        <article class="card">
-          <h3>{m.home.value2Title}</h3>
-          <p>{m.home.value2Desc}</p>
-        </article>
-        <article class="card">
-          <h3>{m.home.value3Title}</h3>
-          <p>{m.home.value3Desc}</p>
-        </article>
+      <h2 class="section-title">{h.blogTitle}</h2>
+      <div class="topic-grid">
+        {
+          h.blogTopics.map((topic) => (
+            <a class="topic-card" href={topic.href}>{topic.label}</a>
+          ))
+        }
       </div>
+      <p style="margin-top: 1.5rem">
+        <a class="btn btn-secondary" href={pageUrl('vi', 'blog')}>{h.blogCta}</a>
+      </p>
     </div>
   </section>
 
-  <Footer slot="footer" />
+  <Footer slot="footer" locale="vi" />
 </BaseLayout>

@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import { getHubChildren, getPage, getStaticSlugs, pageUrl } from '../../lib/site-map';
+import { t } from '../../i18n';
+import '../../styles/global.css';
+
+export function getStaticPaths() {
+  return getStaticSlugs('en').map((slug) => ({ params: { slug } }));
+}
+
+const slug = Astro.params.slug!;
+const page = getPage('en', slug);
+if (!page) throw new Error(`Unknown page: ${slug}`);
+
+const m = t('en');
+const url = pageUrl('en', slug);
+const children = page.hub ? getHubChildren('en', page.key) : [];
+---
+
+<BaseLayout title={page.title.en} description={page.intro?.en} locale="en" canonicalPath={url}>
+  <Header slot="header" locale="en" />
+  <section class="section">
+    <div class="container">
+      <h1 class="section-title">{page.title.en}</h1>
+      {page.intro?.en && <p class="section-intro">{page.intro.en}</p>}
+
+      {
+        page.key === 'novixa' && (
+          <p class="section-intro">
+            <a class="btn btn-primary" href="https://novixa.vn/en" target="_blank" rel="noopener noreferrer">
+              novixa.vn
+            </a>
+          </p>
+        )
+      }
+
+      {
+        page.hub && children.length > 0 && (
+          <div class="hub-grid">
+            {children.map((child) => (
+              <a class="hub-card" href={pageUrl('en', child.paths.en)}>
+                <h3>{child.title.en}</h3>
+                {child.intro?.en && <p>{child.intro.en}</p>}
+              </a>
+            ))}
+          </div>
+        )
+      }
+
+      {
+        !page.hub && (
+          <div class="card prose">
+            <p>{m.content.comingSoon}</p>
+            {
+              page.key.startsWith('novixa') && (
+                <p>
+                  <a href="https://novixa.vn/en" target="_blank" rel="noopener noreferrer">
+                    {m.content.novixaExternal}
+                  </a>
+                </p>
+              )
+            }
+          </div>
+        )
+      }
+    </div>
+  </section>
+  <Footer slot="footer" locale="en" />
+</BaseLayout>

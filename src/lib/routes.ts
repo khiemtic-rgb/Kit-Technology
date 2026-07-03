@@ -1,28 +1,5 @@
 import type { Locale } from '../i18n';
-
-export type SitePage = 'home' | 'about' | 'products' | 'contact';
-
-export const localePaths: Record<Locale, Record<SitePage, string>> = {
-  vi: {
-    home: '/vi',
-    about: '/vi/ve-chung-toi',
-    products: '/vi/san-pham',
-    contact: '/vi/lien-he',
-  },
-  en: {
-    home: '/en',
-    about: '/en/about',
-    products: '/en/products',
-    contact: '/en/contact',
-  },
-};
-
-const pathToPage = new Map<string, SitePage>();
-for (const locale of ['vi', 'en'] as const) {
-  for (const [page, path] of Object.entries(localePaths[locale]) as [SitePage, string][]) {
-    pathToPage.set(path, page);
-  }
-}
+import { getAlternatePath, getPage, getStaticSlugs } from './site-map';
 
 export function getLocaleFromPath(pathname: string): Locale {
   const normalized = pathname.replace(/\/$/, '') || '/';
@@ -30,16 +7,28 @@ export function getLocaleFromPath(pathname: string): Locale {
   return 'vi';
 }
 
-export function getAlternateLocalePath(pathname: string): string {
+export function getSlugFromPath(pathname: string): string | undefined {
+  const locale = getLocaleFromPath(pathname);
+  const prefix = `/${locale}/`;
   const normalized = pathname.replace(/\/$/, '') || '/';
-  const page = pathToPage.get(normalized);
-  if (!page) return localePaths.en.home;
-  const currentLocale = getLocaleFromPath(normalized);
-  const alternateLocale: Locale = currentLocale === 'vi' ? 'en' : 'vi';
-  return localePaths[alternateLocale][page];
+  if (normalized === `/${locale}`) return undefined;
+  if (!normalized.startsWith(prefix)) return undefined;
+  return normalized.slice(prefix.length);
 }
 
-export function getPageFromPath(pathname: string): SitePage | undefined {
-  const normalized = pathname.replace(/\/$/, '') || '/';
-  return pathToPage.get(normalized);
+export function getAlternateLocalePath(pathname: string): string {
+  const locale = getLocaleFromPath(pathname);
+  const slug = getSlugFromPath(pathname);
+  if (!slug) return locale === 'vi' ? '/en' : '/vi';
+  if (slug === 'lien-he') return locale === 'vi' ? '/en/contact' : '/vi/lien-he';
+  if (slug === 'contact') return locale === 'vi' ? '/en/contact' : '/vi/lien-he';
+  const page = getPage(locale, slug);
+  if (!page) return locale === 'vi' ? '/en' : '/vi';
+  return getAlternatePath(locale, slug);
 }
+
+export function contactPath(locale: Locale): string {
+  return locale === 'vi' ? '/vi/lien-he' : '/en/contact';
+}
+
+export { getStaticSlugs, getPage };

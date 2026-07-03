@@ -1,74 +1,123 @@
 {
   "meta": {
-    "siteName": "Kit Technology",
-    "tagline": "Công nghệ số cho vận hành hiệu quả",
-    "description": "Kit Technology — công ty công nghệ phát triển giải pháp SaaS theo ngành dọc. Sản phẩm tiêu biểu: Novixa — nền tảng quản trị nhà thuốc thế hệ mới.",
-    "keywords": "kit technology, công ty công nghệ, saas việt nam, novixa, phần mềm nhà thuốc, giải pháp số"
+    "siteName": "KIT Technology",
+    "tagline": "AI First Software Company",
+    "description": "KIT Technology — xây dựng nền tảng số ứng dụng AI. Sản phẩm tiêu biểu: Novixa Healthcare SaaS.",
+    "keywords": "kit technology, ai first, saas, healthcare, novixa, enterprise platform, flutter, cloud native"
   },
   "nav": {
     "home": "Trang chủ",
-    "about": "Về chúng tôi",
-    "products": "Sản phẩm",
     "contact": "Liên hệ",
+    "contactCta": "Đặt lịch tư vấn",
     "menuOpen": "Mở menu",
     "menuClose": "Đóng menu",
     "langVi": "Tiếng Việt",
     "langEn": "English"
   },
   "home": {
-    "heroTitle": "Xây dựng giải pháp công nghệ cho doanh nghiệp Việt",
-    "heroSubtitle": "Kit Technology phát triển phần mềm SaaS theo ngành dọc — tập trung vào vận hành thực tế, dữ liệu minh bạch và khả năng mở rộng. Sản phẩm đầu tiên: Novixa cho nhà thuốc.",
-    "ctaContact": "Liên hệ hợp tác",
-    "ctaProducts": "Xem sản phẩm",
-    "focusTitle": "Trọng tâm phát triển",
-    "focus1Title": "SaaS theo ngành dọc",
-    "focus1Desc": "Không làm phần mềm chung chung — mỗi sản phẩm giải quyết bài toán vận hành cụ thể của một ngành.",
-    "focus2Title": "Kiến trúc hiện đại",
-    "focus2Desc": "Cloud-native, API-first, tách biệt marketing site và lõi sản phẩm — bảo mật và cập nhật độc lập.",
-    "focus3Title": "Đồng hành triển khai",
-    "focus3Desc": "Hỗ trợ migrate dữ liệu, training và go-live — khách hàng không phải tự triển khai một mình.",
-    "portfolioTitle": "Sản phẩm nổi bật",
-    "portfolioLead": "Novixa — giải pháp quản trị nhà thuốc do Kit Technology phát triển và vận hành.",
-    "portfolioCta": "Khám phá Novixa",
-    "valuesTitle": "Giá trị cốt lõi",
-    "value1Title": "Thực chiến",
-    "value1Desc": "Ưu tiên tính năng giải quyết vấn đề hàng ngày — không demo hào nhoáng.",
-    "value2Title": "Minh bạch",
-    "value2Desc": "Dữ liệu rõ ràng, báo cáo đáng tin — quyết định dựa trên số liệu.",
-    "value3Title": "Bền vững",
-    "value3Desc": "Phát triển lộ trình dài hạn, cập nhật liên tục theo phản hồi người dùng thật."
-  },
-  "about": {
-    "title": "Về Kit Technology",
-    "p1": "Kit Technology là công ty công nghệ Việt Nam, chuyên phát triển giải pháp phần mềm SaaS theo ngành dọc — bắt đầu từ lĩnh vực dược với thương hiệu Novixa.",
-    "p2": "Chúng tôi tin rằng doanh nghiệp vừa và nhỏ cần công cụ số chuyên sâu, không phải ERP đa ngành cồng kềnh. Mỗi sản phẩm được thiết kế quanh quy trình vận hành thực tế của ngành.",
-    "p3": "Đội ngũ kết hợp kinh nghiệm phát triển phần mềm doanh nghiệp và hiểu biết về vận hành nhà thuốc — từ POS, tồn kho lô FEFO đến chăm sóc khách hàng.",
-    "missionTitle": "Sứ mệnh",
-    "mission": "Đưa công nghệ số đến gần hơn với doanh nghiệp Việt — dễ triển khai, dễ sử dụng, mang lại hiệu quả đo lường được.",
-    "visionTitle": "Tầm nhìn",
-    "vision": "Trở thành đối tác công nghệ tin cậy cho các ngành dọc — mỗi sản phẩm là chuẩn mực vận hành trong phân khúc mình phục vụ."
-  },
-  "products": {
-    "title": "Sản phẩm",
-    "intro": "Các giải pháp SaaS do Kit Technology phát triển — mỗi sản phẩm có website và đội vận hành riêng.",
-    "novixaName": "Novixa",
-    "novixaTagline": "Giải pháp dược thông minh",
-    "novixaDesc": "Nền tảng quản trị nhà thuốc thế hệ mới: ERP toàn diện với POS, tồn kho lô FEFO, CRM khách hàng, app đặt hàng và báo cáo real-time. Dành cho nhà thuốc GPP và chuỗi nhỏ tại Việt Nam.",
-    "novixaFeatures": [
-      "POS bán hàng & quản lý ca",
-      "Tồn kho theo lô, FEFO & cảnh báo cận date",
-      "CRM & app khách hàng (OTP, loyalty)",
-      "Báo cáo doanh thu, tồn kho real-time"
+    "heroBadge": "KIT Technology",
+    "heroTitle": "Building AI-Powered Digital Platforms",
+    "heroSubtitle": "Chúng tôi xây dựng các nền tảng số ứng dụng AI giúp doanh nghiệp tăng trưởng bền vững.",
+    "ctaProducts": "Khám phá sản phẩm",
+    "ctaConsult": "Đặt lịch tư vấn",
+    "heroProducts": [
+      {
+        "name": "Novixa",
+        "tagline": "Healthcare SaaS",
+        "href": "/vi/san-pham/novixa"
+      },
+      {
+        "name": "AI Automation",
+        "tagline": "Workflow Automation",
+        "href": "/vi/san-pham/ai-automation"
+      },
+      {
+        "name": "Enterprise Platform",
+        "tagline": "Custom Digital Platform",
+        "href": "/vi/giai-phap/enterprise-platform"
+      }
     ],
-    "novixaCta": "Truy cập novixa.vn",
-    "novixaUrl": "https://novixa.vn/vi",
-    "comingTitle": "Lộ trình",
-    "comingDesc": "Kit Technology đang nghiên cứu thêm các giải pháp theo ngành dọc khác. Liên hệ nếu bạn muốn trao đổi hợp tác hoặc đầu tư sản phẩm mới.",
-    "contactCta": "Liên hệ"
+    "whatWeDoTitle": "Chúng tôi làm gì?",
+    "whatWeDo": [
+      {
+        "title": "Healthcare Platform",
+        "desc": "Xây dựng nền tảng quản lý cho ngành y tế.",
+        "href": "/vi/giai-phap/healthcare"
+      },
+      {
+        "title": "AI Automation",
+        "desc": "Tự động hóa quy trình bằng AI.",
+        "href": "/vi/san-pham/ai-automation"
+      },
+      {
+        "title": "Enterprise Platform",
+        "desc": "Phát triển nền tảng số theo yêu cầu.",
+        "href": "/vi/giai-phap/enterprise-platform"
+      }
+    ],
+    "featuredTitle": "Sản phẩm nổi bật",
+    "featuredName": "NOVIXA",
+    "featuredTags": ["Dashboard", "Mobile", "POS", "AI", "API", "QR", "ERP"],
+    "featuredDesc": "Nền tảng quản trị nhà thuốc thế hệ mới — POS, tồn kho, CRM, app khách hàng và AI Assistant.",
+    "featuredCta": "Xem Novixa",
+    "featuredUrl": "https://novixa.vn/vi",
+    "processTitle": "Quy trình phát triển",
+    "processSteps": [
+      "Khảo sát",
+      "Phân tích",
+      "Thiết kế UX",
+      "AI Assisted Development",
+      "Testing",
+      "Cloud Deployment",
+      "Support"
+    ],
+    "processNote": "Điểm khác biệt: tích hợp AI vào toàn bộ quy trình phát triển phần mềm.",
+    "techTitle": "Công nghệ",
+    "techStack": [
+      "Flutter",
+      "Node.js",
+      "NestJS",
+      "PostgreSQL",
+      "Redis",
+      "Docker",
+      "Kubernetes",
+      "AI",
+      "LLM",
+      "AWS",
+      "Azure"
+    ],
+    "whyTitle": "Vì sao chọn KIT",
+    "whyItems": [
+      { "value": "10+", "label": "Năm kinh nghiệm" },
+      { "value": "AI First", "label": "Quy trình phát triển" },
+      { "value": "Cloud Native", "label": "Kiến trúc hiện đại" },
+      { "value": "Healthcare", "label": "Chuyên sâu ngành y tế" }
+    ],
+    "caseTitle": "Case Study — NOVIXA",
+    "caseSubtitle": "Quản lý nhà thuốc · POS · CRM · App · AI · Cloud",
+    "caseTimeline": ["Ý tưởng", "Prototype", "MVP", "Pilot", "Commercial"],
+    "caseCta": "Xem dự án Novixa",
+    "caseHref": "/vi/du-an/novixa",
+    "blogTitle": "Insights",
+    "blogTopics": [
+      { "label": "AI", "href": "/vi/blog/ai" },
+      { "label": "Chuyển đổi số", "href": "/vi/blog/digital-transformation" },
+      { "label": "Nhà thuốc", "href": "/vi/blog/healthcare" },
+      { "label": "Flutter", "href": "/vi/cong-nghe/flutter" },
+      { "label": "Cloud", "href": "/vi/cong-nghe/cloud" },
+      { "label": "SaaS", "href": "/vi/san-pham" }
+    ],
+    "blogCta": "Xem tất cả bài viết"
+  },
+  "content": {
+    "comingSoon": "Nội dung đang được cập nhật. Liên hệ chúng tôi nếu bạn cần thông tin chi tiết.",
+    "backHub": "Quay lại",
+    "relatedTitle": "Liên quan",
+    "novixaExternal": "Tìm hiểu thêm trên novixa.vn"
   },
   "contact": {
     "title": "Liên hệ",
-    "intro": "Quan tâm hợp tác, đầu tư hoặc tìm hiểu sản phẩm? Gửi tin nhắn — chúng tôi phản hồi sớm nhất có thể.",
+    "intro": "Quan tâm hợp tác, đầu tư hoặc đặt lịch tư vấn? Gửi tin nhắn — chúng tôi phản hồi sớm nhất có thể.",
     "channelsTitle": "Kênh liên hệ",
     "formTitle": "Gửi tin nhắn",
     "name": "Họ tên",
@@ -81,14 +130,25 @@
     "phoneTel": "+84984660399",
     "emailLabel": "Email",
     "emailAddress": "khiemtic@gmail.com",
-    "formNote": "Nội dung form được gửi tới email Kit Technology.",
+    "formNote": "Nội dung form được gửi tới email KIT Technology.",
     "successTitle": "Đã gửi tin nhắn",
     "successMessage": "Cảm ơn bạn! Chúng tôi sẽ phản hồi qua số điện thoại hoặc email bạn cung cấp.",
     "formSubject": "Liên hệ từ kittech.vn"
   },
   "footer": {
-    "rights": "Bản quyền thuộc Kit Technology.",
-    "parentNote": "Công ty mẹ của Novixa — Smart Pharmacy Solutions.",
-    "novixaLink": "novixa.vn"
+    "since": "Since 2015",
+    "tagline": "AI First Software Company",
+    "locations": ["Hà Nội", "Thái Nguyên"],
+    "rights": "Bản quyền thuộc KIT Technology.",
+    "columns": {
+      "products": "Products",
+      "solutions": "Solutions",
+      "company": "Company"
+    },
+    "social": {
+      "linkedin": "LinkedIn",
+      "facebook": "Facebook",
+      "github": "GitHub"
+    }
   }
 }

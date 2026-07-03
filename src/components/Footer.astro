@@ -1,6 +1,7 @@
 ---
 import { t, type Locale } from '../i18n';
 import { getLocaleFromPath } from '../lib/routes';
+import { pageUrl } from '../lib/site-map';
 
 interface Props {
   locale?: Locale;
@@ -9,17 +10,56 @@ interface Props {
 const { locale: localeProp } = Astro.props;
 const locale = localeProp ?? getLocaleFromPath(Astro.url.pathname);
 const m = t(locale);
+const f = m.footer;
 const year = new Date().getFullYear();
+const companyPath = pageUrl(locale, locale === 'vi' ? 'gioi-thieu' : 'company');
+const contactPath = locale === 'vi' ? '/vi/lien-he' : '/en/contact';
 ---
 
 <footer class="site-footer">
-  <div class="container footer-inner">
-    <p><strong>{m.meta.siteName}</strong> — {m.meta.tagline}</p>
-    <p class="muted">{m.footer.parentNote}</p>
-    <p class="muted">
-      <a class="footer-link" href={m.products.novixaUrl}>{m.footer.novixaLink}</a>
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <p class="footer-name">{m.meta.siteName}</p>
+      <p class="footer-since">{f.since}</p>
+      <p class="footer-tagline">{f.tagline}</p>
+      <p class="footer-locations">{f.locations.join(' · ')}</p>
+      <p class="footer-contact">
+        <a href={`mailto:${m.contact.emailAddress}`}>{m.contact.emailAddress}</a>
+        ·
+        <a href={`tel:${m.contact.phoneTel}`}>{m.contact.phoneDisplay}</a>
+      </p>
+    </div>
+
+    <div class="footer-col">
+      <p class="footer-col-title">{f.columns.products}</p>
+      <a href={pageUrl(locale, locale === 'vi' ? 'san-pham/novixa' : 'products/novixa')}>Novixa</a>
+      <a href={pageUrl(locale, locale === 'vi' ? 'san-pham/ai-automation' : 'products/ai-automation')}>AI Automation</a>
+      <a href={pageUrl(locale, locale === 'vi' ? 'san-pham/ai-agent' : 'products/ai-agent')}>AI Agent</a>
+    </div>
+
+    <div class="footer-col">
+      <p class="footer-col-title">{f.columns.solutions}</p>
+      <a href={pageUrl(locale, locale === 'vi' ? 'giai-phap/healthcare' : 'solutions/healthcare')}>Healthcare</a>
+      <a href={pageUrl(locale, locale === 'vi' ? 'giai-phap/retail' : 'solutions/retail')}>Retail</a>
+      <a href={pageUrl(locale, locale === 'vi' ? 'giai-phap/ai-transformation' : 'solutions/ai-transformation')}>AI Transformation</a>
+    </div>
+
+    <div class="footer-col">
+      <p class="footer-col-title">{f.columns.company}</p>
+      <a href={companyPath}>Company</a>
+      <a href={pageUrl(locale, locale === 'vi' ? 'blog' : 'insights')}>Insights</a>
+      <a href={pageUrl(locale, locale === 'vi' ? 'tuyen-dung' : 'careers')}>Careers</a>
+      <a href={contactPath}>{m.nav.contact}</a>
+    </div>
+  </div>
+
+  <div class="container footer-bottom">
+    <p>© {year} {f.rights}</p>
+    <p class="footer-social">
+      <span>{f.social.linkedin}</span>
+      <span>{f.social.facebook}</span>
+      <span>{f.social.github}</span>
     </p>
-    <p class="muted">© {year} {m.footer.rights}</p>
   </div>
 </footer>
 
@@ -27,21 +67,87 @@ const year = new Date().getFullYear();
   .site-footer {
     background: var(--color-text);
     color: #cbd5e1;
-    padding: 2.5rem 0;
-    margin-top: 3rem;
+    padding: 3rem 0 1.5rem;
+    margin-top: 2rem;
     font-size: 0.9rem;
   }
-  .footer-inner p {
-    margin: 0.35rem 0;
+
+  .footer-grid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: 1.4fr repeat(3, 1fr);
+    margin-bottom: 2rem;
   }
-  .footer-link {
-    color: #5eead4;
+
+  @media (max-width: 768px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .footer-brand {
+      grid-column: 1 / -1;
+    }
   }
-  .footer-link:hover {
+
+  .footer-name {
+    margin: 0 0 0.25rem;
+    font-size: 1.15rem;
+    font-weight: 700;
     color: #fff;
   }
-  .muted {
+
+  .footer-since,
+  .footer-tagline,
+  .footer-locations {
+    margin: 0.2rem 0;
     color: #94a3b8;
-    font-size: 0.85rem;
+  }
+
+  .footer-contact {
+    margin-top: 0.75rem;
+  }
+
+  .footer-contact a {
+    color: #5eead4;
+  }
+
+  .footer-col-title {
+    margin: 0 0 0.65rem;
+    font-weight: 700;
+    color: #fff;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .footer-col a {
+    color: #94a3b8;
+    text-decoration: none;
+  }
+
+  .footer-col a:hover {
+    color: #5eead4;
+  }
+
+  .footer-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #334155;
+    font-size: 0.82rem;
+    color: #64748b;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 1rem;
+    margin: 0;
   }
 </style>

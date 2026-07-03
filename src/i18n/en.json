@@ -1,74 +1,79 @@
 {
   "meta": {
-    "siteName": "Kit Technology",
-    "tagline": "Technology for smarter business",
-    "description": "Kit Technology — vertical SaaS for Vietnamese businesses. Flagship product: Novixa, a next-generation pharmacy management platform.",
-    "keywords": "kit technology, saas vietnam, novixa, pharmacy software, vertical saas"
+    "siteName": "KIT Technology",
+    "tagline": "AI First Software Company",
+    "description": "KIT Technology — building AI-powered digital platforms. Flagship product: Novixa Healthcare SaaS.",
+    "keywords": "kit technology, ai first, saas, healthcare, novixa, enterprise platform"
   },
   "nav": {
     "home": "Home",
-    "about": "About",
-    "products": "Products",
     "contact": "Contact",
+    "contactCta": "Book a consultation",
     "menuOpen": "Open menu",
     "menuClose": "Close menu",
     "langVi": "Tiếng Việt",
     "langEn": "English"
   },
   "home": {
-    "heroTitle": "Building technology solutions for Vietnamese businesses",
-    "heroSubtitle": "Kit Technology develops vertical SaaS — focused on real operations, transparent data, and scalability. First product: Novixa for pharmacies.",
-    "ctaContact": "Partner with us",
-    "ctaProducts": "View products",
-    "focusTitle": "Development focus",
-    "focus1Title": "Vertical SaaS",
-    "focus1Desc": "No generic software — each product solves concrete operational problems for a specific industry.",
-    "focus2Title": "Modern architecture",
-    "focus2Desc": "Cloud-native, API-first, separate marketing site and product core — independent security and updates.",
-    "focus3Title": "Hands-on rollout",
-    "focus3Desc": "Data migration, training, and go-live support — customers are not left to deploy alone.",
-    "portfolioTitle": "Featured product",
-    "portfolioLead": "Novixa — pharmacy management by Kit Technology.",
-    "portfolioCta": "Explore Novixa",
-    "valuesTitle": "Core values",
-    "value1Title": "Practical",
-    "value1Desc": "Features that solve daily problems — not flashy demos.",
-    "value2Title": "Transparent",
-    "value2Desc": "Clear data and trustworthy reports — decisions based on numbers.",
-    "value3Title": "Sustainable",
-    "value3Desc": "Long-term roadmap, continuous updates from real user feedback."
-  },
-  "about": {
-    "title": "About Kit Technology",
-    "p1": "Kit Technology is a Vietnamese technology company specializing in vertical SaaS — starting in pharmacy with the Novixa brand.",
-    "p2": "We believe SMEs need deep digital tools, not bulky multi-industry ERPs. Each product is designed around real operational workflows.",
-    "p3": "Our team combines enterprise software experience with pharmacy operations — from POS and FEFO batch inventory to customer care.",
-    "missionTitle": "Mission",
-    "mission": "Bring digital technology closer to Vietnamese businesses — easy to deploy, easy to use, with measurable impact.",
-    "visionTitle": "Vision",
-    "vision": "Become a trusted technology partner for vertical industries — each product a benchmark in its segment."
-  },
-  "products": {
-    "title": "Products",
-    "intro": "SaaS solutions developed by Kit Technology — each product has its own website and operations team.",
-    "novixaName": "Novixa",
-    "novixaTagline": "Smart pharmacy solutions",
-    "novixaDesc": "Next-generation pharmacy platform: full ERP with POS, FEFO batch inventory, customer CRM, ordering app, and real-time reporting. For GPP pharmacies and small chains in Vietnam.",
-    "novixaFeatures": [
-      "POS sales & shift management",
-      "Batch inventory, FEFO & expiry alerts",
-      "CRM & customer app (OTP, loyalty)",
-      "Real-time revenue and inventory reports"
+    "heroBadge": "KIT Technology",
+    "heroTitle": "Building AI-Powered Digital Platforms",
+    "heroSubtitle": "We build AI-powered digital platforms that help businesses grow sustainably.",
+    "ctaProducts": "Explore products",
+    "ctaConsult": "Book a consultation",
+    "heroProducts": [
+      { "name": "Novixa", "tagline": "Healthcare SaaS", "href": "/en/products/novixa" },
+      { "name": "AI Automation", "tagline": "Workflow Automation", "href": "/en/products/ai-automation" },
+      { "name": "Enterprise Platform", "tagline": "Custom Digital Platform", "href": "/en/solutions/enterprise-platform" }
     ],
-    "novixaCta": "Visit novixa.vn",
-    "novixaUrl": "https://novixa.vn/en",
-    "comingTitle": "Roadmap",
-    "comingDesc": "Kit Technology is exploring additional vertical solutions. Contact us to discuss partnership or investment in new products.",
-    "contactCta": "Contact us"
+    "whatWeDoTitle": "What we do",
+    "whatWeDo": [
+      { "title": "Healthcare Platform", "desc": "Management platforms for healthcare.", "href": "/en/solutions/healthcare" },
+      { "title": "AI Automation", "desc": "Process automation powered by AI.", "href": "/en/products/ai-automation" },
+      { "title": "Enterprise Platform", "desc": "Custom digital platforms on demand.", "href": "/en/solutions/enterprise-platform" }
+    ],
+    "featuredTitle": "Featured product",
+    "featuredName": "NOVIXA",
+    "featuredTags": ["Dashboard", "Mobile", "POS", "AI", "API", "QR", "ERP"],
+    "featuredDesc": "Next-gen pharmacy platform — POS, inventory, CRM, customer app and AI Assistant.",
+    "featuredCta": "Visit Novixa",
+    "featuredUrl": "https://novixa.vn/en",
+    "processTitle": "Development process",
+    "processSteps": ["Discovery", "Analysis", "UX Design", "AI Assisted Development", "Testing", "Cloud Deployment", "Support"],
+    "processNote": "AI is integrated throughout our software development lifecycle.",
+    "techTitle": "Technology",
+    "techStack": ["Flutter", "Node.js", "NestJS", "PostgreSQL", "Redis", "Docker", "Kubernetes", "AI", "LLM", "AWS", "Azure"],
+    "whyTitle": "Why KIT",
+    "whyItems": [
+      { "value": "10+", "label": "Years of experience" },
+      { "value": "AI First", "label": "Development process" },
+      { "value": "Cloud Native", "label": "Modern architecture" },
+      { "value": "Healthcare", "label": "Industry focus" }
+    ],
+    "caseTitle": "Case Study — NOVIXA",
+    "caseSubtitle": "Pharmacy · POS · CRM · App · AI · Cloud",
+    "caseTimeline": ["Idea", "Prototype", "MVP", "Pilot", "Commercial"],
+    "caseCta": "View Novixa project",
+    "caseHref": "/en/projects/novixa",
+    "blogTitle": "Insights",
+    "blogTopics": [
+      { "label": "AI", "href": "/en/insights/ai" },
+      { "label": "Digital Transformation", "href": "/en/insights/digital-transformation" },
+      { "label": "Healthcare", "href": "/en/insights/healthcare" },
+      { "label": "Flutter", "href": "/en/technology/flutter" },
+      { "label": "Cloud", "href": "/en/technology/cloud" },
+      { "label": "SaaS", "href": "/en/products" }
+    ],
+    "blogCta": "View all articles"
+  },
+  "content": {
+    "comingSoon": "Content is being updated. Contact us if you need more details.",
+    "backHub": "Back",
+    "relatedTitle": "Related",
+    "novixaExternal": "Learn more on novixa.vn"
   },
   "contact": {
     "title": "Contact",
-    "intro": "Interested in partnership, investment, or our products? Send a message — we will respond as soon as possible.",
+    "intro": "Partnership, investment, or consultation? Send a message — we will respond as soon as possible.",
     "channelsTitle": "Contact channels",
     "formTitle": "Send a message",
     "name": "Full name",
@@ -81,14 +86,25 @@
     "phoneTel": "+84984660399",
     "emailLabel": "Email",
     "emailAddress": "khiemtic@gmail.com",
-    "formNote": "Form submissions are sent to Kit Technology email.",
+    "formNote": "Form submissions are sent to KIT Technology email.",
     "successTitle": "Message sent",
     "successMessage": "Thank you! We will reply via the phone number or email you provided.",
     "formSubject": "Contact from kittech.vn"
   },
   "footer": {
-    "rights": "All rights reserved by Kit Technology.",
-    "parentNote": "Parent company of Novixa — Smart Pharmacy Solutions.",
-    "novixaLink": "novixa.vn"
+    "since": "Since 2015",
+    "tagline": "AI First Software Company",
+    "locations": ["Hanoi", "Thai Nguyen"],
+    "rights": "All rights reserved by KIT Technology.",
+    "columns": {
+      "products": "Products",
+      "solutions": "Solutions",
+      "company": "Company"
+    },
+    "social": {
+      "linkedin": "LinkedIn",
+      "facebook": "Facebook",
+      "github": "GitHub"
+    }
   }
 }

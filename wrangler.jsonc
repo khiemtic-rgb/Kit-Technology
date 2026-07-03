@@ -1,4 +1,5 @@
 {
+  "$schema": "node_modules/wrangler/config-schema.json",
   "name": "kit-technology",
   "compatibility_date": "2026-07-03",
   "assets": {

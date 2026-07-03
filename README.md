@@ -30,7 +30,8 @@ Site tĩnh Astro 6 deploy qua **Wrangler** (không cần `@astrojs/cloudflare` a
 1. Push repo lên GitHub
 2. Cloudflare → **Workers & Pages** → **Import repository** → chọn repo
 3. **Build command:** `npm run build`
-4. **Deploy command:** `npx wrangler deploy`
+4. **Deploy command:** `npm run cf:deploy`  
+   (hoặc `npx wrangler deploy --config wrangler.jsonc` — bắt buộc có `--config` để tắt autoconfig Astro)
 5. Env: `NODE_VERSION` = `22`
 6. Gán domain `kittech.vn` trong tab **Domains**
 
