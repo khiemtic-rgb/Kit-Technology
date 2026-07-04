@@ -139,7 +139,7 @@
     "successMessage": "Cảm ơn bạn! Chúng tôi sẽ phản hồi qua số điện thoại hoặc email bạn cung cấp.",
     "formSubject": "Liên hệ từ kittech.vn",
     "addressLabel": "Địa chỉ",
-    "addressLines": ["KIT Technology — Thái Nguyên", "Việt Nam"],
+    "addressLines": ["KĐT Hồ Xương Rồng, phường Phan Đình Phùng, tỉnh Thái Nguyên"],
     "mapTitle": "Bản đồ",
     "mapNote": "Văn phòng Thái Nguyên — liên hệ trước khi ghé thăm.",
     "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3720.276!2d105.844119!3d21.5831444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31352771aa783d2f%3A0xd008864f40919e38!2sBING%20COFFEE!5e0!3m2!1svi!2s!4v1740000000000",
@@ -149,6 +149,14 @@
     "demoSubmit": "Gửi đăng ký Demo",
     "demoPlaceholder": "Tên doanh nghiệp, nhu cầu demo, sản phẩm quan tâm…",
     "demoFormSubject": "Đăng ký Demo từ kittech.vn"
+  },
+  "company": {
+    "legalName": "Công ty TNHH Truyền thông và Công nghệ KIT",
+    "legalNameLabel": "Pháp nhân",
+    "address": "KĐT Hồ Xương Rồng, phường Phan Đình Phùng, tỉnh Thái Nguyên",
+    "addressShort": "KĐT Hồ Xương Rồng, P. Phan Đình Phùng, Thái Nguyên",
+    "taxId": "4601239671",
+    "taxIdLabel": "MST"
   },
   "footer": {
     "since": "Từ 2015",

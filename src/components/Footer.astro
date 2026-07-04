@@ -11,6 +11,7 @@ const { locale: localeProp } = Astro.props;
 const locale = localeProp ?? getLocaleFromPath(Astro.url.pathname);
 const m = t(locale);
 const f = m.footer;
+const co = m.company;
 const year = new Date().getFullYear();
 const companyPath = pageUrl(locale, locale === 'vi' ? 'gioi-thieu' : 'company');
 const contactPath = locale === 'vi' ? '/vi/lien-he' : '/en/contact';
@@ -40,14 +41,18 @@ const link =
   <div class="container footer-grid">
     <div class="footer-brand">
       <p class="footer-name">{m.meta.siteName}</p>
-      <p class="footer-since">{f.since}</p>
       <p class="footer-tagline">{f.tagline}</p>
       <p class="footer-locations">{f.locations.join(' · ')}</p>
       <p class="footer-contact">
-        <a href={`mailto:${m.contact.emailAddress}`}>{m.contact.emailAddress}</a>
-        ·
         <a href={`tel:${m.contact.phoneTel}`}>{m.contact.phoneDisplay}</a>
+        ·
+        <a href={`mailto:${m.contact.emailAddress}`}>{m.contact.emailAddress}</a>
       </p>
+      <div class="footer-legal">
+        <p>{co.legalName}</p>
+        <p>{co.addressShort}</p>
+        <p>{co.taxIdLabel}: {co.taxId}</p>
+      </div>
     </div>
 
     <div class="footer-col">
@@ -74,7 +79,7 @@ const link =
   </div>
 
   <div class="container footer-bottom">
-    <p>© {year} {f.rights}</p>
+    <p>© {year} {f.rights} · {f.since}</p>
     <p class="footer-social">
       <span>{f.social.linkedin}</span>
       <span>{f.social.facebook}</span>
@@ -115,11 +120,14 @@ const link =
     color: #fff;
   }
 
-  .footer-since,
   .footer-tagline,
   .footer-locations {
     margin: 0.2rem 0;
     color: #94a3b8;
+  }
+
+  .footer-tagline {
+    color: #cbd5e1;
   }
 
   .footer-contact {
@@ -128,6 +136,19 @@ const link =
 
   .footer-contact a {
     color: #5eead4;
+  }
+
+  .footer-legal {
+    margin-top: 1.25rem;
+    padding-top: 1rem;
+    border-top: 1px solid #334155;
+    font-size: 0.78rem;
+    line-height: 1.55;
+    color: #64748b;
+  }
+
+  .footer-legal p {
+    margin: 0.2rem 0;
   }
 
   .footer-col-title {

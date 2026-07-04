@@ -9,6 +9,7 @@ interface Props {
 const { locale = 'vi', canonicalPath } = Astro.props;
 const m = t(locale);
 const c = m.contact;
+const co = m.company;
 const sent = Astro.url.searchParams.get('sent') === '1';
 const isDemo = Astro.url.searchParams.get('demo') === '1';
 
@@ -55,7 +56,17 @@ const formSubject = isDemo ? c.demoFormSubject : c.formSubject;
 
       <div class="contact-channel">
         <span class="contact-channel-label">{c.addressLabel}</span>
-        <p class="contact-channel-value contact-address">{c.addressLines.join(' · ')}</p>
+        <p class="contact-channel-value contact-address">{co.address}</p>
+      </div>
+
+      <div class="contact-channel">
+        <span class="contact-channel-label">{co.legalNameLabel}</span>
+        <p class="contact-channel-value">{co.legalName}</p>
+      </div>
+
+      <div class="contact-channel">
+        <span class="contact-channel-label">{co.taxIdLabel}</span>
+        <p class="contact-channel-value">{co.taxId}</p>
       </div>
 
       <p style="margin-top: 1rem">
