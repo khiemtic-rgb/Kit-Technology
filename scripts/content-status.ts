@@ -1,6 +1,8 @@
 import { EDITORIAL_PLAN, EDITORIAL_STATS, KNOWLEDGE_HUB } from '../src/lib/content-plan.ts';
 
-const today = new Date().toISOString().slice(0, 10);
+import { getIctDateIso } from '../src/lib/timezone.ts';
+
+const today = getIctDateIso();
 const upcoming = EDITORIAL_PLAN.filter((item) => !item.alreadyLive && item.publishDate >= today).slice(0, 14);
 const todayItems = EDITORIAL_PLAN.filter((item) => item.publishDate === today && !item.alreadyLive);
 

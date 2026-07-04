@@ -4,10 +4,11 @@ description: 'AI First means designing products and processes with AI at the cen
 locale: en
 category: technology
 section: technology
-publishDate: 2026-07-03
+publishDate: 2026-07-04
 draft: false
 translationId: tech-ai-first
 tags: ['ai-first', 'kit-technology']
+heroImage: '/images/insights/en/ai-first-la-gi.png'
 targetWords: 1400
 ---
 

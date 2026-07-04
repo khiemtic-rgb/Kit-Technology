@@ -36,10 +36,12 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Set publish date (Vietnam)
+        run: echo "PUBLISH_DATE=$(TZ=Asia/Ho_Chi_Minh date +%F)" >> "$GITHUB_ENV"
+
       - name: Auto-publish articles and hero images (OpenAI)
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          PUBLISH_DATE: ${{ vars.PUBLISH_DATE }}
         run: npm run content:publish
 
       - name: Import manual content queue (optional)

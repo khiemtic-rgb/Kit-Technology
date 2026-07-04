@@ -1,7 +1,9 @@
-/** Build-time "now" for scheduled publishing. Set PUBLISH_DATE=YYYY-MM-DD in CI for reproducible builds. */
+import { getIctDateIso, getIctDayEnd } from './timezone';
+
+/** Build-time cutoff for scheduled publishing. Uses Vietnam calendar day; override with PUBLISH_DATE=YYYY-MM-DD. */
 export function getPublishCutoff(): Date {
-  const raw = typeof process !== 'undefined' ? process.env.PUBLISH_DATE : undefined;
-  return raw ? new Date(raw) : new Date();
+  const raw = typeof process !== 'undefined' ? process.env.PUBLISH_DATE?.trim() : undefined;
+  return getIctDayEnd(raw || getIctDateIso());
 }
 
 export function isPublished(publishDate: Date, draft: boolean, cutoff = getPublishCutoff()): boolean {

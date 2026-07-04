@@ -4,10 +4,11 @@ description: 'AI First nghĩa là thiết kế sản phẩm và quy trình với
 locale: vi
 category: technology
 section: technology
-publishDate: 2026-07-03
+publishDate: 2026-07-04
 draft: false
 translationId: tech-ai-first
 tags: ['ai-first', 'kit-technology']
+heroImage: '/images/insights/vi/ai-first-la-gi.png'
 targetWords: 1400
 ---
 

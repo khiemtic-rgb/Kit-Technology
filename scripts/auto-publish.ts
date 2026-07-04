@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import { getIctDateIso } from '../src/lib/timezone.ts';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { EDITORIAL_PLAN, getPlanById, getPlanForDate, type PlannedArticle } from '../src/lib/content-plan.ts';
@@ -24,7 +25,7 @@ const insightsRoot = path.join(root, 'src/content/insights');
 const imagesRoot = path.join(root, 'public/images/insights');
 
 function publishDate(): string {
-  return process.env.PUBLISH_DATE?.trim() || new Date().toISOString().slice(0, 10);
+  return process.env.PUBLISH_DATE?.trim() || getIctDateIso();
 }
 
 function parseArg(flag: string): string | undefined {
