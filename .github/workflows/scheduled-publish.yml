@@ -42,6 +42,7 @@ jobs:
       - name: Auto-publish articles and hero images (OpenAI)
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          LOCALE: vi
         run: npm run content:publish
 
       - name: Import manual content queue (optional)

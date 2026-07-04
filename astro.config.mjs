@@ -5,7 +5,11 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://kittech.vn',
   trailingSlash: 'never',
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      filter: (page) => !page.includes('/en'),
+    }),
+  ],
   i18n: {
     defaultLocale: 'vi',
     locales: ['vi', 'en'],

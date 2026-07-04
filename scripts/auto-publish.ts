@@ -40,7 +40,7 @@ function targetArticleId(): string | undefined {
 function publishLocales(): Array<'vi' | 'en'> {
   const locale = process.env.LOCALE?.trim() || parseArg('--locale');
   if (locale === 'vi' || locale === 'en') return [locale];
-  return ['vi', 'en'];
+  return ['vi'];
 }
 
 function forcePublish(): boolean {

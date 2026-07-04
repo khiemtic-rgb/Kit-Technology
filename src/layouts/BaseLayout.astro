@@ -29,12 +29,13 @@ const {
   locale = 'vi',
   image,
   canonicalPath,
-  noIndex = false,
+  noIndex: noIndexProp,
   ogType = 'website',
   keywords: pageKeywords,
   alternateHref,
   article,
 } = Astro.props;
+const noIndex = noIndexProp ?? locale === 'en';
 const m = t(locale);
 const pageDescription = description ?? m.meta.description;
 const fullTitle = title === m.meta.siteName ? `${title} — ${m.meta.tagline}` : `${title} — ${m.meta.siteName}`;
