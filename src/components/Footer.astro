@@ -14,6 +14,26 @@ const f = m.footer;
 const year = new Date().getFullYear();
 const companyPath = pageUrl(locale, locale === 'vi' ? 'gioi-thieu' : 'company');
 const contactPath = locale === 'vi' ? '/vi/lien-he' : '/en/contact';
+const link =
+  locale === 'vi'
+    ? {
+        aiAutomation: 'Tự động hóa AI',
+        healthcare: 'Ngành y tế',
+        retail: 'Bán lẻ',
+        aiTransform: 'Chuyển đổi AI',
+        company: 'Giới thiệu',
+        insights: 'Kiến thức',
+        careers: 'Tuyển dụng',
+      }
+    : {
+        aiAutomation: 'AI Automation',
+        healthcare: 'Healthcare',
+        retail: 'Retail',
+        aiTransform: 'AI Transformation',
+        company: 'Company',
+        insights: 'Insights',
+        careers: 'Careers',
+      };
 ---
 
 <footer class="site-footer">
@@ -33,22 +53,22 @@ const contactPath = locale === 'vi' ? '/vi/lien-he' : '/en/contact';
     <div class="footer-col">
       <p class="footer-col-title">{f.columns.products}</p>
       <a href={pageUrl(locale, locale === 'vi' ? 'san-pham/novixa' : 'products/novixa')}>Novixa</a>
-      <a href={pageUrl(locale, locale === 'vi' ? 'san-pham/ai-automation' : 'products/ai-automation')}>AI Automation</a>
+      <a href={pageUrl(locale, locale === 'vi' ? 'san-pham/ai-automation' : 'products/ai-automation')}>{link.aiAutomation}</a>
       <a href={pageUrl(locale, locale === 'vi' ? 'san-pham/ai-agent' : 'products/ai-agent')}>AI Agent</a>
     </div>
 
     <div class="footer-col">
       <p class="footer-col-title">{f.columns.solutions}</p>
-      <a href={pageUrl(locale, locale === 'vi' ? 'giai-phap/healthcare' : 'solutions/healthcare')}>Healthcare</a>
-      <a href={pageUrl(locale, locale === 'vi' ? 'giai-phap/retail' : 'solutions/retail')}>Retail</a>
-      <a href={pageUrl(locale, locale === 'vi' ? 'giai-phap/ai-transformation' : 'solutions/ai-transformation')}>AI Transformation</a>
+      <a href={pageUrl(locale, locale === 'vi' ? 'giai-phap/healthcare' : 'solutions/healthcare')}>{link.healthcare}</a>
+      <a href={pageUrl(locale, locale === 'vi' ? 'giai-phap/retail' : 'solutions/retail')}>{link.retail}</a>
+      <a href={pageUrl(locale, locale === 'vi' ? 'giai-phap/ai-transformation' : 'solutions/ai-transformation')}>{link.aiTransform}</a>
     </div>
 
     <div class="footer-col">
       <p class="footer-col-title">{f.columns.company}</p>
-      <a href={companyPath}>Company</a>
-      <a href={pageUrl(locale, locale === 'vi' ? 'blog' : 'insights')}>Insights</a>
-      <a href={pageUrl(locale, locale === 'vi' ? 'tuyen-dung' : 'careers')}>Careers</a>
+      <a href={companyPath}>{link.company}</a>
+      <a href={pageUrl(locale, locale === 'vi' ? 'blog' : 'insights')}>{link.insights}</a>
+      <a href={pageUrl(locale, locale === 'vi' ? 'tuyen-dung' : 'careers')}>{link.careers}</a>
       <a href={contactPath}>{m.nav.contact}</a>
     </div>
   </div>

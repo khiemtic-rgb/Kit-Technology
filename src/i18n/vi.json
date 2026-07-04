@@ -1,7 +1,7 @@
 {
   "meta": {
     "siteName": "KIT Technology",
-    "tagline": "AI First Software Company",
+    "tagline": "Công ty phần mềm AI First",
     "description": "KIT Technology — xây dựng nền tảng số ứng dụng AI. Sản phẩm tiêu biểu: Novixa Healthcare SaaS.",
     "keywords": "kit technology, ai first, saas, healthcare, novixa, enterprise platform, flutter, cloud native"
   },
@@ -16,41 +16,41 @@
   },
   "home": {
     "heroBadge": "KIT Technology",
-    "heroTitle": "Building AI-Powered Digital Platforms",
+    "heroTitle": "Xây dựng nền tảng số ứng dụng AI",
     "heroSubtitle": "Chúng tôi xây dựng các nền tảng số ứng dụng AI giúp doanh nghiệp tăng trưởng bền vững.",
     "ctaProducts": "Khám phá sản phẩm",
     "ctaConsult": "Đặt lịch tư vấn",
     "heroProducts": [
       {
         "name": "Novixa",
-        "tagline": "Healthcare SaaS",
+        "tagline": "SaaS ngành y tế",
         "href": "/vi/san-pham/novixa"
       },
       {
-        "name": "AI Automation",
-        "tagline": "Workflow Automation",
+        "name": "Tự động hóa AI",
+        "tagline": "Tự động hóa quy trình",
         "href": "/vi/san-pham/ai-automation"
       },
       {
-        "name": "Enterprise Platform",
-        "tagline": "Custom Digital Platform",
+        "name": "Nền tảng doanh nghiệp",
+        "tagline": "Nền tảng số theo yêu cầu",
         "href": "/vi/giai-phap/enterprise-platform"
       }
     ],
     "whatWeDoTitle": "Chúng tôi làm gì?",
     "whatWeDo": [
       {
-        "title": "Healthcare Platform",
-        "desc": "Xây dựng nền tảng quản lý cho ngành y tế.",
+        "title": "Nền tảng ngành y tế",
+        "desc": "Xây dựng nền tảng quản lý cho ngành y tế và nhà thuốc.",
         "href": "/vi/giai-phap/healthcare"
       },
       {
-        "title": "AI Automation",
+        "title": "Tự động hóa AI",
         "desc": "Tự động hóa quy trình bằng AI.",
         "href": "/vi/san-pham/ai-automation"
       },
       {
-        "title": "Enterprise Platform",
+        "title": "Nền tảng doanh nghiệp",
         "desc": "Phát triển nền tảng số theo yêu cầu.",
         "href": "/vi/giai-phap/enterprise-platform"
       }
@@ -58,7 +58,7 @@
     "featuredTitle": "Sản phẩm nổi bật",
     "featuredName": "NOVIXA",
     "featuredTags": ["Dashboard", "Mobile", "POS", "AI", "API", "QR", "ERP"],
-    "featuredDesc": "Nền tảng quản trị nhà thuốc thế hệ mới — POS, tồn kho, CRM, app khách hàng và AI Assistant.",
+    "featuredDesc": "Nền tảng quản trị nhà thuốc thế hệ mới — POS, tồn kho, CRM, app khách hàng và trợ lý AI.",
     "featuredCta": "Xem Novixa",
     "featuredUrl": "https://novixa.vn/vi",
     "processTitle": "Quy trình phát triển",
@@ -66,10 +66,10 @@
       "Khảo sát",
       "Phân tích",
       "Thiết kế UX",
-      "AI Assisted Development",
-      "Testing",
-      "Cloud Deployment",
-      "Support"
+      "Phát triển hỗ trợ AI",
+      "Kiểm thử",
+      "Triển khai cloud",
+      "Hỗ trợ vận hành"
     ],
     "processNote": "Điểm khác biệt: tích hợp AI vào toàn bộ quy trình phát triển phần mềm.",
     "techTitle": "Công nghệ",
@@ -91,20 +91,20 @@
       { "value": "10+", "label": "Năm kinh nghiệm" },
       { "value": "AI First", "label": "Quy trình phát triển" },
       { "value": "Cloud Native", "label": "Kiến trúc hiện đại" },
-      { "value": "Healthcare", "label": "Chuyên sâu ngành y tế" }
+      { "value": "Y tế", "label": "Chuyên sâu ngành y tế" }
     ],
-    "caseTitle": "Case Study — NOVIXA",
+    "caseTitle": "Dự án tiêu biểu — Novixa",
     "caseSubtitle": "Quản lý nhà thuốc · POS · CRM · App · AI · Cloud",
-    "caseTimeline": ["Ý tưởng", "Prototype", "MVP", "Pilot", "Commercial"],
+    "caseTimeline": ["Ý tưởng", "Prototype", "MVP", "Pilot", "Thương mại hóa"],
     "caseCta": "Xem dự án Novixa",
     "caseHref": "/vi/du-an/novixa",
     "blogTitle": "Kiến thức",
     "blogTopics": [
       { "label": "AI", "href": "/vi/blog/ai" },
-      { "label": "Healthcare", "href": "/vi/blog/healthcare" },
-      { "label": "Technology", "href": "/vi/blog/technology" },
+      { "label": "Ngành y tế", "href": "/vi/blog/healthcare" },
+      { "label": "Công nghệ", "href": "/vi/blog/technology" },
       { "label": "Novixa", "href": "/vi/blog/products" },
-      { "label": "FAQ", "href": "/vi/faq" }
+      { "label": "Câu hỏi thường gặp", "href": "/vi/faq" }
     ],
     "blogCta": "Xem tất cả bài viết"
   },
@@ -151,14 +151,14 @@
     "demoFormSubject": "Đăng ký Demo từ kittech.vn"
   },
   "footer": {
-    "since": "Since 2015",
-    "tagline": "AI First Software Company",
+    "since": "Từ 2015",
+    "tagline": "Công ty phần mềm AI First",
     "locations": ["Hà Nội", "Thái Nguyên"],
     "rights": "Bản quyền thuộc KIT Technology.",
     "columns": {
-      "products": "Products",
-      "solutions": "Solutions",
-      "company": "Company"
+      "products": "Sản phẩm",
+      "solutions": "Giải pháp",
+      "company": "Giới thiệu"
     },
     "social": {
       "linkedin": "LinkedIn",

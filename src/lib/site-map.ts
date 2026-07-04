@@ -40,7 +40,7 @@ const p = (
 /** All content pages (excluding locale home + contact). */
 export const pages: PageEntry[] = [
   // Company
-  p('company', 'gioi-thieu', 'company', 'Giới thiệu', 'Company', 'KIT Technology — AI First Software Company.', undefined, true),
+  p('company', 'gioi-thieu', 'company', 'Giới thiệu', 'Company', 'KIT Technology — công ty phần mềm AI First.', undefined, true),
   p('about', 'gioi-thieu/ve-chung-toi', 'company/about', 'Giới thiệu KIT Technology', 'About KIT Technology', 'Kiến tạo nền tảng số bằng sức mạnh của AI.'),
   p('story', 'gioi-thieu/cau-chuyen-kit', 'company/story', 'Câu chuyện KIT', 'KIT Story'),
   p('vision', 'gioi-thieu/tam-nhin', 'company/vision', 'Tầm nhìn', 'Vision'),
@@ -49,7 +49,7 @@ export const pages: PageEntry[] = [
   p('company-tech', 'gioi-thieu/cong-nghe', 'company/technology', 'Công nghệ', 'Technology', 'Công nghệ tạo nên các nền tảng của KIT.'),
   p('why-kit', 'gioi-thieu/vi-sao-chon-kit', 'company/why-kit', 'Vì sao chọn KIT', 'Why KIT'),
   p('company-contact', 'gioi-thieu/lien-he', 'company/contact', 'Liên hệ', 'Contact'),
-  p('engineering', 'ky-thuat', 'engineering', 'Engineering', 'Engineering', 'Chia sẻ kiến thức kỹ thuật từ đội ngũ KIT.'),
+  p('engineering', 'ky-thuat', 'engineering', 'Kỹ thuật', 'Engineering', 'Chia sẻ kiến thức kỹ thuật từ đội ngũ KIT.'),
   p('team', 'gioi-thieu/doi-ngu', 'company/team', 'Đội ngũ', 'Team'),
 
   // Products
@@ -59,19 +59,19 @@ export const pages: PageEntry[] = [
   p('novixa-pos', 'san-pham/novixa/pos-nha-thuoc', 'products/novixa/pharmacy-pos', 'POS Nhà thuốc', 'Pharmacy POS'),
   p('novixa-chain', 'san-pham/novixa/quan-ly-chuoi', 'products/novixa/chain', 'Quản lý chuỗi', 'Chain Management'),
   p('novixa-app', 'san-pham/novixa/app-khach-hang', 'products/novixa/customer-app', 'App khách hàng', 'Customer App'),
-  p('novixa-ai', 'san-pham/novixa/ai-assistant', 'products/novixa/ai-assistant', 'AI Assistant', 'AI Assistant'),
+  p('novixa-ai', 'san-pham/novixa/ai-assistant', 'products/novixa/ai-assistant', 'Trợ lý AI', 'AI Assistant'),
   p('novixa-api', 'san-pham/novixa/api', 'products/novixa/api', 'API', 'API'),
-  p('novixa-demo', 'san-pham/novixa/demo', 'products/novixa/demo', 'Demo', 'Demo'),
-  p('ai-automation', 'san-pham/ai-automation', 'products/ai-automation', 'AI Automation', 'AI Automation'),
+  p('novixa-demo', 'san-pham/novixa/demo', 'products/novixa/demo', 'Đăng ký demo', 'Demo'),
+  p('ai-automation', 'san-pham/ai-automation', 'products/ai-automation', 'Tự động hóa AI', 'AI Automation'),
   p('ai-agent', 'san-pham/ai-agent', 'products/ai-agent', 'AI Agent', 'AI Agent'),
-  p('future-products', 'san-pham/tuong-lai', 'products/future', 'Các sản phẩm tương lai', 'Future Products'),
+  p('future-products', 'san-pham/tuong-lai', 'products/future', 'Sản phẩm tương lai', 'Future Products'),
 
   // Solutions
   p('solutions', 'giai-phap', 'solutions', 'Giải pháp', 'Solutions', 'Giải pháp theo ngành và quy mô doanh nghiệp.', undefined, true),
-  p('sol-healthcare', 'giai-phap/healthcare', 'solutions/healthcare', 'Healthcare', 'Healthcare', 'Giải pháp chuyển đổi số cho ngành y tế và nhà thuốc.', 'Digital solutions for healthcare and pharmacies.'),
-  p('sol-retail', 'giai-phap/retail', 'solutions/retail', 'Retail', 'Retail'),
-  p('sol-ai', 'giai-phap/ai-transformation', 'solutions/ai-transformation', 'AI Transformation', 'AI Transformation'),
-  p('sol-enterprise', 'giai-phap/enterprise-platform', 'solutions/enterprise-platform', 'Enterprise Platform', 'Enterprise Platform'),
+  p('sol-healthcare', 'giai-phap/healthcare', 'solutions/healthcare', 'Ngành y tế & nhà thuốc', 'Healthcare', 'Giải pháp chuyển đổi số cho ngành y tế và nhà thuốc.', 'Digital solutions for healthcare and pharmacies.'),
+  p('sol-retail', 'giai-phap/retail', 'solutions/retail', 'Bán lẻ', 'Retail', 'Giải pháp số hóa bán lẻ và điểm bán.', 'Digital solutions for modern retail.'),
+  p('sol-ai', 'giai-phap/ai-transformation', 'solutions/ai-transformation', 'Chuyển đổi AI', 'AI Transformation', 'Ứng dụng AI vào quy trình và sản phẩm doanh nghiệp.', 'Apply AI across products and operations.'),
+  p('sol-enterprise', 'giai-phap/enterprise-platform', 'solutions/enterprise-platform', 'Nền tảng doanh nghiệp', 'Enterprise Platform', 'Nền tảng số tùy chỉnh theo quy mô doanh nghiệp.', 'Custom digital platforms at enterprise scale.'),
 
   // Technology
   p('technology', 'cong-nghe', 'technology', 'Công nghệ', 'Technology', 'Stack và kiến trúc KIT Technology.', undefined, true),
@@ -79,32 +79,32 @@ export const pages: PageEntry[] = [
   p('tech-node', 'cong-nghe/nodejs', 'technology/nodejs', 'Node.js', 'Node.js'),
   p('tech-pg', 'cong-nghe/postgresql', 'technology/postgresql', 'PostgreSQL', 'PostgreSQL'),
   p('tech-docker', 'cong-nghe/docker', 'technology/docker', 'Docker', 'Docker'),
-  p('tech-ai', 'cong-nghe/ai', 'technology/ai', 'AI', 'AI'),
+  p('tech-ai', 'cong-nghe/ai', 'technology/ai', 'AI & LLM', 'AI'),
   p('tech-cloud', 'cong-nghe/cloud', 'technology/cloud', 'Cloud', 'Cloud'),
   p('tech-arch', 'cong-nghe/kien-truc-he-thong', 'technology/architecture', 'Kiến trúc hệ thống', 'System Architecture'),
 
   // Projects
-  p('projects', 'du-an', 'projects', 'Dự án tiêu biểu', 'Case Studies', undefined, undefined, true),
+  p('projects', 'du-an', 'projects', 'Dự án tiêu biểu', 'Case Studies', 'Các dự án và sản phẩm KIT Technology triển khai thực tế.', 'Selected projects and products from KIT Technology.', true),
   p('proj-novixa', 'du-an/novixa', 'projects/novixa', 'Novixa', 'Novixa'),
   p('proj-web', 'du-an/website', 'projects/website', 'Website', 'Website'),
-  p('proj-mobile', 'du-an/mobile-app', 'projects/mobile-app', 'Mobile App', 'Mobile App'),
-  p('proj-ai', 'du-an/ai-automation', 'projects/ai-automation', 'AI Automation', 'AI Automation'),
+  p('proj-mobile', 'du-an/mobile-app', 'projects/mobile-app', 'Ứng dụng mobile', 'Mobile App'),
+  p('proj-ai', 'du-an/ai-automation', 'projects/ai-automation', 'Tự động hóa AI', 'AI Automation'),
 
   // Blog / Insights (Knowledge Hub)
-  p('blog', 'blog', 'insights', 'Kiến thức', 'Insights', 'Tri thức về AI, engineering và chuyển đổi số.', 'Knowledge on AI, engineering, and digital transformation.', true),
+  p('blog', 'blog', 'insights', 'Kiến thức', 'Insights', 'Tri thức về AI, kỹ thuật và chuyển đổi số.', 'Knowledge on AI, engineering, and digital transformation.', true),
   p('blog-ai', 'blog/ai', 'insights/ai', 'AI', 'AI'),
-  p('blog-health', 'blog/healthcare', 'insights/healthcare', 'Healthcare', 'Healthcare'),
-  p('blog-dx', 'blog/digital-transformation', 'insights/digital-transformation', 'Digital Transformation', 'Digital Transformation'),
-  p('blog-eng', 'blog/engineering', 'insights/engineering', 'Engineering', 'Engineering'),
-  p('blog-news', 'blog/company-news', 'insights/company-news', 'Company', 'Company'),
-  p('blog-business', 'blog/business', 'insights/business', 'Business', 'Business'),
-  p('blog-tech-cat', 'blog/technology', 'insights/technology', 'Technology', 'Technology'),
-  p('blog-sol-cat', 'blog/solutions', 'insights/solutions', 'Solutions', 'Solutions'),
-  p('blog-prod-cat', 'blog/products', 'insights/products', 'Products', 'Products'),
-  p('faq', 'faq', 'faq', 'FAQ', 'FAQ', 'Câu hỏi thường gặp về Novixa và KIT Technology.', 'Frequently asked questions about Novixa and KIT Technology.', true),
+  p('blog-health', 'blog/healthcare', 'insights/healthcare', 'Ngành y tế', 'Healthcare'),
+  p('blog-dx', 'blog/digital-transformation', 'insights/digital-transformation', 'Chuyển đổi số', 'Digital Transformation'),
+  p('blog-eng', 'blog/engineering', 'insights/engineering', 'Kỹ thuật', 'Engineering'),
+  p('blog-news', 'blog/company-news', 'insights/company-news', 'Công ty', 'Company'),
+  p('blog-business', 'blog/business', 'insights/business', 'Kinh doanh', 'Business'),
+  p('blog-tech-cat', 'blog/technology', 'insights/technology', 'Công nghệ', 'Technology'),
+  p('blog-sol-cat', 'blog/solutions', 'insights/solutions', 'Giải pháp', 'Solutions'),
+  p('blog-prod-cat', 'blog/products', 'insights/products', 'Sản phẩm', 'Products'),
+  p('faq', 'faq', 'faq', 'Câu hỏi thường gặp', 'FAQ', 'Câu hỏi thường gặp về Novixa và KIT Technology.', 'Frequently asked questions about Novixa and KIT Technology.', true),
 
   // Careers
-  p('careers', 'tuyen-dung', 'careers', 'Careers', 'Careers', 'Cơ hội nghề nghiệp tại KIT Technology.'),
+  p('careers', 'tuyen-dung', 'careers', 'Tuyển dụng', 'Careers', 'Cơ hội nghề nghiệp tại KIT Technology.'),
 ];
 
 const pathIndex = new Map<string, PageEntry>();
@@ -140,27 +140,27 @@ export function getAlternatePath(locale: Locale, slug: string): string {
 export const mainNav: Record<Locale, NavGroup[]> = {
   vi: [
     {
-      label: 'Products',
+      label: 'Sản phẩm',
       href: pageUrl('vi', 'san-pham'),
       items: [
         { label: 'Novixa', href: pageUrl('vi', 'san-pham/novixa') },
-        { label: 'AI Automation', href: pageUrl('vi', 'san-pham/ai-automation') },
+        { label: 'Tự động hóa AI', href: pageUrl('vi', 'san-pham/ai-automation') },
         { label: 'AI Agent', href: pageUrl('vi', 'san-pham/ai-agent') },
         { label: 'Sản phẩm tương lai', href: pageUrl('vi', 'san-pham/tuong-lai') },
       ],
     },
     {
-      label: 'Solutions',
+      label: 'Giải pháp',
       href: pageUrl('vi', 'giai-phap'),
       items: [
-        { label: 'Healthcare', href: pageUrl('vi', 'giai-phap/healthcare') },
-        { label: 'Retail', href: pageUrl('vi', 'giai-phap/retail') },
-        { label: 'AI Transformation', href: pageUrl('vi', 'giai-phap/ai-transformation') },
-        { label: 'Enterprise Platform', href: pageUrl('vi', 'giai-phap/enterprise-platform') },
+        { label: 'Ngành y tế', href: pageUrl('vi', 'giai-phap/healthcare') },
+        { label: 'Bán lẻ', href: pageUrl('vi', 'giai-phap/retail') },
+        { label: 'Chuyển đổi AI', href: pageUrl('vi', 'giai-phap/ai-transformation') },
+        { label: 'Nền tảng doanh nghiệp', href: pageUrl('vi', 'giai-phap/enterprise-platform') },
       ],
     },
     {
-      label: 'Technology',
+      label: 'Công nghệ',
       href: pageUrl('vi', 'cong-nghe'),
       items: [
         { label: 'Flutter', href: pageUrl('vi', 'cong-nghe/flutter') },
@@ -173,22 +173,22 @@ export const mainNav: Record<Locale, NavGroup[]> = {
       ],
     },
     {
-      label: 'Insights',
+      label: 'Kiến thức',
       href: pageUrl('vi', 'blog'),
       items: [
         { label: 'AI', href: pageUrl('vi', 'blog/ai') },
-        { label: 'Healthcare', href: pageUrl('vi', 'blog/healthcare') },
-        { label: 'Business', href: pageUrl('vi', 'blog/business') },
-        { label: 'Technology', href: pageUrl('vi', 'blog/technology') },
-        { label: 'Solutions', href: pageUrl('vi', 'blog/solutions') },
-        { label: 'Products', href: pageUrl('vi', 'blog/products') },
-        { label: 'Engineering', href: pageUrl('vi', 'blog/engineering') },
-        { label: 'Company', href: pageUrl('vi', 'blog/company-news') },
-        { label: 'FAQ', href: pageUrl('vi', 'faq') },
+        { label: 'Ngành y tế', href: pageUrl('vi', 'blog/healthcare') },
+        { label: 'Kinh doanh', href: pageUrl('vi', 'blog/business') },
+        { label: 'Công nghệ', href: pageUrl('vi', 'blog/technology') },
+        { label: 'Giải pháp', href: pageUrl('vi', 'blog/solutions') },
+        { label: 'Sản phẩm', href: pageUrl('vi', 'blog/products') },
+        { label: 'Kỹ thuật', href: pageUrl('vi', 'blog/engineering') },
+        { label: 'Công ty', href: pageUrl('vi', 'blog/company-news') },
+        { label: 'Câu hỏi thường gặp', href: pageUrl('vi', 'faq') },
       ],
     },
     {
-      label: 'Company',
+      label: 'Giới thiệu',
       href: pageUrl('vi', 'gioi-thieu'),
       items: [
         { label: 'Về KIT Technology', href: pageUrl('vi', 'gioi-thieu/ve-chung-toi') },
