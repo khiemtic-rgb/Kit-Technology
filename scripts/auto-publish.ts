@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import { loadEnvFile } from 'node:process';
 import { getIctDateIso } from '../src/lib/timezone.ts';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -21,6 +22,10 @@ import {
 } from './lib/openai.ts';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+const envPath = path.join(root, '.env');
+if (fs.existsSync(envPath)) {
+  loadEnvFile(envPath);
+}
 const insightsRoot = path.join(root, 'src/content/insights');
 const imagesRoot = path.join(root, 'public/images/insights');
 
@@ -90,7 +95,13 @@ async function ensureHeroImage(
   }
 
   console.log(`  → Generating hero image: ${title}`);
-  const source = await generateHeroImageFromTitle({ title, locale });
+  const source = await generateHeroImageFromTitle({
+    title,
+    locale,
+    category: plan.category,
+    section: plan.section,
+    slug: plan.slug,
+  });
   const filePath = heroImageFilePath(imagesRoot, locale, plan.slug);
   await saveGeneratedImage(source, filePath);
   await sleep(1200);

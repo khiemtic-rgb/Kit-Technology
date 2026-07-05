@@ -101,17 +101,70 @@ export async function generateArticleContent(input: {
   };
 }
 
-export function buildImagePrompt(title: string, locale: 'vi' | 'en'): string {
-  const context =
+export function buildImagePrompt(input: {
+  title: string;
+  locale: 'vi' | 'en';
+  category?: string;
+  section?: string;
+  slug?: string;
+}): string {
+  const { title, locale, category, section, slug } = input;
+  const haystack = `${title} ${slug ?? ''} ${category ?? ''}`.toLowerCase();
+
+  let scene =
     locale === 'vi'
-      ? 'Phong cách minh họa công nghệ B2B, ngành y dược và nhà thuốc Việt Nam.'
-      : 'B2B technology illustration style, healthcare and pharmacy context.';
+      ? 'Minh họa công nghệ B2B hiện đại, chuyên nghiệp.'
+      : 'Modern professional B2B technology illustration.';
+
+  if (/flutter|mobile|app/.test(haystack)) {
+    scene =
+      locale === 'vi'
+        ? 'Ứng dụng mobile đa nền tảng: smartphone, tablet, UI components, code — không dùng cảnh nhà thuốc.'
+        : 'Cross-platform mobile apps: smartphones, UI layers, code — not a pharmacy scene.';
+  } else if (/postgres|database|sql|data|redis/.test(haystack)) {
+    scene =
+      locale === 'vi'
+        ? 'Cơ sở dữ liệu và hạ tầng dữ liệu: server, biểu đồ, kết nối, lưu trữ — trừu tượng, không dùng cảnh nhà thuốc.'
+        : 'Database and data infrastructure: servers, charts, storage — abstract, not a pharmacy scene.';
+  } else if (/cloud|docker|devops|kubernetes|architect/.test(haystack)) {
+    scene =
+      locale === 'vi'
+        ? 'Cloud native / DevOps: container, pipeline CI/CD, kiến trúc hệ thống trên nền mây.'
+        : 'Cloud native / DevOps: containers, CI/CD pipelines, system architecture.';
+  } else if (/ai|llm|agent|automation/.test(haystack)) {
+    scene =
+      locale === 'vi'
+        ? 'Trí tuệ nhân tạo: mạng neural, automation workflow, dashboard AI — futuristic nhưng gọn.'
+        : 'Artificial intelligence: neural motifs, automation flows, AI dashboards.';
+  } else if (category === 'healthcare' || section === 'solutions' || /pharmacy|nhà thuốc|gpp|novixa|dược/.test(haystack)) {
+    scene =
+      locale === 'vi'
+        ? 'Bối cảnh nhà thuốc / y tế Việt Nam: quầy thuốc, dược sĩ, tồn kho — phù hợp ngành dược.'
+        : 'Vietnam pharmacy / healthcare: dispensary counter, inventory, clinical context.';
+  } else if (category === 'engineering') {
+    scene =
+      locale === 'vi'
+        ? 'Kỹ thuật phần mềm: IDE, git branch, monitoring, terminal — workspace developer.'
+        : 'Software engineering: IDE, monitoring, developer workspace.';
+  }
+
+  const palette =
+    /flutter|mobile/.test(haystack)
+      ? 'Blue and indigo accents with white.'
+      : /postgres|database/.test(haystack)
+        ? 'Deep blue and slate with white.'
+        : /cloud|docker/.test(haystack)
+          ? 'Sky blue and cyan with white.'
+          : /ai|llm/.test(haystack)
+            ? 'Purple and teal gradients.'
+            : 'Teal and white palette with one accent color unique to the topic.';
 
   return [
-    `Blog hero image for article: "${title}".`,
-    context,
-    'Modern, clean, professional, teal and white palette, soft gradients.',
-    'Wide 16:9 hero composition, no text, no logos, no watermarks.',
+    `Wide 16:9 blog hero image for: "${title}".`,
+    scene,
+    palette,
+    'Flat or semi-flat illustration, clean composition, varied layout — not the same template as other articles.',
+    'No text, no logos, no watermarks, no brand names.',
   ].join(' ');
 }
 
@@ -150,9 +203,12 @@ const IMAGE_MODEL_FALLBACKS: ImageGenerationPayload[] = [
 export async function generateHeroImageFromTitle(input: {
   title: string;
   locale: 'vi' | 'en';
+  category?: string;
+  section?: string;
+  slug?: string;
 }): Promise<string> {
   const preferred = process.env.OPENAI_IMAGE_MODEL?.trim();
-  const prompt = buildImagePrompt(input.title, input.locale);
+  const prompt = buildImagePrompt(input);
   const models = preferred
     ? [{ ...IMAGE_MODEL_FALLBACKS[0]!, model: preferred, prompt }]
     : IMAGE_MODEL_FALLBACKS.map((item) => ({ ...item, prompt }));
