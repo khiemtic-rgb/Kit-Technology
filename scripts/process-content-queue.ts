@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { EDITORIAL_PLAN, getPlanById } from '../src/lib/content-plan.ts';
-import { defaultHeroImagePath } from '../src/lib/seo.ts';
+import { heroImagePublicPath } from './lib/insight-markdown.ts';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const queueDir = path.join(root, 'content-queue');
@@ -65,7 +65,7 @@ async function saveHeroImage(
 
   const dir = path.join(imagesRoot, locale);
   fs.mkdirSync(dir, { recursive: true });
-  const publicPath = defaultHeroImagePath(locale, slug);
+  const publicPath = heroImagePublicPath(locale, slug);
   const filePath = path.join(dir, `${slug}.webp`);
 
   if (payload.heroImageUrl) {
