@@ -39,6 +39,16 @@ jobs:
       - name: Set publish date (Vietnam)
         run: echo "PUBLISH_DATE=$(TZ=Asia/Ho_Chi_Minh date +%F)" >> "$GITHUB_ENV"
 
+      - name: Verify OpenAI secret
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "::error::OPENAI_API_KEY is not set. Add it in GitHub → Settings → Secrets and variables → Actions."
+            exit 1
+          fi
+          echo "OPENAI_API_KEY is configured."
+
       - name: Auto-publish articles and hero images (OpenAI)
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
@@ -98,5 +108,12 @@ jobs:
 
       - name: Publish summary
         if: always()
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
-          echo "Build completed. Set OPENAI_API_KEY for auto article + DALL-E hero images."
+          echo "Publish date: ${PUBLISH_DATE:-unknown}"
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "::warning::Set OPENAI_API_KEY in repo Secrets for daily auto article + hero images."
+          else
+            echo "OPENAI_API_KEY is set — auto-publish runs daily at 06:00 ICT with catch-up for missed days."
+          fi

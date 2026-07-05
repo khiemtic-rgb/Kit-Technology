@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import { getIctDateIso } from '../src/lib/timezone.ts';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { EDITORIAL_PLAN, getPlanById, getPlanForDate, type PlannedArticle } from '../src/lib/content-plan.ts';
+import { EDITORIAL_PLAN, getDuePlans, getPlanById, type PlannedArticle } from '../src/lib/content-plan.ts';
 import {
   heroImageFilePath,
   heroImagePublicPath,
@@ -47,6 +47,18 @@ function forcePublish(): boolean {
   return process.env.FORCE_PUBLISH === '1' || process.argv.includes('--force') || Boolean(targetArticleId());
 }
 
+function planNeedsPublish(plan: PlannedArticle, locale: 'vi' | 'en'): boolean {
+  if (plan.alreadyLive || plan.pageKey) return false;
+  const filePath = insightMarkdownPath(insightsRoot, locale, plan.category, plan.slug);
+  const existing = readInsightMarkdown(filePath);
+  if (!existing) return true;
+  if (existing.frontmatter.draft) return true;
+  if (!isRealBody(existing.body)) return true;
+  if (!existing.frontmatter.heroImage) return true;
+  const heroPath = path.join(root, 'public', (existing.frontmatter.heroImage ?? '').replace(/^\//, ''));
+  return !fs.existsSync(heroPath);
+}
+
 function resolvePlans(): PlannedArticle[] {
   const articleId = targetArticleId();
   if (articleId) {
@@ -54,7 +66,10 @@ function resolvePlans(): PlannedArticle[] {
     if (!plan) throw new Error(`Unknown ARTICLE_ID / --id: ${articleId}`);
     return [plan];
   }
-  return getPlanForDate(publishDate());
+  const date = publishDate();
+  const due = getDuePlans(date);
+  const locales = publishLocales();
+  return due.filter((plan) => locales.some((locale) => planNeedsPublish(plan, locale)));
 }
 
 function defaultDescription(title: string, locale: 'vi' | 'en'): string {
@@ -185,7 +200,7 @@ async function main() {
   if (articleId) {
     console.log(`Single article mode: ${articleId}`);
   } else {
-    console.log(`Scheduled articles today: ${plans.length}`);
+    console.log(`Due articles through ${date}: ${plans.length}`);
   }
 
   if (plans.length === 0) {

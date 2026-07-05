@@ -269,6 +269,13 @@ export function getPlanForDate(isoDate: string): PlannedArticle[] {
   return EDITORIAL_PLAN.filter((item) => item.publishDate === isoDate && !item.alreadyLive);
 }
 
+/** All scheduled articles on or before isoDate (for catch-up when a day was missed). */
+export function getDuePlans(isoDate: string): PlannedArticle[] {
+  return EDITORIAL_PLAN.filter(
+    (item) => !item.alreadyLive && !item.pageKey && item.publishDate <= isoDate,
+  ).sort((a, b) => a.publishDate.localeCompare(b.publishDate));
+}
+
 export function getUpcomingPlan(fromDate = new Date()): PlannedArticle[] {
   const iso = fromDate.toISOString().slice(0, 10);
   return EDITORIAL_PLAN.filter((item) => !item.alreadyLive && item.publishDate >= iso).sort((a, b) =>
