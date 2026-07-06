@@ -2,8 +2,10 @@ name: Scheduled Knowledge Hub publish
 
 on:
   schedule:
-    # 06:00 ICT (UTC+7) daily
+    # 06:00 ICT (UTC+7) — primary
     - cron: '0 23 * * *'
+    # 08:00 ICT — backup if GitHub delays the primary run
+    - cron: '0 1 * * *'
   workflow_dispatch:
   push:
     branches: [main]
@@ -50,6 +52,7 @@ jobs:
           echo "OPENAI_API_KEY is configured."
 
       - name: Auto-publish articles and hero images (OpenAI)
+        id: auto_publish
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           LOCALE: vi

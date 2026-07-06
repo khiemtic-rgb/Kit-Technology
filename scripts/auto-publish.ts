@@ -205,17 +205,22 @@ async function main() {
   const date = publishDate();
   const articleId = targetArticleId();
   const plans = resolvePlans();
+  const dueTotal = getDuePlans(date).length;
 
   console.log('=== KIT Knowledge Hub — Auto publish ===');
   console.log(`Publish date: ${date}`);
   if (articleId) {
     console.log(`Single article mode: ${articleId}`);
   } else {
-    console.log(`Due articles through ${date}: ${plans.length}`);
+    console.log(`Due through ${date}: ${dueTotal} planned, ${plans.length} need publishing`);
   }
 
   if (plans.length === 0) {
-    console.log('Nothing scheduled for this date.');
+    if (!articleId && dueTotal > 0) {
+      console.log('All due articles are already published.');
+    } else {
+      console.log('Nothing due for publishing.');
+    }
     return;
   }
 
@@ -233,6 +238,17 @@ async function main() {
   }
 
   console.log(`\nDone. Updated ${totalUpdates} file(s).`);
+
+  if (!articleId) {
+    const remaining = resolvePlans();
+    if (remaining.length > 0) {
+      console.error(`\n::error:: ${remaining.length} due article(s) still unpublished after run:`);
+      for (const plan of remaining) {
+        console.error(`  - [${plan.publishDate}] ${plan.titleVi} (${plan.id})`);
+      }
+      process.exit(1);
+    }
+  }
 }
 
 main().catch((error) => {
