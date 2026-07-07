@@ -6,6 +6,8 @@ on:
     - cron: '0 23 * * *'
     # 08:00 ICT — backup if GitHub delays the primary run
     - cron: '0 1 * * *'
+    # 12:00 ICT — afternoon catch-up
+    - cron: '0 5 * * *'
   workflow_dispatch:
   push:
     branches: [main]
@@ -53,19 +55,18 @@ jobs:
 
       - name: Auto-publish articles and hero images (OpenAI)
         id: auto_publish
+        continue-on-error: true
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           LOCALE: vi
+          MAX_ARTICLES_PER_RUN: 2
         run: npm run content:publish
 
       - name: Import manual content queue (optional)
         continue-on-error: true
         run: npm run content:queue
 
-      - name: Show editorial schedule
-        run: npm run content:status
-
-      - name: Commit imported articles
+      - name: Commit published articles
         id: content_commit
         run: |
           git config user.name "github-actions[bot]"
@@ -83,7 +84,17 @@ jobs:
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
 
+      - name: Show editorial schedule
+        run: npm run content:status
+
+      - name: Verify today's articles are live
+        env:
+          LOCALE: vi
+        run: npm run content:verify
+
       - name: Build static site
+        env:
+          PUBLISH_DATE: ${{ env.PUBLISH_DATE }}
         run: npm run build
 
       - name: Deploy to Cloudflare Workers
@@ -110,6 +121,12 @@ jobs:
           git push
           echo "Empty commit pushed to trigger Cloudflare Pages rebuild."
 
+      - name: Fail if auto-publish step errored
+        if: steps.auto_publish.outcome == 'failure'
+        run: |
+          echo "::error::Auto-publish failed — see logs above. Partial changes may have been committed."
+          exit 1
+
       - name: Publish summary
         if: always()
         env:
@@ -119,5 +136,5 @@ jobs:
           if [ -z "$OPENAI_API_KEY" ]; then
             echo "::warning::Set OPENAI_API_KEY in repo Secrets for daily auto article + hero images."
           else
-            echo "OPENAI_API_KEY is set — auto-publish runs daily at 06:00 ICT with catch-up for missed days."
+            echo "OPENAI_API_KEY is set — auto-publish runs at 06:00, 08:00, and 12:00 ICT."
           fi

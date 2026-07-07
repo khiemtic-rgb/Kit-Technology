@@ -18,27 +18,48 @@ export function hasOpenAiKey(): boolean {
   return Boolean(getApiKey());
 }
 
-async function openaiRequest<T>(endpoint: string, body: unknown): Promise<T> {
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function openaiRequest<T>(endpoint: string, body: unknown, attempt = 1): Promise<T> {
   const apiKey = getApiKey();
   if (!apiKey) {
     throw new Error('OPENAI_API_KEY is not set');
   }
 
-  const res = await fetch(`${API_BASE}${endpoint}`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body),
-  });
+  try {
+    const res = await fetch(`${API_BASE}${endpoint}`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
 
-  if (!res.ok) {
-    const detail = await res.text();
-    throw new Error(`OpenAI ${endpoint} failed (${res.status}): ${detail.slice(0, 500)}`);
+    if (!res.ok) {
+      const detail = await res.text();
+      const retryable = res.status === 429 || res.status >= 500;
+      if (retryable && attempt < 3) {
+        const delay = attempt * 2000;
+        console.warn(`  ! OpenAI ${endpoint} ${res.status} — retry in ${delay}ms (${attempt}/2)`);
+        await sleep(delay);
+        return openaiRequest<T>(endpoint, body, attempt + 1);
+      }
+      throw new Error(`OpenAI ${endpoint} failed (${res.status}): ${detail.slice(0, 500)}`);
+    }
+
+    return res.json() as Promise<T>;
+  } catch (error) {
+    if (attempt < 3 && error instanceof TypeError) {
+      const delay = attempt * 2000;
+      console.warn(`  ! OpenAI network error — retry in ${delay}ms (${attempt}/2)`);
+      await sleep(delay);
+      return openaiRequest<T>(endpoint, body, attempt + 1);
+    }
+    throw error;
   }
-
-  return res.json() as Promise<T>;
 }
 
 export async function generateArticleContent(input: {
@@ -263,8 +284,4 @@ export async function saveGeneratedImage(source: string, destPath: string): Prom
     throw new Error(`Failed to download generated image (${res.status})`);
   }
   fs.writeFileSync(destPath, Buffer.from(await res.arrayBuffer()));
-}
-
-export function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
 }

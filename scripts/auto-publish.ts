@@ -3,7 +3,12 @@ import { loadEnvFile } from 'node:process';
 import { getIctDateIso } from '../src/lib/timezone.ts';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { EDITORIAL_PLAN, getDuePlans, getPlanById, type PlannedArticle } from '../src/lib/content-plan.ts';
+import {
+  getDuePlans,
+  getPlanById,
+  getPlanForDate,
+  type PlannedArticle,
+} from '../src/lib/content-plan.ts';
 import {
   heroImageFilePath,
   heroImagePublicPath,
@@ -18,8 +23,11 @@ import {
   generateHeroImageFromTitle,
   hasOpenAiKey,
   saveGeneratedImage,
-  sleep,
 } from './lib/openai.ts';
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const envPath = path.join(root, '.env');
@@ -31,6 +39,12 @@ const imagesRoot = path.join(root, 'public/images/insights');
 
 function publishDate(): string {
   return process.env.PUBLISH_DATE?.trim() || getIctDateIso();
+}
+
+function maxPerRun(): number {
+  const raw = process.env.MAX_ARTICLES_PER_RUN?.trim();
+  const parsed = raw ? Number(raw) : 2;
+  return Number.isFinite(parsed) && parsed > 0 ? Math.floor(parsed) : 2;
 }
 
 function parseArg(flag: string): string | undefined {
@@ -64,6 +78,13 @@ function planNeedsPublish(plan: PlannedArticle, locale: 'vi' | 'en'): boolean {
   return !fs.existsSync(heroPath);
 }
 
+function orderPlans(date: string, plans: PlannedArticle[]): PlannedArticle[] {
+  const todayIds = new Set(getPlanForDate(date).map((plan) => plan.id));
+  const today = plans.filter((plan) => todayIds.has(plan.id));
+  const catchUp = plans.filter((plan) => !todayIds.has(plan.id));
+  return [...today, ...catchUp];
+}
+
 function resolvePlans(): PlannedArticle[] {
   const articleId = targetArticleId();
   if (articleId) {
@@ -71,10 +92,13 @@ function resolvePlans(): PlannedArticle[] {
     if (!plan) throw new Error(`Unknown ARTICLE_ID / --id: ${articleId}`);
     return [plan];
   }
+
   const date = publishDate();
-  const due = getDuePlans(date);
   const locales = publishLocales();
-  return due.filter((plan) => locales.some((locale) => planNeedsPublish(plan, locale)));
+  const due = getDuePlans(date).filter((plan) =>
+    locales.some((locale) => planNeedsPublish(plan, locale)),
+  );
+  return orderPlans(date, due).slice(0, maxPerRun());
 }
 
 function defaultDescription(title: string, locale: 'vi' | 'en'): string {
@@ -187,32 +211,46 @@ async function publishLocale(plan: PlannedArticle, locale: 'vi' | 'en'): Promise
   return 'updated';
 }
 
-async function publishPlanItem(plan: PlannedArticle): Promise<number> {
-  if (plan.alreadyLive || plan.pageKey) return 0;
+async function publishPlanItem(plan: PlannedArticle): Promise<'updated' | 'skipped' | 'failed'> {
+  if (plan.alreadyLive || plan.pageKey) return 'skipped';
 
   console.log(`\n[${plan.id}] ${plan.titleVi} (${plan.publishDate})`);
   let updates = 0;
 
-  for (const locale of publishLocales()) {
-    const result = await publishLocale(plan, locale);
-    if (result === 'updated') updates++;
+  try {
+    for (const locale of publishLocales()) {
+      const result = await publishLocale(plan, locale);
+      if (result === 'updated') updates++;
+    }
+    return updates > 0 ? 'updated' : 'skipped';
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.error(`  ✗ Failed [${plan.id}]: ${message}`);
+    return 'failed';
   }
+}
 
-  return updates;
+function todayStillUnpublished(date: string): PlannedArticle[] {
+  const locales = publishLocales();
+  return getPlanForDate(date)
+    .filter((plan) => !plan.alreadyLive && !plan.pageKey)
+    .filter((plan) => locales.some((locale) => planNeedsPublish(plan, locale)));
 }
 
 async function main() {
   const date = publishDate();
   const articleId = targetArticleId();
   const plans = resolvePlans();
-  const dueTotal = getDuePlans(date).length;
+  const dueTotal = getDuePlans(date).filter((plan) => !plan.alreadyLive && !plan.pageKey).length;
+  const todayTotal = getPlanForDate(date).filter((plan) => !plan.alreadyLive && !plan.pageKey).length;
 
   console.log('=== KIT Knowledge Hub — Auto publish ===');
   console.log(`Publish date: ${date}`);
+  console.log(`Max articles this run: ${maxPerRun()}`);
   if (articleId) {
     console.log(`Single article mode: ${articleId}`);
   } else {
-    console.log(`Due through ${date}: ${dueTotal} planned, ${plans.length} need publishing`);
+    console.log(`Due through ${date}: ${dueTotal} planned, ${todayTotal} scheduled today, ${plans.length} in this batch`);
   }
 
   if (plans.length === 0) {
@@ -232,21 +270,32 @@ async function main() {
 
   fs.mkdirSync(imagesRoot, { recursive: true });
 
-  let totalUpdates = 0;
+  let updated = 0;
+  let failed = 0;
   for (const plan of plans) {
-    totalUpdates += await publishPlanItem(plan);
+    const result = await publishPlanItem(plan);
+    if (result === 'updated') updated++;
+    if (result === 'failed') failed++;
   }
 
-  console.log(`\nDone. Updated ${totalUpdates} file(s).`);
+  console.log(`\nDone. Updated ${updated} article(s), ${failed} failed in this batch.`);
 
   if (!articleId) {
-    const remaining = resolvePlans();
-    if (remaining.length > 0) {
-      console.error(`\n::error:: ${remaining.length} due article(s) still unpublished after run:`);
-      for (const plan of remaining) {
-        console.error(`  - [${plan.publishDate}] ${plan.titleVi} (${plan.id})`);
+    const remainingToday = todayStillUnpublished(date);
+    const remainingDue = getDuePlans(date).filter((plan) =>
+      publishLocales().some((locale) => planNeedsPublish(plan, locale)),
+    );
+
+    if (remainingToday.length > 0) {
+      console.error(`\n::error:: ${remainingToday.length} article(s) scheduled for ${date} still not live:`);
+      for (const plan of remainingToday) {
+        console.error(`  - ${plan.titleVi} (${plan.id})`);
       }
       process.exit(1);
+    }
+
+    if (remainingDue.length > 0) {
+      console.warn(`\n::warning:: ${remainingDue.length} older due article(s) remain — will catch up on next run.`);
     }
   }
 }
