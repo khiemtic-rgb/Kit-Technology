@@ -8,6 +8,7 @@ publishDate: 2026-07-03
 draft: false
 translationId: faq-novixa-what
 tags: ['faq', 'novixa']
+heroImage: '/images/insights/pool/general/01-abstract.png'
 targetWords: 400
 ---
 

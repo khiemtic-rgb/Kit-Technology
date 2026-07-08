@@ -9,7 +9,7 @@ draft: false
 translationId: tech-cloud-native
 tags: ['kien-truc-cloud-native', 'cloud-computing', 'phat-trien-phan-mem']
 keywords: ['kiến trúc Cloud Native', 'lợi ích Cloud Native', 'phát triển phần mềm', 'ứng dụng Cloud Native', 'công nghệ điện toán đám mây']
-heroImage: '/images/insights/vi/kien-truc-cloud-native.png'
+heroImage: '/images/insights/pool/technology/02-cloud.png'
 targetWords: 1600
 ---
 

@@ -8,6 +8,7 @@ publishDate: 2026-07-03
 draft: false
 translationId: eng-flutter-ui
 tags: ['flutter', 'engineering', 'ui']
+heroImage: '/images/insights/pool/technology/01-mobile.png'
 targetWords: 1300
 ---
 

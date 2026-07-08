@@ -9,7 +9,7 @@ draft: false
 translationId: tech-flutter
 tags: ['flutter', 'phat-trien-ung-dung', 'cong-nghe']
 keywords: ['lợi ích của Flutter', 'phát triển ứng dụng di động', 'Flutter vs React Native', 'ứng dụng đa nền tảng', 'ngôn ngữ lập trình Dart']
-heroImage: '/images/insights/vi/tai-sao-chon-flutter.png'
+heroImage: '/images/insights/pool/technology/02-cloud.png'
 targetWords: 1400
 ---
 

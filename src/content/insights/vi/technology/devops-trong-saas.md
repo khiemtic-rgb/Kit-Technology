@@ -9,7 +9,7 @@ draft: false
 translationId: tech-devops
 tags: ['devops', 'saas', 'ci-cd']
 keywords: ['DevOps SaaS', 'CI/CD phần mềm', 'triển khai cloud', 'KIT Technology', 'Novixa']
-heroImage: '/images/insights/vi/devops-trong-saas.png'
+heroImage: '/images/insights/pool/technology/02-cloud.png'
 targetWords: 1500
 ---
 

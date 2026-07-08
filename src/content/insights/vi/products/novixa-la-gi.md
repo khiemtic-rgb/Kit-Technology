@@ -8,6 +8,7 @@ publishDate: 2026-07-03
 draft: false
 translationId: nv-overview
 tags: ['novixa', 'nha-thuoc', 'saas']
+heroImage: '/images/insights/pool/business/01-platform.png'
 targetWords: 1500
 ---
 

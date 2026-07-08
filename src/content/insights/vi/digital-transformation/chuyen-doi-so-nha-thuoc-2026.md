@@ -8,6 +8,7 @@ publishDate: 2026-07-03
 draft: false
 translationId: bl-dx-pharmacy
 tags: ['chuyen-doi-so', 'nha-thuoc', '2026']
+heroImage: '/images/insights/pool/general/01-abstract.png'
 targetWords: 1500
 ---
 

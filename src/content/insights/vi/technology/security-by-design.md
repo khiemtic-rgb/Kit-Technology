@@ -9,7 +9,7 @@ draft: false
 translationId: tech-security
 tags: ['bao-mat', 'security', 'saas']
 keywords: ['Security by Design', 'bảo mật phần mềm', 'SaaS y tế', 'bảo vệ dữ liệu nhà thuốc', 'KIT Technology']
-heroImage: '/images/insights/vi/security-by-design.png'
+heroImage: '/images/insights/pool/technology/01-mobile.png'
 targetWords: 1500
 ---
 

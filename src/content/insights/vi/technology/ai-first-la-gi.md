@@ -8,7 +8,7 @@ publishDate: 2026-07-04
 draft: false
 translationId: tech-ai-first
 tags: ['ai-first', 'kit-technology']
-heroImage: '/images/insights/vi/ai-first-la-gi.png'
+heroImage: '/images/insights/pool/technology/01-mobile.png'
 targetWords: 1400
 ---
 

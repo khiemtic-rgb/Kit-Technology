@@ -9,7 +9,7 @@ draft: false
 translationId: tech-api-first
 tags: ['api-first', 'kien-truc', 'saas']
 keywords: ['API First là gì', 'thiết kế API', 'kiến trúc SaaS', 'tích hợp hệ thống', 'KIT Technology']
-heroImage: '/images/insights/vi/api-first.png'
+heroImage: '/images/insights/pool/technology/03-data.png'
 targetWords: 1300
 ---
 

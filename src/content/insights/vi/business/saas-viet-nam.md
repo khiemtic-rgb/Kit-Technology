@@ -8,6 +8,7 @@ publishDate: 2026-07-03
 draft: false
 translationId: bl-saas-vn
 tags: ['saas', 'viet-nam', 'business']
+heroImage: '/images/insights/pool/business/01-platform.png'
 targetWords: 1400
 ---
 

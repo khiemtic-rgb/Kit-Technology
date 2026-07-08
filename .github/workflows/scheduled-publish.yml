@@ -74,6 +74,7 @@ jobs:
           LOCALE: vi
           MAX_ARTICLES_PER_RUN: ${{ env.MAX_ARTICLES_PER_RUN || '2' }}
           DAYS_AHEAD: ${{ env.DAYS_AHEAD || '0' }}
+          HERO_IMAGE_MODE: pool
         run: |
           if [ -z "$OPENAI_API_KEY" ]; then
             echo "::warning::OPENAI_API_KEY not set — skip content generation, deploy only."

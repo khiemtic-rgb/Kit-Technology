@@ -8,6 +8,7 @@ publishDate: 2026-07-03
 draft: false
 translationId: ins-llm
 tags: ['llm', 'ai', 'doanh-nghiep']
+heroImage: '/images/insights/pool/ai/02-neural.png'
 targetWords: 1400
 ---
 

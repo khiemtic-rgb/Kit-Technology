@@ -16,6 +16,7 @@
     "content:queue": "npx tsx scripts/process-content-queue.ts",
     "content:publish": "npx tsx scripts/auto-publish.ts",
     "content:prepare": "npx tsx scripts/auto-publish.ts --days-ahead=7",
+    "content:hero-reassign": "npx tsx scripts/reassign-hero-pool.ts",
     "content:publish:test": "npx tsx scripts/auto-publish.ts --id=tech-cloud-native --locale=vi --force",
     "content:status": "npx tsx scripts/content-status.ts",
     "content:verify": "npx tsx scripts/verify-publish.ts"

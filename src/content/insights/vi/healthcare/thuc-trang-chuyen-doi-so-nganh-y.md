@@ -8,6 +8,7 @@ publishDate: 2026-07-03
 draft: false
 translationId: sol-dx-y
 tags: ['healthcare', 'chuyen-doi-so', 'nha-thuoc']
+heroImage: '/images/insights/pool/healthcare/01-digital.png'
 targetWords: 1600
 ---
 

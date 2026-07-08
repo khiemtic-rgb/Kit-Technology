@@ -19,6 +19,12 @@ import {
   type InsightFrontmatter,
 } from './lib/insight-markdown.ts';
 import {
+  assignHeroFromPool,
+  heroImageMode,
+  poolFilePath,
+  poolStats,
+} from './lib/hero-pool.ts';
+import {
   generateArticleContent,
   generateHeroImageFromTitle,
   hasOpenAiKey,
@@ -87,7 +93,9 @@ function planNeedsPublish(plan: PlannedArticle, locale: 'vi' | 'en'): boolean {
   if (existing.frontmatter.draft) return true;
   if (!isRealBody(existing.body)) return true;
   if (!existing.frontmatter.heroImage) return true;
-  const heroPath = path.join(root, 'public', (existing.frontmatter.heroImage ?? '').replace(/^\//, ''));
+  const heroPath = existing.frontmatter.heroImage.startsWith('/images/insights/pool/')
+    ? poolFilePath(existing.frontmatter.heroImage.replace('/images/insights/pool/', ''))
+    : path.join(root, 'public', (existing.frontmatter.heroImage ?? '').replace(/^\//, ''));
   return !fs.existsSync(heroPath);
 }
 
@@ -128,26 +136,37 @@ async function ensureHeroImage(
   frontmatter: InsightFrontmatter,
 ): Promise<InsightFrontmatter> {
   if (frontmatter.heroImage) {
-    const existing = path.join(root, 'public', frontmatter.heroImage.replace(/^\//, ''));
-    if (fs.existsSync(existing)) return frontmatter;
+    const poolPath = frontmatter.heroImage.startsWith('/images/insights/pool/')
+      ? poolFilePath(frontmatter.heroImage.replace('/images/insights/pool/', ''))
+      : path.join(root, 'public', frontmatter.heroImage.replace(/^\//, ''));
+    if (fs.existsSync(poolPath)) return frontmatter;
   }
 
-  console.log(`  → Generating hero image: ${title}`);
-  const source = await generateHeroImageFromTitle({
-    title,
-    locale,
+  if (heroImageMode() === 'ai' && hasOpenAiKey()) {
+    console.log(`  → Generating hero image (AI): ${title}`);
+    const source = await generateHeroImageFromTitle({
+      title,
+      locale,
+      category: plan.category,
+      section: plan.section,
+      slug: plan.slug,
+    });
+    const filePath = heroImageFilePath(imagesRoot, locale, plan.slug);
+    await saveGeneratedImage(source, filePath);
+    await sleep(1200);
+    return {
+      ...frontmatter,
+      heroImage: heroImagePublicPath(locale, plan.slug),
+    };
+  }
+
+  const heroImage = assignHeroFromPool({
     category: plan.category,
     section: plan.section,
     slug: plan.slug,
   });
-  const filePath = heroImageFilePath(imagesRoot, locale, plan.slug);
-  await saveGeneratedImage(source, filePath);
-  await sleep(1200);
-
-  return {
-    ...frontmatter,
-    heroImage: heroImagePublicPath(locale, plan.slug),
-  };
+  console.log(`  → Hero from pool: ${heroImage}`);
+  return { ...frontmatter, heroImage };
 }
 
 async function publishLocale(plan: PlannedArticle, locale: 'vi' | 'en'): Promise<'updated' | 'skipped'> {
@@ -262,6 +281,7 @@ async function main() {
   console.log('=== KIT Knowledge Hub — Auto publish ===');
   console.log(`Publish date: ${date}`);
   console.log(`Content through: ${through}${daysAhead() > 0 ? ` (+${daysAhead()} days ahead)` : ''}`);
+  console.log(`Hero images: ${heroImageMode()} (${JSON.stringify(poolStats())})`);
   console.log(`Max articles this run: ${maxPerRun()}`);
   if (articleId) {
     console.log(`Single article mode: ${articleId}`);
