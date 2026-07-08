@@ -93,6 +93,9 @@ function planNeedsPublish(plan: PlannedArticle, locale: 'vi' | 'en'): boolean {
   if (existing.frontmatter.draft) return true;
   if (!isRealBody(existing.body)) return true;
   if (!existing.frontmatter.heroImage) return true;
+  if (heroImageMode() === 'ai' && existing.frontmatter.heroImage.startsWith('/images/insights/pool/')) {
+    return true;
+  }
   const heroPath = existing.frontmatter.heroImage.startsWith('/images/insights/pool/')
     ? poolFilePath(existing.frontmatter.heroImage.replace('/images/insights/pool/', ''))
     : path.join(root, 'public', (existing.frontmatter.heroImage ?? '').replace(/^\//, ''));

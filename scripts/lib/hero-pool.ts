@@ -11,8 +11,8 @@ export const HERO_POOL_KEYS = ['ai', 'technology', 'healthcare', 'business', 'ge
 export type HeroPoolKey = (typeof HERO_POOL_KEYS)[number];
 
 export function heroImageMode(): 'pool' | 'ai' {
-  const raw = (process.env.HERO_IMAGE_MODE ?? 'pool').trim().toLowerCase();
-  return raw === 'ai' ? 'ai' : 'pool';
+  const raw = (process.env.HERO_IMAGE_MODE ?? 'ai').trim().toLowerCase();
+  return raw === 'pool' ? 'pool' : 'ai';
 }
 
 export function poolKeyFor(category: InsightCategory | string, section?: InsightSection | string): HeroPoolKey {
