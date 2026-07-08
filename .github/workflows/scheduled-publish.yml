@@ -2,11 +2,14 @@ name: Scheduled Knowledge Hub publish
 
 on:
   schedule:
-    # 06:00 ICT (UTC+7) — primary
+    # 05:00–12:00 ICT — hourly backups (GitHub cron often delays 1–3h)
+    - cron: '0 22 * * *'
     - cron: '0 23 * * *'
-    # 08:00 ICT — backup if GitHub delays the primary run
+    - cron: '0 0 * * *'
     - cron: '0 1 * * *'
-    # 12:00 ICT — afternoon catch-up
+    - cron: '0 2 * * *'
+    - cron: '0 3 * * *'
+    - cron: '0 4 * * *'
     - cron: '0 5 * * *'
   workflow_dispatch:
   push:
@@ -88,17 +91,24 @@ jobs:
         run: npm run content:status
 
       - name: Verify today's articles are live
+        id: verify_publish
         env:
           LOCALE: vi
         run: npm run content:verify
 
+      - name: Skip rebuild when already up to date
+        if: steps.content_commit.outputs.changed != 'true' && steps.verify_publish.outcome == 'success'
+        run: echo "Today's articles are live and no new content was committed — skipping deploy."
+
       - name: Build static site
+        if: steps.content_commit.outputs.changed == 'true'
         env:
           PUBLISH_DATE: ${{ env.PUBLISH_DATE }}
         run: npm run build
 
       - name: Deploy to Cloudflare Workers
         id: cf_deploy
+        if: steps.content_commit.outputs.changed == 'true'
         continue-on-error: true
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -136,5 +146,5 @@ jobs:
           if [ -z "$OPENAI_API_KEY" ]; then
             echo "::warning::Set OPENAI_API_KEY in repo Secrets for daily auto article + hero images."
           else
-            echo "OPENAI_API_KEY is set — auto-publish runs at 06:00, 08:00, and 12:00 ICT."
+            echo "OPENAI_API_KEY is set — auto-publish runs hourly 05:00–12:00 ICT."
           fi
