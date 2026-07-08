@@ -1,9 +1,14 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "kittech",
+  "main": "workers/site.mjs",
   "compatibility_date": "2026-07-03",
   "assets": {
     "directory": "./dist",
+    "binding": "ASSETS",
     "not_found_handling": "404-page"
+  },
+  "triggers": {
+    "crons": ["0 22 * * *", "0 23 * * *", "0 0 * * *"]
   }
 }

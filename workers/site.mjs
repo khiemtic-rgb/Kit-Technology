@@ -1,0 +1,41 @@
+/**
+ * Cloudflare Cron — triggers GitHub Actions daily deploy (more reliable than GitHub schedule).
+ * One-time setup: Cloudflare Dashboard → Workers → kittech → Settings → Variables
+ *   GITHUB_PAT = fine-grained token with Actions: read + write on this repo
+ */
+async function triggerGithubWorkflow(env) {
+  if (!env.GITHUB_PAT) {
+    console.warn('GITHUB_PAT not set — skip workflow dispatch');
+    return;
+  }
+
+  const res = await fetch(
+    'https://api.github.com/repos/khiemtic-rgb/Kit-Technology/actions/workflows/scheduled-publish.yml/dispatches',
+    {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${env.GITHUB_PAT}`,
+        Accept: 'application/vnd.github+json',
+        'Content-Type': 'application/json',
+        'User-Agent': 'kittech-cron-worker',
+      },
+      body: JSON.stringify({ ref: 'main' }),
+    },
+  );
+
+  if (!res.ok) {
+    console.error('GitHub dispatch failed', res.status, await res.text());
+  } else {
+    console.log('GitHub workflow dispatched');
+  }
+}
+
+export default {
+  async fetch(request, env) {
+    return env.ASSETS.fetch(request);
+  },
+
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(triggerGithubWorkflow(env));
+  },
+};

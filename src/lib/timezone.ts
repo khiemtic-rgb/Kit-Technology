@@ -14,3 +14,10 @@ export function getIctDateIso(date = new Date()): string {
 export function getIctDayEnd(isoDate = getIctDateIso()): Date {
   return new Date(`${isoDate}T23:59:59.999+07:00`);
 }
+
+/** Add calendar days in ICT and return YYYY-MM-DD. */
+export function addIctDays(isoDate: string, days: number): string {
+  const anchor = new Date(`${isoDate}T12:00:00+07:00`);
+  anchor.setUTCDate(anchor.getUTCDate() + days);
+  return getIctDateIso(anchor);
+}

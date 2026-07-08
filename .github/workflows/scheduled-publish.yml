@@ -2,7 +2,7 @@ name: Scheduled Knowledge Hub publish
 
 on:
   schedule:
-    # 05:00–12:00 ICT — hourly backups (GitHub cron often delays 1–3h)
+    # 05:00–12:00 ICT — GitHub cron is often delayed; multiple slots improve odds
     - cron: '0 22 * * *'
     - cron: '0 23 * * *'
     - cron: '0 0 * * *'
@@ -11,7 +11,14 @@ on:
     - cron: '0 3 * * *'
     - cron: '0 4 * * *'
     - cron: '0 5 * * *'
+    # Sunday 02:00 ICT — weekly batch prep (Saturday 19:00 UTC)
+    - cron: '0 19 * * 6'
   workflow_dispatch:
+    inputs:
+      days_ahead:
+        description: 'Generate content N days ahead (0 = today only, 7 = weekly prep)'
+        required: false
+        default: '0'
   push:
     branches: [main]
     paths:
@@ -43,18 +50,21 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Set publish date (Vietnam)
-        run: echo "PUBLISH_DATE=$(TZ=Asia/Ho_Chi_Minh date +%F)" >> "$GITHUB_ENV"
-
-      - name: Verify OpenAI secret
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      - name: Set publish date and prep mode (Vietnam)
         run: |
-          if [ -z "$OPENAI_API_KEY" ]; then
-            echo "::error::OPENAI_API_KEY is not set. Add it in GitHub → Settings → Secrets and variables → Actions."
-            exit 1
+          echo "PUBLISH_DATE=$(TZ=Asia/Ho_Chi_Minh date +%F)" >> "$GITHUB_ENV"
+          DISPATCH_AHEAD="${{ github.event.inputs.days_ahead }}"
+          if [ -n "$DISPATCH_AHEAD" ] && [ "$DISPATCH_AHEAD" != "0" ]; then
+            echo "DAYS_AHEAD=$DISPATCH_AHEAD" >> "$GITHUB_ENV"
+            echo "MAX_ARTICLES_PER_RUN=10" >> "$GITHUB_ENV"
+            echo "Weekly prep via workflow_dispatch (+${DISPATCH_AHEAD} days)."
+          elif [ "${{ github.event_name }}" = "schedule" ] && [ "$(TZ=Asia/Ho_Chi_Minh date +%u)" = "7" ] && [ "$(TZ=Asia/Ho_Chi_Minh date +%H)" = "02" ]; then
+            echo "DAYS_AHEAD=7" >> "$GITHUB_ENV"
+            echo "MAX_ARTICLES_PER_RUN=10" >> "$GITHUB_ENV"
+            echo "Sunday weekly prep — generating 7 days of content."
+          else
+            echo "Daily catch-up — today only."
           fi
-          echo "OPENAI_API_KEY is configured."
 
       - name: Auto-publish articles and hero images (OpenAI)
         id: auto_publish
@@ -62,8 +72,14 @@ jobs:
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           LOCALE: vi
-          MAX_ARTICLES_PER_RUN: 2
-        run: npm run content:publish
+          MAX_ARTICLES_PER_RUN: ${{ env.MAX_ARTICLES_PER_RUN || '2' }}
+          DAYS_AHEAD: ${{ env.DAYS_AHEAD || '0' }}
+        run: |
+          if [ -z "$OPENAI_API_KEY" ]; then
+            echo "::warning::OPENAI_API_KEY not set — skip content generation, deploy only."
+            exit 0
+          fi
+          npm run content:publish
 
       - name: Import manual content queue (optional)
         continue-on-error: true
@@ -96,19 +112,15 @@ jobs:
           LOCALE: vi
         run: npm run content:verify
 
-      - name: Skip rebuild when already up to date
-        if: steps.content_commit.outputs.changed != 'true' && steps.verify_publish.outcome == 'success'
-        run: echo "Today's articles are live and no new content was committed — skipping deploy."
-
       - name: Build static site
-        if: steps.content_commit.outputs.changed == 'true'
+        if: github.event_name != 'push' || steps.content_commit.outputs.changed == 'true'
         env:
           PUBLISH_DATE: ${{ env.PUBLISH_DATE }}
         run: npm run build
 
       - name: Deploy to Cloudflare Workers
         id: cf_deploy
-        if: steps.content_commit.outputs.changed == 'true'
+        if: github.event_name != 'push' || steps.content_commit.outputs.changed == 'true'
         continue-on-error: true
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -123,7 +135,7 @@ jobs:
           npm run cf:deploy
 
       - name: Trigger Cloudflare Pages rebuild
-        if: steps.cf_deploy.outputs.configured != 'true' && steps.content_commit.outputs.changed != 'true'
+        if: steps.cf_deploy.outputs.configured != 'true' && steps.content_commit.outputs.changed != 'true' && github.event_name == 'schedule'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
@@ -131,20 +143,21 @@ jobs:
           git push
           echo "Empty commit pushed to trigger Cloudflare Pages rebuild."
 
+      - name: Fail if today's articles are missing
+        if: steps.verify_publish.outcome == 'failure'
+        run: |
+          echo "::error::Today's scheduled articles are not in the repo. Run weekly prep or check OpenAI logs."
+          exit 1
+
       - name: Fail if auto-publish step errored
         if: steps.auto_publish.outcome == 'failure'
         run: |
-          echo "::error::Auto-publish failed — see logs above. Partial changes may have been committed."
+          echo "::error::Auto-publish failed — see logs above."
           exit 1
 
       - name: Publish summary
         if: always()
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         run: |
           echo "Publish date: ${PUBLISH_DATE:-unknown}"
-          if [ -z "$OPENAI_API_KEY" ]; then
-            echo "::warning::Set OPENAI_API_KEY in repo Secrets for daily auto article + hero images."
-          else
-            echo "OPENAI_API_KEY is set — auto-publish runs hourly 05:00–12:00 ICT."
-          fi
+          echo "Strategy: weekly prep (7 days ahead) + daily build/deploy with PUBLISH_DATE."
+          echo "Pre-generated articles go live on schedule without a new git commit each day."

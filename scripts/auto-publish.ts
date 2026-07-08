@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { loadEnvFile } from 'node:process';
-import { getIctDateIso } from '../src/lib/timezone.ts';
+import { addIctDays, getIctDateIso } from '../src/lib/timezone.ts';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
@@ -43,8 +43,21 @@ function publishDate(): string {
 
 function maxPerRun(): number {
   const raw = process.env.MAX_ARTICLES_PER_RUN?.trim();
-  const parsed = raw ? Number(raw) : 2;
+  const parsed = raw ? Number(raw) : daysAhead() > 0 ? 10 : 2;
   return Number.isFinite(parsed) && parsed > 0 ? Math.floor(parsed) : 2;
+}
+
+/** Generate content through today + N days (weekly prep). 0 = due through today only. */
+function daysAhead(): number {
+  const raw = process.env.DAYS_AHEAD?.trim() || parseArg('--days-ahead');
+  const parsed = raw ? Number(raw) : 0;
+  return Number.isFinite(parsed) && parsed > 0 ? Math.floor(parsed) : 0;
+}
+
+function publishThroughDate(): string {
+  const date = publishDate();
+  const ahead = daysAhead();
+  return ahead > 0 ? addIctDays(date, ahead) : date;
 }
 
 function parseArg(flag: string): string | undefined {
@@ -94,8 +107,9 @@ function resolvePlans(): PlannedArticle[] {
   }
 
   const date = publishDate();
+  const through = publishThroughDate();
   const locales = publishLocales();
-  const due = getDuePlans(date).filter((plan) =>
+  const due = getDuePlans(through).filter((plan) =>
     locales.some((locale) => planNeedsPublish(plan, locale)),
   );
   return orderPlans(date, due).slice(0, maxPerRun());
@@ -140,8 +154,8 @@ async function publishLocale(plan: PlannedArticle, locale: 'vi' | 'en'): Promise
   const title = locale === 'vi' ? plan.titleVi : plan.titleEn;
   const filePath = insightMarkdownPath(insightsRoot, locale, plan.category, plan.slug);
   const existing = readInsightMarkdown(filePath);
-  const today = publishDate();
-  const shouldPublish = forcePublish() || plan.publishDate <= today;
+  const through = publishThroughDate();
+  const shouldPublish = forcePublish() || plan.publishDate <= through;
 
   let frontmatter: InsightFrontmatter = existing?.frontmatter ?? {
     title,
@@ -180,7 +194,7 @@ async function publishLocale(plan: PlannedArticle, locale: 'vi' | 'en'): Promise
   }
 
   if (forcePublish()) {
-    frontmatter.publishDate = today;
+    frontmatter.publishDate = publishDate();
   }
 
   if (shouldPublish && isRealBody(body)) {
@@ -244,13 +258,17 @@ async function main() {
   const dueTotal = getDuePlans(date).filter((plan) => !plan.alreadyLive && !plan.pageKey).length;
   const todayTotal = getPlanForDate(date).filter((plan) => !plan.alreadyLive && !plan.pageKey).length;
 
+  const through = publishThroughDate();
   console.log('=== KIT Knowledge Hub — Auto publish ===');
   console.log(`Publish date: ${date}`);
+  console.log(`Content through: ${through}${daysAhead() > 0 ? ` (+${daysAhead()} days ahead)` : ''}`);
   console.log(`Max articles this run: ${maxPerRun()}`);
   if (articleId) {
     console.log(`Single article mode: ${articleId}`);
   } else {
-    console.log(`Due through ${date}: ${dueTotal} planned, ${todayTotal} scheduled today, ${plans.length} in this batch`);
+    console.log(
+      `Due through ${through}: ${getDuePlans(through).filter((p) => !p.alreadyLive && !p.pageKey).length} planned, ${todayTotal} scheduled today, ${plans.length} in this batch`,
+    );
   }
 
   if (plans.length === 0) {
