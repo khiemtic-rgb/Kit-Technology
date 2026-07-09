@@ -9,7 +9,7 @@ draft: false
 translationId: tech-ai-agent
 tags: ['ai-agent', 'cong-nghe', 'phat-trien-phan-mem']
 keywords: ['AI Agent là gì', 'cách hoạt động của AI Agent', 'ứng dụng AI trong công nghệ', 'phân tích dữ liệu với AI', 'tương lai của AI Agent']
-heroImage: '/images/insights/pool/technology/02-cloud.png'
+heroImage: '/images/insights/vi/ai-agent-hoat-dong-nhu-the-nao.png'
 targetWords: 1500
 ---
 
