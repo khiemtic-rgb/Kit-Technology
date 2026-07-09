@@ -139,10 +139,12 @@ async function ensureHeroImage(
   frontmatter: InsightFrontmatter,
 ): Promise<InsightFrontmatter> {
   if (frontmatter.heroImage) {
-    const poolPath = frontmatter.heroImage.startsWith('/images/insights/pool/')
+    const isPool = frontmatter.heroImage.startsWith('/images/insights/pool/');
+    const heroPath = isPool
       ? poolFilePath(frontmatter.heroImage.replace('/images/insights/pool/', ''))
       : path.join(root, 'public', frontmatter.heroImage.replace(/^\//, ''));
-    if (fs.existsSync(poolPath)) return frontmatter;
+    const upgradePoolToAi = heroImageMode() === 'ai' && isPool && hasOpenAiKey();
+    if (fs.existsSync(heroPath) && !upgradePoolToAi) return frontmatter;
   }
 
   if (heroImageMode() === 'ai' && hasOpenAiKey()) {

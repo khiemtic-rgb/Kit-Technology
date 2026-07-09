@@ -129,20 +129,26 @@ jobs:
         run: |
           if [ -z "$CLOUDFLARE_API_TOKEN" ] || [ -z "$CLOUDFLARE_ACCOUNT_ID" ]; then
             echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "success=false" >> "$GITHUB_OUTPUT"
             echo "::warning::CLOUDFLARE_API_TOKEN / CLOUDFLARE_ACCOUNT_ID not set — skip Wrangler deploy."
             exit 0
           fi
           echo "configured=true" >> "$GITHUB_OUTPUT"
-          npm run cf:deploy
+          if npm run cf:deploy; then
+            echo "success=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "success=false" >> "$GITHUB_OUTPUT"
+            exit 1
+          fi
 
-      - name: Trigger Cloudflare Pages rebuild
-        if: steps.cf_deploy.outputs.configured != 'true' && steps.content_commit.outputs.changed != 'true' && github.event_name == 'schedule'
+      - name: Fallback git push (Wrangler deploy failed)
+        if: steps.cf_deploy.outputs.success != 'true' && github.event_name != 'push'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit --allow-empty -m "chore: scheduled Knowledge Hub rebuild $(date -u +%F)"
           git push
-          echo "Empty commit pushed to trigger Cloudflare Pages rebuild."
+          echo "::warning::Wrangler deploy failed — pushed empty commit to trigger any git-connected Cloudflare build."
 
       - name: Fail if today's articles are missing
         if: steps.verify_publish.outcome == 'failure'
@@ -150,10 +156,15 @@ jobs:
           echo "::error::Today's scheduled articles are not in the repo. Run weekly prep or check OpenAI logs."
           exit 1
 
-      - name: Fail if auto-publish step errored
+      - name: Warn if auto-publish had errors
         if: steps.auto_publish.outcome == 'failure'
         run: |
-          echo "::error::Auto-publish failed — see logs above."
+          echo "::warning::Auto-publish reported errors — check OpenAI / hero image logs. Continuing if verify passed."
+
+      - name: Fail if deploy failed
+        if: steps.cf_deploy.outputs.configured == 'true' && steps.cf_deploy.outputs.success != 'true'
+        run: |
+          echo "::error::Cloudflare Wrangler deploy failed. Update CLOUDFLARE_API_TOKEN with Workers Scripts Edit permission."
           exit 1
 
       - name: Publish summary
