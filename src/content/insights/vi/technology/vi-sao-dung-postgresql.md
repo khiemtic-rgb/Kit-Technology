@@ -9,7 +9,7 @@ draft: false
 translationId: tech-postgresql
 tags: ['postgresql', 'database', 'technology']
 keywords: ['lợi ích của PostgreSQL', 'PostgreSQL so với MySQL', 'cơ sở dữ liệu mã nguồn mở', 'tính năng của PostgreSQL', 'PostgreSQL cho doanh nghiệp']
-heroImage: '/images/insights/pool/technology/02-cloud.png'
+heroImage: '/images/insights/vi/vi-sao-dung-postgresql.png'
 targetWords: 1400
 ---
 
