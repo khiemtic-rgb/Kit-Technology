@@ -69,7 +69,29 @@ export function buildInsightStructuredData(
         articleSection: data.section,
         keywords: insightMetaKeywords(data),
         wordCount: body.trim().split(/\s+/).filter(Boolean).length,
+        isPartOf: {
+          '@type': 'Blog',
+          name: data.locale === 'vi' ? 'KIT Knowledge Hub' : 'KIT Knowledge Hub',
+          url: absoluteUrl(data.locale === 'vi' ? '/vi/blog' : '/en/insights'),
+        },
       },
+      ...(data.category === 'faq'
+        ? [
+            {
+              '@type': 'FAQPage',
+              mainEntity: [
+                {
+                  '@type': 'Question',
+                  name: data.title,
+                  acceptedAnswer: {
+                    '@type': 'Answer',
+                    text: data.description,
+                  },
+                },
+              ],
+            },
+          ]
+        : []),
       {
         '@type': 'BreadcrumbList',
         itemListElement: [

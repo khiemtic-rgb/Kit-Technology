@@ -1,4 +1,3 @@
-/vi/ve-chung-toi /vi/gioi-thieu/ve-chung-toi 301
-/en/company/values /en/company/core-values 301
-/en/about /en/company/about 301
-/en/contact /en/company/contact 301
+# Cloudflare Pages / static redirect fallback
+/ /vi 301
+/index.html /vi 301

@@ -32,6 +32,11 @@ async function triggerGithubWorkflow(env) {
 
 export default {
   async fetch(request, env) {
+    const url = new URL(request.url);
+    // Permanent home redirect for SEO (avoid soft meta-refresh from static HTML).
+    if (url.pathname === '/' || url.pathname === '') {
+      return Response.redirect(`${url.origin}/vi`, 301);
+    }
     return env.ASSETS.fetch(request);
   },
 

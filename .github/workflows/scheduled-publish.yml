@@ -117,6 +117,8 @@ jobs:
         if: github.event_name != 'push' || steps.content_commit.outputs.changed == 'true'
         env:
           PUBLISH_DATE: ${{ env.PUBLISH_DATE }}
+          PUBLIC_GOOGLE_SITE_VERIFICATION: ${{ secrets.PUBLIC_GOOGLE_SITE_VERIFICATION }}
+          PUBLIC_CF_WEB_ANALYTICS_TOKEN: ${{ secrets.PUBLIC_CF_WEB_ANALYTICS_TOKEN }}
         run: npm run build
 
       - name: Deploy to Cloudflare Workers

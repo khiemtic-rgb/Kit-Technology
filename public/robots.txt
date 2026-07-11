@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
 
+# Prefer Vietnamese pages for indexing (English is noindex in HTML).
+Disallow: /en
+
 Sitemap: https://kittech.vn/sitemap-index.xml
