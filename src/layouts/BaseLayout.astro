@@ -50,7 +50,9 @@ const emitHreflangAlternate = !noIndex && alternateLocale === 'vi';
 const siteKeywords = 'keywords' in m.meta ? m.meta.keywords : undefined;
 const metaKeywords = pageKeywords ?? siteKeywords;
 const articleModified = article?.modifiedTime ?? article?.publishedTime;
-const googleVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION?.trim();
+const googleVerification =
+  import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION?.trim() ||
+  'DgsLjPbVvbfSwsRY2IxiiBXgaPTjak9y26CYFFMfe6M';
 ---
 
 <!doctype html>
