@@ -3,16 +3,20 @@ import sitemap from '@astrojs/sitemap';
 
 /** Priority / changefreq hints for Google (VI indexable URLs only). */
 function sitemapItem(page) {
-  const url = page.replace(/\/$/, '') || 'https://kittech.vn';
+  // Keep trailing slash — matches Cloudflare static hosting (200 on /path/, 307 without).
+  let url = page;
+  if (!url.endsWith('/') && !/\.[a-z0-9]+$/i.test(url)) {
+    url = `${url}/`;
+  }
   const path = url.replace('https://kittech.vn', '') || '/';
 
   let priority = 0.5;
   let changefreq = 'monthly';
 
-  if (path === '/' || path === '/vi') {
+  if (path === '/' || path === '/vi/') {
     priority = 1;
     changefreq = 'daily';
-  } else if (path === '/vi/blog' || path === '/vi/lien-he') {
+  } else if (path === '/vi/blog/' || path === '/vi/lien-he/') {
     priority = 0.9;
     changefreq = 'daily';
   } else if (path.startsWith('/vi/blog/')) {
@@ -38,7 +42,7 @@ function sitemapItem(page) {
 // https://astro.build/config
 export default defineConfig({
   site: 'https://kittech.vn',
-  trailingSlash: 'never',
+  trailingSlash: 'always',
   integrations: [
     sitemap({
       // EN pages are noindex — keep them out of the sitemap.

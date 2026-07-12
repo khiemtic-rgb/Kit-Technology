@@ -119,7 +119,8 @@ export function localePrefix(locale: Locale): string {
 }
 
 export function pageUrl(locale: Locale, path: string): string {
-  return `${localePrefix(locale)}/${path}`;
+  const joined = `${localePrefix(locale)}/${path}`.replace(/\/{2,}/g, '/');
+  return joined.endsWith('/') ? joined : `${joined}/`;
 }
 
 export function getPage(locale: Locale, slug: string): PageEntry | undefined {

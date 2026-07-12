@@ -72,7 +72,7 @@ export function buildInsightStructuredData(
         isPartOf: {
           '@type': 'Blog',
           name: data.locale === 'vi' ? 'KIT Knowledge Hub' : 'KIT Knowledge Hub',
-          url: absoluteUrl(data.locale === 'vi' ? '/vi/blog' : '/en/insights'),
+          url: absoluteUrl(data.locale === 'vi' ? '/vi/blog/' : '/en/insights/'),
         },
       },
       ...(data.category === 'faq'
@@ -99,13 +99,13 @@ export function buildInsightStructuredData(
             '@type': 'ListItem',
             position: 1,
             name: data.locale === 'vi' ? 'Trang chủ' : 'Home',
-            item: absoluteUrl(data.locale === 'vi' ? '/vi' : '/en'),
+            item: absoluteUrl(data.locale === 'vi' ? '/vi/' : '/en/'),
           },
           {
             '@type': 'ListItem',
             position: 2,
             name: data.locale === 'vi' ? 'Kiến thức' : 'Insights',
-            item: absoluteUrl(data.locale === 'vi' ? '/vi/blog' : '/en/insights'),
+            item: absoluteUrl(data.locale === 'vi' ? '/vi/blog/' : '/en/insights/'),
           },
           {
             '@type': 'ListItem',

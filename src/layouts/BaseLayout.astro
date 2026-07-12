@@ -41,7 +41,6 @@ const m = t(locale);
 const pageDescription = description ?? m.meta.description;
 const fullTitle = title === m.meta.siteName ? `${title} — ${m.meta.tagline}` : `${title} — ${m.meta.siteName}`;
 const ogImage = absoluteUrl(image ?? DEFAULT_OG_IMAGE);
-const canonical = canonicalPath ? absoluteUrl(canonicalPath) : new URL(Astro.url.pathname, SITE_URL).href;
 const ogLocale = locale === 'en' ? 'en_US' : 'vi_VN';
 const alternateLocale: Locale = locale === 'vi' ? 'en' : 'vi';
 const alternatePath = alternateHref ?? getAlternateLocalePath(Astro.url.pathname);
@@ -53,6 +52,10 @@ const articleModified = article?.modifiedTime ?? article?.publishedTime;
 const googleVerification =
   import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION?.trim() ||
   'DgsLjPbVvbfSwsRY2IxiiBXgaPTjak9y26CYFFMfe6M';
+const canonicalRaw = canonicalPath
+  ? absoluteUrl(canonicalPath)
+  : new URL(Astro.url.pathname, SITE_URL).href;
+const canonical = absoluteUrl(canonicalRaw.replace(SITE_URL, '') || '/');
 ---
 
 <!doctype html>
@@ -75,7 +78,7 @@ const googleVerification =
     {emitHreflangAlternate && (
       <link rel="alternate" hreflang={alternateLocale} href={absoluteUrl(alternatePath)} />
     )}
-    {!noIndex && <link rel="alternate" hreflang="x-default" href={absoluteUrl('/vi')} />}
+    {!noIndex && <link rel="alternate" hreflang="x-default" href={absoluteUrl('/vi/')} />}
     <link rel="icon" type="image/png" href="/images/logo-kit.png" />
     <link rel="apple-touch-icon" href="/images/logo-kit.png" />
     <title>{fullTitle}</title>

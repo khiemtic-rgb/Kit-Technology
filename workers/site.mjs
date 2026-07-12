@@ -1,5 +1,5 @@
 /**
- * Cloudflare Cron — triggers GitHub Actions daily deploy (more reliable than GitHub schedule).
+ * Cloudflare Worker — static assets + SEO redirects + cron → GitHub Actions.
  * One-time setup: Cloudflare Dashboard → Workers → kittech → Settings → Variables
  *   GITHUB_PAT = fine-grained token with Actions: read + write on this repo
  */
@@ -33,10 +33,24 @@ async function triggerGithubWorkflow(env) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
-    // Permanent home redirect for SEO (avoid soft meta-refresh from static HTML).
-    if (url.pathname === '/' || url.pathname === '') {
-      return Response.redirect(`${url.origin}/vi`, 301);
+
+    // Prefer apex host (avoid www + non-www duplicates in Google).
+    if (url.hostname === 'www.kittech.vn') {
+      url.hostname = 'kittech.vn';
+      return Response.redirect(url.toString(), 301);
     }
+
+    if (url.pathname === '/' || url.pathname === '') {
+      return Response.redirect(`${url.origin}/vi/`, 301);
+    }
+
+    // Permanent trailing slash — Cloudflare static dirs return 200 on /path/, 307 without.
+    const isFile = /\.[a-zA-Z0-9]+$/.test(url.pathname);
+    if (!isFile && !url.pathname.endsWith('/')) {
+      url.pathname = `${url.pathname}/`;
+      return Response.redirect(url.toString(), 301);
+    }
+
     return env.ASSETS.fetch(request);
   },
 
