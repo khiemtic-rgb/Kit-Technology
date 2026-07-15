@@ -24,8 +24,8 @@ import {
   poolFilePath,
   poolStats,
 } from './lib/hero-pool.ts';
+import { generateArticleContent, hasGeminiKey } from './lib/gemini.ts';
 import {
-  generateArticleContent,
   generateHeroImageFromTitle,
   hasOpenAiKey,
   saveGeneratedImage,
@@ -305,9 +305,9 @@ async function main() {
     return;
   }
 
-  if (!hasOpenAiKey()) {
-    console.warn('OPENAI_API_KEY is not set.');
-    console.warn('Create .env with OPENAI_API_KEY=sk-... then run again.');
+  if (!hasGeminiKey()) {
+    console.warn('GEMINI_API_KEY is not set.');
+    console.warn('Create .env with GEMINI_API_KEY=... (Google AI Studio) then run again.');
     process.exit(1);
   }
 

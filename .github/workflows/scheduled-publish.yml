@@ -66,18 +66,19 @@ jobs:
             echo "Daily catch-up — today only."
           fi
 
-      - name: Auto-publish articles and hero images (OpenAI)
+      - name: Auto-publish articles and hero images (Gemini)
         id: auto_publish
         continue-on-error: true
         env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_MODEL: ${{ vars.GEMINI_MODEL }}
           LOCALE: vi
           MAX_ARTICLES_PER_RUN: ${{ env.MAX_ARTICLES_PER_RUN || '2' }}
           DAYS_AHEAD: ${{ env.DAYS_AHEAD || '0' }}
           HERO_IMAGE_MODE: pool
         run: |
-          if [ -z "$OPENAI_API_KEY" ]; then
-            echo "::warning::OPENAI_API_KEY not set — skip content generation, deploy only."
+          if [ -z "$GEMINI_API_KEY" ]; then
+            echo "::warning::GEMINI_API_KEY not set — skip content generation, deploy only."
             exit 0
           fi
           npm run content:publish
@@ -154,13 +155,13 @@ jobs:
       - name: Fail if today's articles are missing
         if: steps.verify_publish.outcome == 'failure'
         run: |
-          echo "::error::Today's scheduled articles are not in the repo. Run weekly prep or check OpenAI logs."
+          echo "::error::Today's scheduled articles are not in the repo. Run weekly prep or check Gemini logs."
           exit 1
 
       - name: Warn if auto-publish had errors
         if: steps.auto_publish.outcome == 'failure'
         run: |
-          echo "::warning::Auto-publish reported errors — check OpenAI / hero image logs. Continuing if verify passed."
+          echo "::warning::Auto-publish reported errors — check Gemini / hero image logs. Continuing if verify passed."
 
       - name: Fail if deploy failed
         if: steps.cf_deploy.outputs.configured == 'true' && steps.cf_deploy.outputs.success != 'true'
