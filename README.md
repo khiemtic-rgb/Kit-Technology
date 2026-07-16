@@ -65,7 +65,7 @@ Kit-Technology/
 ## Liên hệ & form
 
 - Hotline: 0984.660.399
-- Email: khiemtic@gmail.com
+- Email: contact@kittech.vn
 - Form gửi qua [Formsubmit](https://formsubmit.co) — lần đầu cần xác nhận email.
 
 ## Quy tắc khi sửa

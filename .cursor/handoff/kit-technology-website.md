@@ -22,7 +22,7 @@ Website công ty mẹ **Kit Technology** — giới thiệu công ty, portfolio 
 - i18n: `src/i18n/vi.json`, `src/i18n/en.json`, `src/lib/routes.ts`
 - Lang switcher header + hreflang alternate links
 - Logo & OG: SVG placeholder trong `public/images/`
-- Form liên hệ: Formsubmit → `khiemtic@gmail.com`
+- Form liên hệ: Formsubmit → `contact@kittech.vn`
 - Cloudflare Pages headers: `public/_headers`
 - `.env.example` cho Web Analytics token
 - `.gitignore`, README, `.cursor/rules/kit-technology-site.mdc`

@@ -19,7 +19,7 @@ export function buildOrganizationStructuredData() {
         contactType: 'customer service',
         areaServed: 'VN',
         availableLanguage: ['Vietnamese', 'English'],
-        email: 'khiemtic@gmail.com',
+        email: 'contact@kittech.vn',
       },
     ],
   };
