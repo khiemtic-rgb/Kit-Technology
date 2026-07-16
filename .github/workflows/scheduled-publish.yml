@@ -163,11 +163,11 @@ jobs:
         run: |
           echo "::warning::Auto-publish reported errors — check Gemini / hero image logs. Continuing if verify passed."
 
-      - name: Fail if deploy failed
+      - name: Warn if Wrangler deploy failed (git fallback already ran)
         if: steps.cf_deploy.outputs.configured == 'true' && steps.cf_deploy.outputs.success != 'true'
         run: |
-          echo "::error::Cloudflare Wrangler deploy failed. Update CLOUDFLARE_API_TOKEN with Workers Scripts Edit permission."
-          exit 1
+          echo "::warning::Cloudflare Wrangler deploy failed (token needs Workers Scripts:Edit). Git fallback commit was pushed — Cloudflare Pages/git-connected deploy should pick it up."
+          echo "::notice::Fix CLOUDFLARE_API_TOKEN permissions to restore direct Wrangler deploys."
 
       - name: Publish summary
         if: always()

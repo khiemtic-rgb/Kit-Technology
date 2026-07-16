@@ -43,6 +43,10 @@ function isRateLimited(error: Error): boolean {
   return /failed \(429\)/.test(error.message);
 }
 
+function isFatalAuthError(error: Error): boolean {
+  return /failed \(403\)/.test(error.message) || /API key was reported as leaked/i.test(error.message);
+}
+
 async function geminiRequestOnce(urlPath: string, body: unknown): Promise<unknown> {
   const apiKey = getApiKey();
   if (!apiKey) throw new Error('GEMINI_API_KEY is not set');
@@ -71,6 +75,7 @@ async function geminiRequest(urlPath: string, body: unknown): Promise<unknown> {
       return await geminiRequestOnce(urlPath, body);
     } catch (error) {
       lastError = error instanceof Error ? error : new Error(String(error));
+      if (isFatalAuthError(lastError)) throw lastError;
       if (!isRateLimited(lastError) || attempt === RATE_LIMIT_RETRIES) throw lastError;
       const wait = RATE_LIMIT_BASE_MS * attempt;
       console.warn(
@@ -160,6 +165,7 @@ export async function generateArticleContent(input: {
     } catch (error) {
       lastError = error instanceof Error ? error : new Error(String(error));
       console.warn(`  ! Text model ${model} failed: ${lastError.message.split('\n')[0]}`);
+      if (isFatalAuthError(lastError)) break;
     }
   }
 
