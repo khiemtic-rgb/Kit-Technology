@@ -101,6 +101,7 @@ jobs:
             echo "No content changes to commit."
           else
             git commit -m "Publish scheduled Knowledge Hub content"
+            git pull --rebase origin main
             git push
             echo "changed=true" >> "$GITHUB_OUTPUT"
           fi
