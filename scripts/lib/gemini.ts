@@ -6,10 +6,9 @@
 const API_BASE = 'https://generativelanguage.googleapis.com/v1beta';
 
 const TEXT_MODEL_FALLBACKS = [
-  'gemini-2.0-flash',
-  'gemini-2.5-flash-lite',
-  'gemini-2.5-flash',
   'gemini-flash-latest',
+  'gemini-2.0-flash',
+  'gemini-2.5-flash',
 ];
 
 const RATE_LIMIT_RETRIES = 4;
@@ -39,8 +38,8 @@ function sleep(ms: number): Promise<void> {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function isRateLimited(error: Error): boolean {
-  return /failed \(429\)/.test(error.message);
+function isTransientGeminiError(error: Error): boolean {
+  return /failed \((429|503)\)/.test(error.message);
 }
 
 function isFatalAuthError(error: Error): boolean {
@@ -76,10 +75,11 @@ async function geminiRequest(urlPath: string, body: unknown): Promise<unknown> {
     } catch (error) {
       lastError = error instanceof Error ? error : new Error(String(error));
       if (isFatalAuthError(lastError)) throw lastError;
-      if (!isRateLimited(lastError) || attempt === RATE_LIMIT_RETRIES) throw lastError;
+      if (!isTransientGeminiError(lastError) || attempt === RATE_LIMIT_RETRIES) throw lastError;
       const wait = RATE_LIMIT_BASE_MS * attempt;
+      const code = lastError.message.match(/failed \((\d+)\)/)?.[1] ?? '?';
       console.warn(
-        `  · Rate limit 429 — wait ${Math.round(wait / 1000)}s then retry (${attempt}/${RATE_LIMIT_RETRIES})`,
+        `  · Gemini ${code} — wait ${Math.round(wait / 1000)}s then retry (${attempt}/${RATE_LIMIT_RETRIES})`,
       );
       await sleep(wait);
     }
