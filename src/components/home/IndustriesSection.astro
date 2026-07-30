@@ -1,0 +1,80 @@
+---
+import Icon from '../Icon.astro';
+import type { homeContent } from '../../lib/home-content';
+
+interface Props {
+  industries: ReturnType<typeof homeContent>['industries'];
+}
+
+const { industries } = Astro.props;
+---
+
+<section class="section industries">
+  <div class="container">
+    <h2 class="section-title section-title-center">{industries.title}</h2>
+    <ul class="industry-row">
+      {
+        industries.items.map((item) => (
+          <li class="industry-item">
+            <span class="industry-icon">
+              <Icon name={item.icon} size={24} />
+            </span>
+            <span class="industry-label">{item.label}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .industries {
+    background: #fff;
+    padding-bottom: clamp(1.5rem, 4vw, 2.5rem);
+  }
+
+  .industry-row {
+    display: grid;
+    gap: 1.25rem 0.5rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  @media (min-width: 640px) {
+    .industry-row {
+      grid-template-columns: repeat(9, minmax(0, 1fr));
+    }
+  }
+
+  .industry-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: center;
+  }
+
+  .industry-icon {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 14px;
+    background: #eef4ff;
+    color: var(--color-primary);
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .industry-item:hover .industry-icon {
+    background: var(--color-primary);
+    color: #fff;
+  }
+
+  .industry-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--color-navy);
+  }
+</style>

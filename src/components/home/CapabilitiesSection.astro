@@ -1,0 +1,129 @@
+---
+import Icon from '../Icon.astro';
+import type { homeContent } from '../../lib/home-content';
+
+interface Props {
+  capabilities: ReturnType<typeof homeContent>['capabilities'];
+}
+
+const { capabilities } = Astro.props;
+---
+
+<section class="section capabilities">
+  <div class="container capabilities-grid">
+    <div class="capability-panel">
+      <h2 class="capability-title">{capabilities.aiTitle}</h2>
+      <div class="capability-tiles">
+        {
+          capabilities.ai.map((item) => (
+            <div class="capability-tile">
+              <span class="capability-icon capability-icon-ai">
+                <Icon name={item.icon} size={20} />
+              </span>
+              <span>{item.label}</span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="capability-panel">
+      <h2 class="capability-title">{capabilities.techTitle}</h2>
+      <div class="capability-tiles">
+        {
+          capabilities.tech.map((item) => (
+            <div class="capability-tile">
+              <span class="capability-icon capability-icon-tech">
+                <Icon name={item.icon} size={20} />
+              </span>
+              <span>{item.label}</span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .capabilities {
+    background: #f5f8ff;
+  }
+
+  .capabilities-grid {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 900px) {
+    .capabilities-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .capability-panel {
+    padding: 1.5rem 1.25rem;
+    border: 1px solid var(--color-border);
+    border-radius: 18px;
+    background: #fff;
+    box-shadow: 0 12px 34px rgba(11, 37, 69, 0.06);
+  }
+
+  .capability-title {
+    margin: 0 0 1.25rem;
+    text-align: center;
+    font-size: 1.15rem;
+    color: var(--color-navy);
+  }
+
+  .capability-tiles {
+    display: grid;
+    gap: 0.65rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  @media (min-width: 560px) {
+    .capability-tiles {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+  }
+
+  .capability-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.85rem 0.4rem;
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: var(--color-navy);
+    text-align: center;
+    transition: border-color 0.15s, transform 0.15s;
+  }
+
+  .capability-tile:hover {
+    border-color: rgba(22, 104, 220, 0.35);
+    transform: translateY(-2px);
+  }
+
+  .capability-icon {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 10px;
+  }
+
+  .capability-icon-ai {
+    background: rgba(124, 58, 237, 0.12);
+    color: #7c3aed;
+  }
+
+  .capability-icon-tech {
+    background: rgba(22, 104, 220, 0.12);
+    color: var(--color-primary);
+  }
+</style>

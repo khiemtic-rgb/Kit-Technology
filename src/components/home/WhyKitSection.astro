@@ -1,0 +1,87 @@
+---
+import Icon from '../Icon.astro';
+import type { homeContent } from '../../lib/home-content';
+
+interface Props {
+  why: ReturnType<typeof homeContent>['why'];
+}
+
+const { why } = Astro.props;
+---
+
+<section class="section why">
+  <div class="container">
+    <h2 class="section-title section-title-center section-title-light">{why.title}</h2>
+    <div class="why-grid">
+      {
+        why.items.map((item) => (
+          <div class="why-item">
+            <span class="why-icon">
+              <Icon name={item.icon} size={22} />
+            </span>
+            <p class="why-title">{item.title}</p>
+            <p class="why-desc">{item.desc}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .why {
+    background: linear-gradient(180deg, #102f56 0%, #0b2545 100%);
+  }
+
+  .why-grid {
+    display: grid;
+    gap: 1.5rem 1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (min-width: 640px) {
+    .why-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1040px) {
+    .why-grid {
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+    }
+  }
+
+  .why-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.3rem;
+  }
+
+  .why-icon {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 0.35rem;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: #7db4ff;
+  }
+
+  .why-title {
+    margin: 0;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .why-desc {
+    margin: 0;
+    font-size: 0.8rem;
+    line-height: 1.5;
+    color: #9fb3ce;
+  }
+</style>

@@ -2,138 +2,33 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
-import HeroBanner from '../../components/HeroBanner.astro';
+import HomeHero from '../../components/home/HomeHero.astro';
+import PlatformMap from '../../components/home/PlatformMap.astro';
+import EcosystemSection from '../../components/home/EcosystemSection.astro';
+import IndustriesSection from '../../components/home/IndustriesSection.astro';
+import CapabilitiesSection from '../../components/home/CapabilitiesSection.astro';
+import WhyKitSection from '../../components/home/WhyKitSection.astro';
+import HomeInsights from '../../components/home/HomeInsights.astro';
+import HomeCta from '../../components/home/HomeCta.astro';
 import { t } from '../../i18n';
-import { pageUrl } from '../../lib/site-map';
+import { homeContent } from '../../lib/home-content';
 import '../../styles/global.css';
 
 const m = t('vi');
-const h = m.home;
+const home = homeContent('vi');
 ---
 
 <BaseLayout title={m.meta.siteName} description={m.meta.description} locale="vi" canonicalPath="/vi/">
   <Header slot="header" locale="vi" />
 
-  <HeroBanner locale="vi" />
-
-  <section class="section hero-products-section">
-    <div class="container">
-      <div class="hero-product-row hero-product-row-light">
-        {
-          h.heroProducts.map((item) => (
-            <a class="hero-product-card hero-product-card-light" href={item.href}>
-              <strong>{item.name}</strong>
-              <span>{item.tagline}</span>
-            </a>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <section class="section section-alt">
-    <div class="container">
-      <h2 class="section-title">{h.whatWeDoTitle}</h2>
-      <div class="card-grid">
-        {
-          h.whatWeDo.map((item) => (
-            <a class="card card-link" href={item.href}>
-              <h3>{item.title}</h3>
-              <p>{item.desc}</p>
-            </a>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <h2 class="section-title">{h.featuredTitle}</h2>
-      <article class="featured-novixa">
-        <div class="featured-novixa-content">
-          <p class="featured-label">{h.featuredName}</p>
-          <p class="featured-desc">{h.featuredDesc}</p>
-          <div class="tag-row">
-            {h.featuredTags.map((tag) => <span class="tag">{tag}</span>)}
-          </div>
-          <p style="margin-top: 1.25rem">
-            <a class="btn btn-accent" href={h.featuredUrl} target="_blank" rel="noopener noreferrer">
-              {h.featuredCta}
-            </a>
-          </p>
-        </div>
-        <div class="featured-visual" aria-hidden="true">
-          <div class="mock-panel mock-dashboard">Bảng điều khiển</div>
-          <div class="mock-panel mock-mobile">Mobile · POS · AI</div>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <section class="section section-alt">
-    <div class="container">
-      <h2 class="section-title">{h.processTitle}</h2>
-      <p class="section-intro">{h.processNote}</p>
-      <ol class="process-steps">
-        {h.processSteps.map((step) => <li>{step}</li>)}
-      </ol>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <h2 class="section-title">{h.techTitle}</h2>
-      <ul class="tech-icons">
-        {h.techStack.map((name) => <li>{name}</li>)}
-      </ul>
-    </div>
-  </section>
-
-  <section class="section section-dark">
-    <div class="container">
-      <h2 class="section-title section-title-light">{h.whyTitle}</h2>
-      <div class="stat-grid">
-        {
-          h.whyItems.map((item) => (
-            <div class="stat-card">
-              <p class="stat-value">{item.value}</p>
-              <p class="stat-label">{item.label}</p>
-            </div>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <h2 class="section-title">{h.caseTitle}</h2>
-      <p class="section-intro">{h.caseSubtitle}</p>
-      <ol class="timeline">
-        {h.caseTimeline.map((step) => <li>{step}</li>)}
-      </ol>
-      <p style="margin-top: 1.5rem">
-        <a class="btn btn-primary" href={h.caseHref}>{h.caseCta}</a>
-      </p>
-    </div>
-  </section>
-
-  <section class="section section-alt">
-    <div class="container">
-      <h2 class="section-title">{h.blogTitle}</h2>
-      <div class="topic-grid">
-        {
-          h.blogTopics.map((topic) => (
-            <a class="topic-card" href={topic.href}>{topic.label}</a>
-          ))
-        }
-      </div>
-      <p style="margin-top: 1.5rem">
-        <a class="btn btn-secondary" href={pageUrl('vi', 'blog')}>{h.blogCta}</a>
-      </p>
-    </div>
-  </section>
+  <HomeHero hero={home.hero} />
+  <PlatformMap platform={home.platform} />
+  <EcosystemSection ecosystem={home.ecosystem} />
+  <IndustriesSection industries={home.industries} />
+  <CapabilitiesSection capabilities={home.capabilities} />
+  <WhyKitSection why={home.why} />
+  <HomeInsights insights={home.insights} locale="vi" />
+  <HomeCta cta={home.cta} />
 
   <Footer slot="footer" locale="vi" />
 </BaseLayout>

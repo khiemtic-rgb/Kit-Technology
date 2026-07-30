@@ -1,14 +1,16 @@
 {
   "meta": {
     "siteName": "KIT Technology",
-    "tagline": "AI First Software Company",
-    "description": "KIT Technology — building AI-powered digital platforms. Flagship product: Novixa Healthcare SaaS.",
+    "tagline": "AI Platform for Enterprise Digital Solutions",
+    "description": "KIT Technology builds the AI platform that lets businesses ship digital applications and solutions on one unified foundation.",
     "keywords": "kit technology, ai first, saas, healthcare, novixa, enterprise platform"
   },
   "nav": {
     "home": "Home",
+    "platform": "Platform",
+    "login": "Login",
     "contact": "Contact",
-    "contactCta": "Book a consultation",
+    "contactCta": "Contact Us",
     "menuOpen": "Open menu",
     "menuClose": "Close menu",
     "langVi": "Tiếng Việt",
@@ -117,13 +119,22 @@
   },
   "footer": {
     "since": "Since 2015",
-    "tagline": "AI First Software Company",
+    "tagline": "AI Platform & Digital Solutions",
+    "desc": "KIT Technology builds the AI platform and industry-specific digital solutions on top of it.",
     "locations": ["Hanoi", "Thai Nguyen"],
     "rights": "All rights reserved by KIT Technology.",
     "columns": {
       "products": "Products",
+      "platform": "Platform",
       "solutions": "Solutions",
       "company": "Company"
+    },
+    "newsletter": {
+      "title": "Newsletter",
+      "desc": "Subscribe for the latest from KIT Technology.",
+      "placeholder": "Your email address",
+      "cta": "Subscribe",
+      "subject": "Newsletter signup from kittech.vn"
     },
     "social": {
       "linkedin": "LinkedIn",

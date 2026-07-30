@@ -1,14 +1,16 @@
 {
   "meta": {
     "siteName": "KIT Technology",
-    "tagline": "Công ty phần mềm AI First",
-    "description": "KIT Technology — xây dựng nền tảng số ứng dụng AI. Sản phẩm tiêu biểu: Novixa Healthcare SaaS.",
+    "tagline": "AI Platform for Enterprise Digital Solutions",
+    "description": "KIT Technology xây dựng nền tảng AI giúp doanh nghiệp phát triển các ứng dụng và giải pháp số trên cùng một Platform thống nhất.",
     "keywords": "KIT Technology, kittech.vn, AI First, phần mềm nhà thuốc, Novixa, SaaS y tế, chuyển đổi số nhà thuốc, doanh nghiệp AI, Flutter, Cloud Native"
   },
   "nav": {
     "home": "Trang chủ",
+    "platform": "Platform",
+    "login": "Đăng nhập",
     "contact": "Liên hệ",
-    "contactCta": "Đặt lịch tư vấn",
+    "contactCta": "Liên hệ",
     "menuOpen": "Mở menu",
     "menuClose": "Đóng menu",
     "langVi": "Tiếng Việt",
@@ -160,13 +162,22 @@
   },
   "footer": {
     "since": "Từ 2015",
-    "tagline": "Công ty phần mềm AI First",
+    "tagline": "AI Platform & Digital Solutions",
+    "desc": "KIT Technology xây dựng nền tảng AI và các giải pháp số chuyên biệt cho từng ngành.",
     "locations": ["Hà Nội", "Thái Nguyên"],
     "rights": "Bản quyền thuộc KIT Technology.",
     "columns": {
       "products": "Sản phẩm",
+      "platform": "Platform",
       "solutions": "Giải pháp",
-      "company": "Giới thiệu"
+      "company": "Công ty"
+    },
+    "newsletter": {
+      "title": "Bản tin",
+      "desc": "Đăng ký nhận tin mới nhất từ KIT Technology.",
+      "placeholder": "Email của bạn",
+      "cta": "Đăng ký",
+      "subject": "Đăng ký bản tin từ kittech.vn"
     },
     "social": {
       "linkedin": "LinkedIn",

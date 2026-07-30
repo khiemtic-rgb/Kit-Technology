@@ -1,0 +1,182 @@
+---
+import Icon from '../Icon.astro';
+import type { homeContent } from '../../lib/home-content';
+
+interface Props {
+  platform: ReturnType<typeof homeContent>['platform'];
+}
+
+const { platform } = Astro.props;
+---
+
+<section class="section platform" id="platform">
+  <div class="container">
+    <h2 class="section-title section-title-center">
+      {platform.title} <span class="platform-accent">{platform.titleAccent}</span>
+    </h2>
+    <p class="section-intro section-intro-center">{platform.intro}</p>
+
+    <div class="platform-panel">
+      <p class="platform-label">{platform.coreLabel}</p>
+      <div class="platform-chips">
+        {
+          platform.capabilities.map((item) => (
+            <div class="platform-chip">
+              <span class="platform-chip-icon">
+                <Icon name={item.icon} size={20} />
+              </span>
+              <span class="platform-chip-label">{item.label}</span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="platform-arrow" aria-hidden="true">
+      <Icon name="arrowDown" size={22} />
+    </div>
+
+    <div class="platform-panel platform-panel-solutions">
+      <p class="platform-label">{platform.ecosystemLabel}</p>
+      <div class="platform-chips platform-chips-solutions">
+        {
+          platform.solutions.map((item) => (
+            <div class="platform-chip platform-chip-solution">
+              <span class="platform-chip-icon" style={`color:${item.accent};background:${item.accent}1a`}>
+                <Icon name={item.icon} size={20} />
+              </span>
+              <span class="platform-chip-text">
+                <strong>{item.label}</strong>
+                <em>{item.sub}</em>
+              </span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .platform {
+    background: #fff;
+  }
+
+  .platform-accent {
+    color: var(--color-primary);
+  }
+
+  .platform-panel {
+    padding: 1.5rem 1.25rem;
+    border: 1px solid var(--color-border);
+    border-radius: 18px;
+    background: linear-gradient(180deg, #f7faff 0%, #ffffff 100%);
+    box-shadow: 0 12px 34px rgba(11, 37, 69, 0.06);
+  }
+
+  .platform-panel-solutions {
+    background: linear-gradient(180deg, #ffffff 0%, #f7faff 100%);
+  }
+
+  .platform-label {
+    margin: 0 0 1.15rem;
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: var(--color-primary);
+  }
+
+  .platform-chips {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .platform-chips-solutions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (min-width: 640px) {
+    .platform-chips {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .platform-chips-solutions {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1000px) {
+    .platform-chips-solutions {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+    }
+  }
+
+  .platform-chip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.9rem 0.6rem;
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    background: #fff;
+    text-align: center;
+    transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+  }
+
+  .platform-chip:hover {
+    border-color: rgba(22, 104, 220, 0.35);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(11, 37, 69, 0.08);
+  }
+
+  .platform-chip-icon {
+    display: grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 12px;
+    background: rgba(22, 104, 220, 0.1);
+    color: var(--color-primary);
+  }
+
+  .platform-chip-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    line-height: 1.3;
+    color: var(--color-navy);
+  }
+
+  .platform-chip-solution {
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    padding: 0.85rem 0.9rem;
+  }
+
+  .platform-chip-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .platform-chip-text strong {
+    font-size: 0.95rem;
+    color: var(--color-navy);
+  }
+
+  .platform-chip-text em {
+    font-style: normal;
+    font-size: 0.75rem;
+    color: var(--color-muted);
+  }
+
+  .platform-arrow {
+    display: grid;
+    place-items: center;
+    padding: 0.85rem 0;
+    color: var(--color-primary);
+  }
+</style>

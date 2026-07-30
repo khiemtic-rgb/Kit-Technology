@@ -1,7 +1,9 @@
 ---
+import Icon from './Icon.astro';
 import { t, type Locale } from '../i18n';
 import { getLocaleFromPath } from '../lib/routes';
 import { pageUrl } from '../lib/site-map';
+import { absoluteUrl } from '../lib/site';
 
 interface Props {
   locale?: Locale;
@@ -9,170 +11,290 @@ interface Props {
 
 const { locale: localeProp } = Astro.props;
 const locale = localeProp ?? getLocaleFromPath(Astro.url.pathname);
+const vi = locale === 'vi';
 const m = t(locale);
 const f = m.footer;
 const co = m.company;
 const year = new Date().getFullYear();
-const companyPath = pageUrl(locale, locale === 'vi' ? 'gioi-thieu' : 'company');
-const contactPath = locale === 'vi' ? '/vi/lien-he' : '/en/contact';
-const link =
-  locale === 'vi'
-    ? {
-        aiAutomation: 'Tự động hóa AI',
-        healthcare: 'Ngành y tế',
-        retail: 'Bán lẻ',
-        aiTransform: 'Chuyển đổi AI',
-        company: 'Giới thiệu',
-        insights: 'Kiến thức',
-        careers: 'Tuyển dụng',
-      }
-    : {
-        aiAutomation: 'AI Automation',
-        healthcare: 'Healthcare',
-        retail: 'Retail',
-        aiTransform: 'AI Transformation',
-        company: 'Company',
-        insights: 'Insights',
-        careers: 'Careers',
-      };
+const contactHref = vi ? '/vi/lien-he/' : '/en/contact/';
+const newsletterNext = absoluteUrl(`${contactHref}?sent=1#contact-form`);
+
+const columns = [
+  {
+    title: f.columns.products,
+    links: [
+      { label: 'Novixa', href: pageUrl(locale, vi ? 'san-pham/novixa' : 'products/novixa') },
+      { label: vi ? 'Tự động hóa AI' : 'AI Automation', href: pageUrl(locale, vi ? 'san-pham/ai-automation' : 'products/ai-automation') },
+      { label: 'AI Agent', href: pageUrl(locale, vi ? 'san-pham/ai-agent' : 'products/ai-agent') },
+      { label: vi ? 'Sản phẩm tương lai' : 'Future Products', href: pageUrl(locale, vi ? 'san-pham/tuong-lai' : 'products/future') },
+    ],
+  },
+  {
+    title: f.columns.platform,
+    links: [
+      { label: vi ? 'Kiến trúc hệ thống' : 'Architecture', href: pageUrl(locale, vi ? 'cong-nghe/kien-truc-he-thong' : 'technology/architecture') },
+      { label: 'AI & LLM', href: pageUrl(locale, vi ? 'cong-nghe/ai' : 'technology/ai') },
+      { label: 'Cloud', href: pageUrl(locale, vi ? 'cong-nghe/cloud' : 'technology/cloud') },
+      { label: vi ? 'Toàn bộ công nghệ' : 'All technology', href: pageUrl(locale, vi ? 'cong-nghe' : 'technology') },
+    ],
+  },
+  {
+    title: f.columns.solutions,
+    links: [
+      { label: vi ? 'Ngành y tế' : 'Healthcare', href: pageUrl(locale, vi ? 'giai-phap/healthcare' : 'solutions/healthcare') },
+      { label: vi ? 'Bán lẻ' : 'Retail', href: pageUrl(locale, vi ? 'giai-phap/retail' : 'solutions/retail') },
+      { label: vi ? 'Chuyển đổi AI' : 'AI Transformation', href: pageUrl(locale, vi ? 'giai-phap/ai-transformation' : 'solutions/ai-transformation') },
+      { label: vi ? 'Nền tảng doanh nghiệp' : 'Enterprise Platform', href: pageUrl(locale, vi ? 'giai-phap/enterprise-platform' : 'solutions/enterprise-platform') },
+    ],
+  },
+  {
+    title: f.columns.company,
+    links: [
+      { label: vi ? 'Giới thiệu' : 'About', href: pageUrl(locale, vi ? 'gioi-thieu' : 'company') },
+      { label: vi ? 'Kiến thức' : 'Insights', href: pageUrl(locale, vi ? 'blog' : 'insights') },
+      { label: vi ? 'Dự án tiêu biểu' : 'Case Studies', href: pageUrl(locale, vi ? 'du-an' : 'projects') },
+      { label: vi ? 'Tuyển dụng' : 'Careers', href: pageUrl(locale, vi ? 'tuyen-dung' : 'careers') },
+      { label: m.nav.contact, href: contactHref },
+    ],
+  },
+];
 ---
 
 <footer class="site-footer">
   <div class="container footer-grid">
     <div class="footer-brand">
-      <p class="footer-name">{m.meta.siteName}</p>
+      <img class="footer-logo" src="/images/logo-kit.png" alt={m.meta.siteName} width="180" height="44" loading="lazy" decoding="async" />
       <p class="footer-tagline">{f.tagline}</p>
-      <p class="footer-locations">{f.locations.join(' · ')}</p>
-      <p class="footer-contact">
-        <a href={`tel:${m.contact.phoneTel}`}>{m.contact.phoneDisplay}</a>
-        ·
-        <a href={`mailto:${m.contact.emailAddress}`}>{m.contact.emailAddress}</a>
-      </p>
-      <div class="footer-legal">
-        <p>{co.legalName}</p>
-        <p>{co.addressShort}</p>
-        <p>{co.taxIdLabel}: {co.taxId}</p>
-      </div>
+      <p class="footer-desc">{f.desc}</p>
+      <ul class="footer-contact">
+        <li>
+          <Icon name="phone" size={16} />
+          <a href={`tel:${m.contact.phoneTel}`}>{m.contact.phoneDisplay}</a>
+        </li>
+        <li>
+          <Icon name="mail" size={16} />
+          <a href={`mailto:${m.contact.emailAddress}`}>{m.contact.emailAddress}</a>
+        </li>
+        <li>
+          <Icon name="pin" size={16} />
+          <span>{co.addressShort}</span>
+        </li>
+      </ul>
     </div>
 
-    <div class="footer-col">
-      <p class="footer-col-title">{f.columns.products}</p>
-      <a href={pageUrl(locale, locale === 'vi' ? 'san-pham/novixa' : 'products/novixa')}>Novixa</a>
-      <a href={pageUrl(locale, locale === 'vi' ? 'san-pham/ai-automation' : 'products/ai-automation')}>{link.aiAutomation}</a>
-      <a href={pageUrl(locale, locale === 'vi' ? 'san-pham/ai-agent' : 'products/ai-agent')}>AI Agent</a>
-    </div>
+    {
+      columns.map((column) => (
+        <div class="footer-col">
+          <p class="footer-col-title">{column.title}</p>
+          {column.links.map((linkItem) => (
+            <a href={linkItem.href}>{linkItem.label}</a>
+          ))}
+        </div>
+      ))
+    }
 
-    <div class="footer-col">
-      <p class="footer-col-title">{f.columns.solutions}</p>
-      <a href={pageUrl(locale, locale === 'vi' ? 'giai-phap/healthcare' : 'solutions/healthcare')}>{link.healthcare}</a>
-      <a href={pageUrl(locale, locale === 'vi' ? 'giai-phap/retail' : 'solutions/retail')}>{link.retail}</a>
-      <a href={pageUrl(locale, locale === 'vi' ? 'giai-phap/ai-transformation' : 'solutions/ai-transformation')}>{link.aiTransform}</a>
-    </div>
-
-    <div class="footer-col">
-      <p class="footer-col-title">{f.columns.company}</p>
-      <a href={companyPath}>{link.company}</a>
-      <a href={pageUrl(locale, locale === 'vi' ? 'blog' : 'insights')}>{link.insights}</a>
-      <a href={pageUrl(locale, locale === 'vi' ? 'tuyen-dung' : 'careers')}>{link.careers}</a>
-      <a href={contactPath}>{m.nav.contact}</a>
+    <div class="footer-col footer-newsletter">
+      <p class="footer-col-title">{f.newsletter.title}</p>
+      <p class="footer-newsletter-desc">{f.newsletter.desc}</p>
+      <form
+        class="footer-newsletter-form"
+        method="POST"
+        action={`https://formsubmit.co/${encodeURIComponent(m.contact.emailAddress)}`}
+      >
+        <input type="hidden" name="_subject" value={f.newsletter.subject} />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_next" value={newsletterNext} />
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+        <label class="sr-only" for="newsletter-email">{f.newsletter.placeholder}</label>
+        <input
+          id="newsletter-email"
+          name="email"
+          type="email"
+          required
+          autocomplete="email"
+          placeholder={f.newsletter.placeholder}
+        />
+        <button type="submit" aria-label={f.newsletter.cta}>
+          <Icon name="arrowRight" size={18} />
+        </button>
+      </form>
     </div>
   </div>
 
   <div class="container footer-bottom">
     <p>© {year} {f.rights} · {f.since}</p>
-    <p class="footer-social">
-      <span>{f.social.linkedin}</span>
-      <span>{f.social.facebook}</span>
-      <span>{f.social.github}</span>
+    <p class="footer-legal">
+      <span>{co.legalName}</span>
+      <span>{co.taxIdLabel}: {co.taxId}</span>
     </p>
   </div>
 </footer>
 
 <style>
   .site-footer {
-    background: var(--color-text);
-    color: #cbd5e1;
+    background: var(--color-navy);
+    color: #9fb3ce;
     padding: 3rem 0 1.5rem;
-    margin-top: 2rem;
-    font-size: 0.9rem;
+    font-size: 0.88rem;
   }
 
   .footer-grid {
     display: grid;
-    gap: 2rem;
-    grid-template-columns: 1.4fr repeat(3, 1fr);
+    gap: 2rem 1.5rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     margin-bottom: 2rem;
   }
 
-  @media (max-width: 768px) {
+  @media (min-width: 720px) {
     .footer-grid {
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
+  }
+
+  @media (min-width: 1040px) {
+    .footer-grid {
+      grid-template-columns: 1.5fr repeat(4, 0.85fr) 1.2fr;
+    }
+  }
+
+  .footer-brand {
+    grid-column: 1 / -1;
+  }
+
+  @media (min-width: 1040px) {
     .footer-brand {
-      grid-column: 1 / -1;
+      grid-column: auto;
     }
   }
 
-  .footer-name {
-    margin: 0 0 0.25rem;
-    font-size: 1.15rem;
-    font-weight: 700;
-    color: #fff;
-  }
-
-  .footer-tagline,
-  .footer-locations {
-    margin: 0.2rem 0;
-    color: #94a3b8;
+  .footer-logo {
+    height: 40px;
+    width: auto;
+    margin-bottom: 0.85rem;
+    filter: brightness(0) invert(1);
   }
 
   .footer-tagline {
-    color: #cbd5e1;
+    margin: 0 0 0.5rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  .footer-desc {
+    margin: 0 0 1rem;
+    max-width: 34ch;
+    line-height: 1.6;
   }
 
   .footer-contact {
-    margin-top: 0.75rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .footer-contact li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+  }
+
+  .footer-contact :global(svg) {
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+    color: #7db4ff;
   }
 
   .footer-contact a {
-    color: #5eead4;
+    color: #cbd9ea;
+    text-decoration: none;
   }
 
-  .footer-legal {
-    margin-top: 1.25rem;
-    padding-top: 1rem;
-    border-top: 1px solid #334155;
-    font-size: 0.78rem;
-    line-height: 1.55;
-    color: #64748b;
-  }
-
-  .footer-legal p {
-    margin: 0.2rem 0;
-  }
-
-  .footer-col-title {
-    margin: 0 0 0.65rem;
-    font-weight: 700;
+  .footer-contact a:hover {
     color: #fff;
-    font-size: 0.82rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
   }
 
   .footer-col {
     display: flex;
     flex-direction: column;
-    gap: 0.35rem;
+    gap: 0.4rem;
+  }
+
+  .footer-col-title {
+    margin: 0 0 0.55rem;
+    font-weight: 700;
+    color: #fff;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 
   .footer-col a {
-    color: #94a3b8;
+    color: #9fb3ce;
     text-decoration: none;
   }
 
   .footer-col a:hover {
-    color: #5eead4;
+    color: #fff;
+  }
+
+  .footer-newsletter {
+    grid-column: 1 / -1;
+  }
+
+  @media (min-width: 1040px) {
+    .footer-newsletter {
+      grid-column: auto;
+    }
+  }
+
+  .footer-newsletter-desc {
+    margin: 0 0 0.75rem;
+    line-height: 1.6;
+  }
+
+  .footer-newsletter-form {
+    display: flex;
+    gap: 0.4rem;
+    max-width: 340px;
+  }
+
+  .footer-newsletter-form input[type='email'] {
+    flex: 1;
+    min-width: 0;
+    padding: 0.6rem 0.8rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(255, 255, 255, 0.07);
+    color: #fff;
+    font: inherit;
+  }
+
+  .footer-newsletter-form input[type='email']::placeholder {
+    color: #7d93ae;
+  }
+
+  .footer-newsletter-form input[type='email']:focus {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 1px;
+  }
+
+  .footer-newsletter-form button {
+    display: grid;
+    place-items: center;
+    width: 2.7rem;
+    border: none;
+    border-radius: 10px;
+    background: var(--color-primary);
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .footer-newsletter-form button:hover {
+    background: var(--color-primary-dark);
   }
 
   .footer-bottom {
@@ -181,14 +303,18 @@ const link =
     justify-content: space-between;
     gap: 0.5rem;
     padding-top: 1.25rem;
-    border-top: 1px solid #334155;
-    font-size: 0.82rem;
-    color: #64748b;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    font-size: 0.78rem;
+    color: #7d93ae;
   }
 
-  .footer-social {
-    display: flex;
-    gap: 1rem;
+  .footer-bottom p {
     margin: 0;
+  }
+
+  .footer-legal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 1rem;
   }
 </style>
