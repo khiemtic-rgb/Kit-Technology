@@ -130,8 +130,8 @@
       "company": "Company"
     },
     "newsletter": {
-      "title": "Newsletter",
-      "desc": "Subscribe for the latest from KIT Technology.",
+      "title": "Stay in touch",
+      "desc": "Get the latest news from KIT Technology.",
       "placeholder": "Your email address",
       "cta": "Subscribe",
       "subject": "Newsletter signup from kittech.vn"

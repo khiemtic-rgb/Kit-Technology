@@ -1,0 +1,210 @@
+---
+import Icon from '../Icon.astro';
+import type { homeContent } from '../../lib/home-content';
+
+interface Props {
+  products: ReturnType<typeof homeContent>['products'];
+}
+
+const { products } = Astro.props;
+---
+
+<section class="section products" id="products">
+  <div class="container products-layout">
+    <div class="products-copy">
+      <p class="products-eyebrow">{products.eyebrow}</p>
+      <h2 class="section-title">{products.title}</h2>
+      <p class="products-intro">{products.intro}</p>
+      <a class="products-all" href={products.allHref}>
+        {products.allCta}
+        <Icon name="arrowRight" size={16} />
+      </a>
+    </div>
+
+    <div class="products-rail" data-products-rail>
+      <div class="products-track">
+        {
+          products.cards.map((card) => (
+            <a
+              class={`product-card tone-${card.tone}`}
+              href={card.href}
+              target={card.external ? '_blank' : undefined}
+              rel={card.external ? 'noopener noreferrer' : undefined}
+            >
+              <span class="product-visual" aria-hidden="true">
+                <span class="product-orb">
+                  <Icon name={card.icon} size={34} />
+                </span>
+              </span>
+              <span class="product-body">
+                <strong>{card.name}</strong>
+                <em>{card.kind}</em>
+                <span class="product-more">
+                  {products.more}
+                  <Icon name="arrowRight" size={15} />
+                </span>
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .products {
+    background: linear-gradient(180deg, #f7faff 0%, #ffffff 100%);
+  }
+
+  .products-layout {
+    display: grid;
+    gap: 2rem;
+  }
+
+  @media (min-width: 960px) {
+    .products-layout {
+      grid-template-columns: minmax(240px, 0.85fr) minmax(0, 1.4fr);
+      align-items: center;
+      gap: 2.5rem;
+    }
+  }
+
+  .products-eyebrow {
+    margin: 0 0 0.65rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--color-primary);
+  }
+
+  .products-copy .section-title {
+    margin-bottom: 0.85rem;
+  }
+
+  .products-intro {
+    margin: 0 0 1.25rem;
+    color: var(--color-muted);
+    max-width: 34ch;
+    line-height: 1.65;
+  }
+
+  .products-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-weight: 600;
+  }
+
+  .products-rail {
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .products-track {
+    display: flex;
+    gap: 1rem;
+    min-width: max-content;
+  }
+
+  .product-card {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    scroll-snap-align: start;
+    border-radius: 18px;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    box-shadow: 0 14px 34px rgba(11, 37, 69, 0.08);
+    text-decoration: none;
+    color: inherit;
+    overflow: hidden;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+
+  .product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(11, 37, 69, 0.12);
+    text-decoration: none;
+  }
+
+  .product-visual {
+    display: grid;
+    place-items: center;
+    aspect-ratio: 1 / 0.92;
+    background: linear-gradient(160deg, #eef4ff, #f8fbff);
+  }
+
+  .tone-green .product-visual {
+    background: linear-gradient(160deg, #e8f8ef, #f7fffb);
+  }
+  .tone-orange .product-visual {
+    background: linear-gradient(160deg, #fff1e6, #fffaf5);
+  }
+  .tone-pink .product-visual {
+    background: linear-gradient(160deg, #fce7f3, #fff7fc);
+  }
+  .tone-cyan .product-visual {
+    background: linear-gradient(160deg, #e0f5ff, #f5fcff);
+  }
+  .tone-teal .product-visual {
+    background: linear-gradient(160deg, #e6f7f4, #f5fffd);
+  }
+
+  .product-orb {
+    display: grid;
+    place-items: center;
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 22px;
+    background: #fff;
+    box-shadow: 0 12px 28px rgba(11, 37, 69, 0.1);
+    color: var(--color-primary);
+  }
+
+  .tone-green .product-orb {
+    color: #16a34a;
+  }
+  .tone-orange .product-orb {
+    color: #f97316;
+  }
+  .tone-pink .product-orb {
+    color: #db2777;
+  }
+  .tone-cyan .product-orb {
+    color: #0ea5e9;
+  }
+  .tone-teal .product-orb {
+    color: #0f766e;
+  }
+
+  .product-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 1rem 1rem 1.1rem;
+  }
+
+  .product-body strong {
+    font-size: 1rem;
+    color: var(--color-navy);
+  }
+
+  .product-body em {
+    font-style: normal;
+    font-size: 0.8rem;
+    color: var(--color-muted);
+  }
+
+  .product-more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+</style>

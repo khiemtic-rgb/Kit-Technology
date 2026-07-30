@@ -4,12 +4,9 @@ import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import HomeHero from '../../components/home/HomeHero.astro';
 import PlatformMap from '../../components/home/PlatformMap.astro';
-import EcosystemSection from '../../components/home/EcosystemSection.astro';
-import IndustriesSection from '../../components/home/IndustriesSection.astro';
-import CapabilitiesSection from '../../components/home/CapabilitiesSection.astro';
+import ProductsSection from '../../components/home/ProductsSection.astro';
 import WhyKitSection from '../../components/home/WhyKitSection.astro';
 import HomeInsights from '../../components/home/HomeInsights.astro';
-import HomeCta from '../../components/home/HomeCta.astro';
 import { t } from '../../i18n';
 import { homeContent } from '../../lib/home-content';
 import '../../styles/global.css';
@@ -23,12 +20,9 @@ const home = homeContent('vi');
 
   <HomeHero hero={home.hero} />
   <PlatformMap platform={home.platform} />
-  <EcosystemSection ecosystem={home.ecosystem} />
-  <IndustriesSection industries={home.industries} />
-  <CapabilitiesSection capabilities={home.capabilities} />
+  <ProductsSection products={home.products} />
   <WhyKitSection why={home.why} />
   <HomeInsights insights={home.insights} locale="vi" />
-  <HomeCta cta={home.cta} />
 
   <Footer slot="footer" locale="vi" />
 </BaseLayout>

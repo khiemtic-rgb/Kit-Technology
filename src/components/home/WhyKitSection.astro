@@ -10,8 +10,8 @@ const { why } = Astro.props;
 ---
 
 <section class="section why">
-  <div class="container">
-    <h2 class="section-title section-title-center section-title-light">{why.title}</h2>
+  <div class="container why-layout">
+    <h2 class="section-title">{why.title}</h2>
     <div class="why-grid">
       {
         why.items.map((item) => (
@@ -19,8 +19,10 @@ const { why } = Astro.props;
             <span class="why-icon">
               <Icon name={item.icon} size={22} />
             </span>
-            <p class="why-title">{item.title}</p>
-            <p class="why-desc">{item.desc}</p>
+            <div>
+              <p class="why-title">{item.title}</p>
+              <p class="why-desc">{item.desc}</p>
+            </div>
           </div>
         ))
       }
@@ -30,58 +32,66 @@ const { why } = Astro.props;
 
 <style>
   .why {
-    background: linear-gradient(180deg, #102f56 0%, #0b2545 100%);
+    background: #f5f8ff;
+  }
+
+  .why-layout {
+    display: grid;
+    gap: 1.75rem;
+  }
+
+  @media (min-width: 900px) {
+    .why-layout {
+      grid-template-columns: minmax(180px, 0.7fr) minmax(0, 1.6fr);
+      align-items: start;
+      gap: 2.5rem;
+    }
   }
 
   .why-grid {
     display: grid;
-    gap: 1.5rem 1rem;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+    grid-template-columns: 1fr;
   }
 
-  @media (min-width: 640px) {
+  @media (min-width: 700px) {
     .why-grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-  }
-
-  @media (min-width: 1040px) {
-    .why-grid {
-      grid-template-columns: repeat(8, minmax(0, 1fr));
+      grid-template-columns: 1fr 1fr;
     }
   }
 
   .why-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 0.3rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.9rem;
+    align-items: start;
+    padding: 1.1rem 1.15rem;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    border-radius: 16px;
   }
 
   .why-icon {
     display: grid;
     place-items: center;
-    width: 3rem;
-    height: 3rem;
-    margin-bottom: 0.35rem;
-    border-radius: 14px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    color: #7db4ff;
+    width: 2.7rem;
+    height: 2.7rem;
+    border-radius: 12px;
+    background: #eef4ff;
+    color: var(--color-primary);
   }
 
   .why-title {
-    margin: 0;
-    font-size: 0.92rem;
+    margin: 0 0 0.25rem;
+    font-size: 1rem;
     font-weight: 700;
-    color: #fff;
+    color: var(--color-navy);
   }
 
   .why-desc {
     margin: 0;
-    font-size: 0.8rem;
-    line-height: 1.5;
-    color: #9fb3ce;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: var(--color-muted);
   }
 </style>
