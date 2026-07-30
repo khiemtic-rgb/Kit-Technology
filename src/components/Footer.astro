@@ -35,10 +35,10 @@ const columns = [
     title: f.columns.products,
     links: [
       { label: 'Novixa', href: pageUrl(locale, vi ? 'san-pham/novixa' : 'products/novixa') },
-      { label: 'Famixa', href: pageUrl(locale, vi ? 'san-pham/tuong-lai' : 'products/future') },
+      { label: 'Famixa', href: 'https://famixa.vn', external: true },
       { label: 'Spa OS', href: pageUrl(locale, vi ? 'san-pham/tuong-lai' : 'products/future') },
       { label: 'Clinic OS', href: pageUrl(locale, vi ? 'san-pham/tuong-lai' : 'products/future') },
-      { label: vi ? 'Sản phẩm khác' : 'More Products', href: pageUrl(locale, vi ? 'san-pham' : 'products') },
+      { label: 'Vân Đình Trà', href: 'https://vandinhtra.vn', external: true },
     ],
   },
   {
@@ -47,7 +47,7 @@ const columns = [
       { label: vi ? 'Y tế' : 'Healthcare', href: pageUrl(locale, vi ? 'giai-phap/healthcare' : 'solutions/healthcare') },
       { label: vi ? 'Bán lẻ' : 'Retail', href: pageUrl(locale, vi ? 'giai-phap/retail' : 'solutions/retail') },
       { label: vi ? 'Làm đẹp' : 'Beauty', href: pageUrl(locale, vi ? 'giai-phap' : 'solutions') },
-      { label: vi ? 'Nông nghiệp' : 'Agriculture', href: pageUrl(locale, vi ? 'du-an' : 'projects') },
+      { label: vi ? 'Nông nghiệp' : 'Agriculture', href: 'https://vandinhtra.vn', external: true },
       { label: vi ? 'Doanh nghiệp' : 'Enterprise', href: pageUrl(locale, vi ? 'giai-phap/enterprise-platform' : 'solutions/enterprise-platform') },
     ],
   },
@@ -81,7 +81,13 @@ const columns = [
         <div class="footer-col">
           <p class="footer-col-title">{column.title}</p>
           {column.links.map((linkItem) => (
-            <a href={linkItem.href}>{linkItem.label}</a>
+            <a
+              href={linkItem.href}
+              target={'external' in linkItem && linkItem.external ? '_blank' : undefined}
+              rel={'external' in linkItem && linkItem.external ? 'noopener noreferrer' : undefined}
+            >
+              {linkItem.label}
+            </a>
           ))}
         </div>
       ))
