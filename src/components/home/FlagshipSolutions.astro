@@ -1,0 +1,251 @@
+---
+import Icon from '../Icon.astro';
+import type { homeContent } from '../../lib/home-content';
+
+interface Props {
+  flagship: ReturnType<typeof homeContent>['flagship'];
+  embedded?: boolean;
+}
+
+const { flagship, embedded = false } = Astro.props;
+---
+
+<section class:list={['flagship', { section: !embedded, 'flagship-embedded': embedded }]} id={embedded ? undefined : 'products'}>
+  <div class:list={{ container: !embedded }}>
+    {
+      !embedded && (
+        <div class="flagship-head">
+          <p class="eyebrow">{flagship.eyebrow}</p>
+          <h2 class="section-title">{flagship.title}</h2>
+        </div>
+      )
+    }
+
+    <div class="flagship-grid">
+      {
+        flagship.cards.map((card) => (
+          <article class={`flagship-card tone-${card.tone}`}>
+            <div class="flagship-copy">
+              <h3 class="flagship-name">{card.name}</h3>
+              <p class="flagship-kind">{card.kind}</p>
+              <p class="flagship-desc">{card.desc}</p>
+              <a
+                class="flagship-cta"
+                href={card.href}
+                target={card.external ? '_blank' : undefined}
+                rel={card.external ? 'noopener noreferrer' : undefined}
+              >
+                {card.cta}
+                <Icon name="arrowRight" size={15} />
+              </a>
+            </div>
+            <div class="flagship-visual" aria-hidden="true">
+              <img
+                src={`/images/flagship/${card.tone}-art.png`}
+                alt=""
+                width="500"
+                height="420"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .flagship {
+    background: #fff;
+  }
+
+  .flagship.section {
+    padding-top: clamp(1.25rem, 3vw, 2rem);
+    padding-bottom: clamp(2.25rem, 5vw, 3.5rem);
+  }
+
+  .flagship-embedded {
+    background: transparent;
+    margin-top: 0.5rem;
+  }
+
+  .flagship-head {
+    text-align: center;
+    margin-bottom: 1.15rem;
+  }
+
+  .eyebrow {
+    margin: 0 0 0.45rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #0a66ff;
+  }
+
+  .flagship-head .section-title {
+    margin: 0;
+    font-size: clamp(1.75rem, 3.4vw, 2.25rem);
+    letter-spacing: -0.03em;
+    color: #081b3a;
+  }
+
+  .flagship-grid {
+    display: grid;
+    gap: 1.15rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 960px) {
+    .flagship-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+    }
+  }
+
+  .flagship-card {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    align-items: center;
+    min-height: 0;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid transparent;
+    box-shadow: 0 10px 28px rgba(8, 27, 58, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .flagship-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 36px rgba(8, 27, 58, 0.1);
+  }
+
+  .tone-novixa {
+    background: linear-gradient(115deg, #eef8f4 0%, #f3faf7 45%, #f8fcfb 100%);
+    border-color: rgba(22, 163, 74, 0.08);
+  }
+
+  .tone-famixa {
+    background: linear-gradient(115deg, #fff5eb 0%, #fff8f1 45%, #fffcf8 100%);
+    border-color: rgba(234, 88, 12, 0.08);
+  }
+
+  .flagship-copy {
+    z-index: 1;
+    padding: 1.45rem 0.4rem 1.45rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 30ch;
+  }
+
+  .flagship-name {
+    margin: 0;
+    font-size: clamp(1.65rem, 2.6vw, 2rem);
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 1.05;
+  }
+
+  .tone-novixa .flagship-name {
+    color: #168a42;
+  }
+
+  .tone-famixa .flagship-name {
+    color: #f06a00;
+  }
+
+  .flagship-kind {
+    margin: 0.3rem 0 0.65rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: #111827;
+  }
+
+  .flagship-desc {
+    margin: 0 0 1rem;
+    color: #5b6b86;
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .flagship-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    align-self: flex-start;
+    padding: 0.62rem 1.05rem;
+    border-radius: 999px;
+    background: #fff;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+    border: 1.5px solid currentColor;
+    transition: background 0.15s ease;
+  }
+
+  .flagship-cta:hover {
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.72);
+  }
+
+  .tone-novixa .flagship-cta {
+    color: #16a34a;
+  }
+
+  .tone-famixa .flagship-cta {
+    color: #ea580c;
+  }
+
+  .flagship-visual {
+    height: 100%;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0.65rem 0.7rem 0.65rem 0;
+  }
+
+  .flagship-visual img {
+    width: 100%;
+    max-height: 210px;
+    object-fit: contain;
+    object-position: right center;
+  }
+
+  @media (max-width: 700px) {
+    .flagship-card {
+      grid-template-columns: 1fr;
+    }
+
+    .flagship-visual {
+      order: -1;
+      min-height: 160px;
+      justify-content: center;
+      padding: 1rem 1.15rem 0;
+    }
+
+    .flagship-visual img {
+      max-height: 180px;
+      object-position: center;
+    }
+
+    .flagship-copy {
+      max-width: none;
+      padding: 0.9rem 1.25rem 1.25rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .flagship-card {
+      transition: none;
+    }
+
+    .flagship-card:hover {
+      transform: none;
+    }
+  }
+</style>

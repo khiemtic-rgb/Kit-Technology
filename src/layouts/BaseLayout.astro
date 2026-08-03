@@ -72,15 +72,21 @@ const canonical = absoluteUrl(canonicalRaw.replace(SITE_URL, '') || '/');
       <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     )}
     {googleVerification && <meta name="google-site-verification" content={googleVerification} />}
-    <meta name="theme-color" content="#1668dc" />
+    <meta name="theme-color" content="#0A66FF" />
     <link rel="canonical" href={canonical} />
     {!noIndex && <link rel="alternate" hreflang={locale} href={canonical} />}
     {emitHreflangAlternate && (
       <link rel="alternate" hreflang={alternateLocale} href={absoluteUrl(alternatePath)} />
     )}
     {!noIndex && <link rel="alternate" hreflang="x-default" href={absoluteUrl('/vi/')} />}
-    <link rel="icon" type="image/png" href="/images/logo-kit.png" />
-    <link rel="apple-touch-icon" href="/images/logo-kit.png" />
+    <link rel="icon" type="image/png" href="/images/logo-kit-mark.png" />
+    <link rel="apple-touch-icon" href="/images/logo-kit-mark.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
     <title>{fullTitle}</title>
 
     <meta property="og:site_name" content={SITE_NAME} />

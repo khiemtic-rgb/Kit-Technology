@@ -1,0 +1,1044 @@
+---
+import Icon from '../Icon.astro';
+import type { Locale } from '../../i18n';
+import { platformContent } from '../../lib/platform-content';
+import PlatformHeroHub from './PlatformHeroHub.astro';
+import PlatformSolArt from './PlatformSolArt.astro';
+import PlatformCtaCube from './PlatformCtaCube.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const p = platformContent(locale);
+---
+
+<div class="pp">
+  <section class="pp-hero">
+    <div class="container pp-hero-grid">
+      <div class="pp-hero-copy">
+        <h1>
+          <span class="pp-hero-title">{p.hero.title}</span>
+          <span class="pp-hero-accent">{p.hero.accent}</span>
+        </h1>
+        <p class="pp-hero-lead">{p.hero.lead}</p>
+        <div class="pp-hero-actions">
+          <a class="btn btn-primary" href={p.hero.primaryHref}>
+            {p.hero.primaryCta}
+            <Icon name="arrowRight" size={16} />
+          </a>
+          <a class="btn btn-ghost" href={p.hero.secondaryHref}>
+            <Icon name="document" size={16} />
+            {p.hero.secondaryCta}
+          </a>
+        </div>
+      </div>
+      <div class="pp-hero-visual">
+        <PlatformHeroHub />
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-solutions">
+    <div class="container pp-solutions-grid">
+      <div class="pp-solutions-copy">
+        <p class="pp-eyebrow">{p.solutions.eyebrow}</p>
+        <h2>{p.solutions.title}</h2>
+        <p class="pp-solutions-lead">{p.solutions.lead}</p>
+        <a class="pp-text-link" href={p.solutions.linkHref}>
+          {p.solutions.linkLabel}
+          <Icon name="arrowRight" size={15} />
+        </a>
+      </div>
+
+      <div class="pp-tree">
+        <div class="pp-tree-hub">{p.solutions.hubLabel}</div>
+        <div class="pp-tree-branches" aria-hidden="true"></div>
+        <div class="pp-tree-cards">
+          {
+            p.solutions.cards.map((card) => (
+              <article class={`pp-sol-card tone-${card.tone}`}>
+                <div class="pp-sol-copy">
+                  <h3>
+                    <a
+                      class="pp-sol-name"
+                      href={card.href}
+                      target={card.external ? '_blank' : undefined}
+                      rel={card.external ? 'noopener noreferrer' : undefined}
+                    >
+                      {card.name}
+                    </a>
+                  </h3>
+                  <p class="pp-sol-kind">{card.kind}</p>
+                  <p class="pp-sol-desc">{card.desc}</p>
+                </div>
+                <div class="pp-sol-art" aria-hidden="true">
+                  <PlatformSolArt tone={card.tone} />
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-arch" id={p.architecture.id}>
+    <div class="container pp-arch-grid">
+      <div class="pp-arch-copy">
+        <p class="pp-eyebrow">{p.architecture.eyebrow}</p>
+        <h2>{p.architecture.title}</h2>
+        <p>{p.architecture.lead}</p>
+      </div>
+      <div class="pp-layers">
+        {
+          p.architecture.layers.map((layer) => (
+            <div class={`pp-layer tone-${layer.tone}`}>
+              <span class="pp-layer-icon">
+                <Icon name={layer.icon} size={20} />
+              </span>
+              <div class="pp-layer-labels">
+                <strong>{layer.name}</strong>
+                <span>{layer.subtitle}</span>
+              </div>
+              {layer.variant === 'pills' ? (
+                <ul class="pp-layer-pills">
+                  {layer.items.map((item) => (
+                    <li>{item.label}</li>
+                  ))}
+                </ul>
+              ) : (
+                <ul class="pp-layer-items">
+                  {layer.items.map((item) => (
+                    <li>
+                      <Icon name={item.icon} size={16} />
+                      <span>{item.label}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-services">
+    <div class="container pp-split">
+      <div class="pp-split-copy">
+        <p class="pp-eyebrow">{p.services.eyebrow}</p>
+        <h2>{p.services.title}</h2>
+        <p>{p.services.lead}</p>
+      </div>
+      <div class="pp-service-grid">
+        {
+          p.services.items.map((item) => (
+            <article class="pp-service-card">
+              <span class="pp-soft-icon">
+                <Icon name={item.icon} size={20} />
+              </span>
+              <div>
+                <h3>{item.title}</h3>
+                <p>{item.desc}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-ai">
+    <div class="container pp-split pp-ai-grid">
+      <div class="pp-split-copy">
+        <p class="pp-eyebrow">{p.ai.eyebrow}</p>
+        <h2>{p.ai.title}</h2>
+        <p>{p.ai.lead}</p>
+      </div>
+      <ul class="pp-ai-row">
+        {
+          p.ai.items.map((item) => (
+            <li>
+              <span class="pp-ai-cube" aria-hidden="true">
+                <Icon name={item.icon} size={34} class="pp-ai-glyph" strokeWidth={2.2} />
+              </span>
+              <strong>{item.title}</strong>
+              <span class="pp-ai-note">{item.note}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="pp-enterprise">
+    <div class="container pp-split">
+      <div class="pp-split-copy">
+        <p class="pp-eyebrow">{p.enterprise.eyebrow}</p>
+        <h2>{p.enterprise.title}</h2>
+      </div>
+      <div class="pp-enterprise-grid">
+        {
+          p.enterprise.items.map((item) => (
+            <article>
+              <span class="pp-soft-icon">
+                <Icon name={item.icon} size={20} />
+              </span>
+              <div>
+                <h3>{item.title}</h3>
+                <p>{item.desc}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="pp-stack">
+    <div class="container pp-stack-row-wrap">
+      <div class="pp-stack-head">
+        <p class="pp-eyebrow">{p.stack.eyebrow}</p>
+        <h2>{p.stack.title}</h2>
+      </div>
+      <ul class="pp-stack-row">
+        {
+          p.stack.items.map((item) => (
+            <li>
+              <Icon name={item.icon} size={22} />
+              <span>{item.label}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="pp-bottom">
+    <div class="container pp-bottom-grid">
+      <div class="pp-trust">
+        <p class="pp-eyebrow">{p.trust.eyebrow}</p>
+        <div class="pp-trust-cards">
+          {
+            p.trust.items.map((item) =>
+              item.tone === 'soon' ? (
+                <div class={`pp-trust-card tone-${item.tone}`}>
+                  <span>{item.name}</span>
+                </div>
+              ) : (
+                <a
+                  class={`pp-trust-card tone-${item.tone}`}
+                  href={item.href}
+                  target={item.external ? '_blank' : undefined}
+                  rel={item.external ? 'noopener noreferrer' : undefined}
+                >
+                  <strong>{item.name}</strong>
+                  <span>{item.kind}</span>
+                </a>
+              ),
+            )
+          }
+        </div>
+      </div>
+
+      <div class="pp-cta-box">
+        <div>
+          <h2>{p.cta.title}</h2>
+          <p>{p.cta.lead}</p>
+          <div class="pp-cta-actions">
+            <a class="btn btn-light" href={p.cta.primaryHref}>
+              {p.cta.primaryCta}
+              <Icon name="arrowRight" size={15} />
+            </a>
+            <a class="btn btn-ghost-light" href={p.cta.secondaryHref}>
+              {p.cta.secondaryCta}
+              <Icon name="arrowRight" size={15} />
+            </a>
+          </div>
+        </div>
+        <div class="pp-cta-art">
+          <PlatformCtaCube />
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style>
+  .pp {
+    --pp-gap: clamp(1.75rem, 3.8vw, 2.75rem);
+  }
+
+  .pp-eyebrow {
+    margin: 0 0 0.35rem;
+    font-size: var(--eyebrow-size);
+    font-weight: var(--eyebrow-weight);
+    letter-spacing: var(--eyebrow-tracking);
+    text-transform: uppercase;
+    color: var(--color-primary);
+  }
+
+  .pp-split-copy h2,
+  .pp-arch-copy h2,
+  .pp-solutions-copy h2,
+  .pp-stack-head h2 {
+    margin: 0;
+    font-size: var(--section-title);
+    letter-spacing: -0.03em;
+    color: var(--color-navy);
+  }
+
+  .pp-split-copy p,
+  .pp-arch-copy > p {
+    margin: 0.7rem 0 0;
+    color: var(--color-muted);
+    line-height: 1.65;
+    max-width: 36ch;
+    font-size: 0.95rem;
+  }
+
+  .pp-split {
+    display: grid;
+    gap: 1.25rem;
+    align-items: start;
+  }
+
+  /* Shared section rhythm — all two-column blocks share the same right edge */
+  .pp-hero-grid,
+  .pp-solutions-grid,
+  .pp-arch-grid,
+  .pp-split {
+    display: grid;
+    gap: 1.35rem;
+  }
+
+  @media (min-width: 980px) {
+    .pp-hero-grid,
+    .pp-solutions-grid,
+    .pp-arch-grid,
+    .pp-split {
+      grid-template-columns: minmax(260px, 0.78fr) minmax(0, 1.42fr);
+      gap: 1.25rem 2rem;
+    }
+
+    .pp-hero-grid {
+      align-items: center;
+    }
+
+    .pp-solutions-grid,
+    .pp-arch-grid,
+    .pp-split {
+      align-items: start;
+    }
+  }
+
+  /* Hero */
+  .pp-hero {
+    padding: var(--hero-pad-y);
+    background: linear-gradient(180deg, #f4f8ff 0%, #ffffff 68%);
+    overflow: visible;
+  }
+
+  .pp-hero h1 {
+    margin: 0 0 0.85rem;
+    font-size: var(--hero-title);
+    line-height: 1.12;
+    letter-spacing: -0.035em;
+    color: var(--color-navy);
+  }
+
+  .pp-hero-title,
+  .pp-hero-accent {
+    display: block;
+  }
+
+  .pp-hero-accent {
+    color: var(--color-primary);
+  }
+
+  .pp-hero-lead {
+    margin: 0 0 1.1rem;
+    max-width: 42ch;
+    color: var(--color-muted);
+    line-height: 1.65;
+    font-size: var(--hero-lead);
+  }
+
+  .pp-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+  }
+
+  .pp-hero-visual {
+    width: 100%;
+    overflow: visible;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    min-height: clamp(280px, 42vw, 420px);
+  }
+
+  /* Solutions */
+  .pp-solutions {
+    padding: var(--pp-gap) 0;
+    background: #fff;
+  }
+
+  .pp-solutions-lead {
+    margin: 0.7rem 0 0.85rem;
+    color: var(--color-muted);
+    max-width: 34ch;
+    line-height: 1.65;
+    font-size: 0.95rem;
+  }
+
+  .pp-text-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-weight: 650;
+  }
+
+  .pp-tree {
+    display: grid;
+    justify-items: center;
+    gap: 0;
+  }
+
+  .pp-tree-hub {
+    z-index: 1;
+    padding: 0.5rem 1.1rem;
+    border-radius: 10px;
+    background: var(--color-primary);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.9rem;
+    box-shadow: 0 8px 20px rgba(10, 102, 255, 0.22);
+  }
+
+  .pp-tree-branches {
+    width: min(100%, 560px);
+    height: 34px;
+    margin-top: -1px;
+    background:
+      repeating-linear-gradient(
+        to bottom,
+        var(--color-primary) 0 3px,
+        transparent 3px 7px
+      )
+      center top / 2px 16px no-repeat,
+      repeating-linear-gradient(
+        to right,
+        var(--color-primary) 0 4px,
+        transparent 4px 8px
+      )
+      center 16px / calc(100% - 18%) 2px no-repeat,
+      repeating-linear-gradient(
+        to bottom,
+        var(--color-primary) 0 3px,
+        transparent 3px 7px
+      )
+      9% 16px / 2px 18px no-repeat,
+      repeating-linear-gradient(
+        to bottom,
+        var(--color-primary) 0 3px,
+        transparent 3px 7px
+      )
+      50% 16px / 2px 18px no-repeat,
+      repeating-linear-gradient(
+        to bottom,
+        var(--color-primary) 0 3px,
+        transparent 3px 7px
+      )
+      91% 16px / 2px 18px no-repeat;
+    opacity: 0.55;
+  }
+
+  .pp-tree-cards {
+    display: grid;
+    width: 100%;
+    gap: 0.7rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 800px) {
+    .pp-tree-cards {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .pp-sol-card {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(5.5rem, 0.75fr);
+    gap: 0.55rem;
+    align-items: center;
+    padding: 1rem 0.9rem;
+    border-radius: 16px;
+    border: 1px solid var(--color-border);
+    background: #fff;
+    color: inherit;
+    box-shadow: var(--shadow-soft);
+    min-height: 100%;
+    user-select: text;
+    -webkit-user-select: text;
+  }
+
+  .pp-sol-copy h3 {
+    margin: 0;
+    font-size: inherit;
+    font-weight: inherit;
+  }
+
+  .pp-sol-name {
+    display: inline-block;
+    font-size: 1.12rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    text-decoration: none;
+  }
+
+  .pp-sol-name:hover {
+    text-decoration: underline;
+  }
+
+  .pp-sol-kind {
+    display: block;
+    margin: 0.18rem 0 0.45rem;
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: #111827;
+  }
+
+  .pp-sol-desc {
+    margin: 0;
+    font-size: 0.82rem;
+    line-height: 1.5;
+    color: var(--color-muted);
+  }
+
+  .pp-sol-art {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 5.5rem;
+    pointer-events: none;
+  }
+
+  @media (max-width: 560px) {
+    .pp-sol-card {
+      grid-template-columns: 1fr;
+    }
+
+    .pp-sol-art {
+      justify-content: flex-start;
+    }
+  }
+
+  .tone-novixa {
+    background: linear-gradient(180deg, #f3fbf6, #fff);
+    border-color: rgba(22, 163, 74, 0.18);
+  }
+  .tone-novixa .pp-sol-name {
+    color: #168a42;
+  }
+
+  .tone-famixa {
+    background: linear-gradient(180deg, #fff7f0, #fff);
+    border-color: rgba(234, 88, 12, 0.18);
+  }
+  .tone-famixa .pp-sol-name {
+    color: #ea580c;
+  }
+
+  .tone-future {
+    background: linear-gradient(180deg, #f7f3ff, #fff);
+    border-color: rgba(124, 58, 237, 0.18);
+  }
+  .tone-future .pp-sol-name {
+    color: #7c3aed;
+  }
+
+  /* Architecture */
+  .pp-arch {
+    padding: var(--pp-gap) 0;
+    background: var(--color-gray);
+  }
+
+  .pp-layers {
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .pp-layer {
+    display: grid;
+    gap: 0.55rem 0.7rem;
+    align-items: center;
+  }
+
+  @media (min-width: 760px) {
+    .pp-layer {
+      grid-template-columns: 2.45rem minmax(120px, 150px) 1fr;
+    }
+  }
+
+  .pp-layer-icon {
+    display: grid;
+    place-items: center;
+    width: 2.45rem;
+    height: 2.45rem;
+    border-radius: 12px;
+    color: #fff;
+    flex: 0 0 auto;
+  }
+
+  .pp-layer-labels strong {
+    display: block;
+    font-size: 0.88rem;
+    color: var(--color-navy);
+    line-height: 1.25;
+  }
+
+  .pp-layer-labels span {
+    display: block;
+    margin-top: 0.12rem;
+    font-size: 0.74rem;
+    color: var(--color-muted);
+    line-height: 1.3;
+  }
+
+  .pp-layer-items,
+  .pp-layer-pills {
+    list-style: none;
+    margin: 0;
+    padding: 0.55rem 0.65rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.75rem;
+    border-radius: 14px;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    align-items: center;
+  }
+
+  .pp-layer-items li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.22rem;
+    min-width: 3.8rem;
+    color: var(--color-primary);
+    font-size: 0.7rem;
+    font-weight: 650;
+    text-align: center;
+  }
+
+  .pp-layer-pills li {
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+    background: #ecfdf3;
+    color: #15803d;
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+
+  .pp-layer.tone-business .pp-layer-pills li:last-child {
+    background: #f3f4f6;
+    color: #6b7280;
+  }
+
+  .pp-layer.tone-presentation .pp-layer-icon {
+    background: #0a66ff;
+  }
+  .pp-layer.tone-business .pp-layer-icon {
+    background: #16a34a;
+  }
+  .pp-layer.tone-services .pp-layer-icon {
+    background: #7c3aed;
+  }
+  .pp-layer.tone-ai .pp-layer-icon {
+    background: #ea580c;
+  }
+  .pp-layer.tone-infra .pp-layer-icon {
+    background: #1e3a5f;
+  }
+
+  /* Services */
+  .pp-services {
+    padding: var(--pp-gap) 0;
+    background: #fff;
+  }
+
+  .pp-service-grid {
+    display: grid;
+    gap: 0.7rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 700px) {
+    .pp-service-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .pp-service-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .pp-service-card {
+    display: flex;
+    gap: 0.7rem;
+    align-items: flex-start;
+    padding: 0.85rem 0.8rem;
+    border-radius: 14px;
+    background: #fff;
+    border: 1px solid var(--color-border);
+  }
+
+  .pp-service-card h3 {
+    margin: 0 0 0.2rem;
+    font-size: 0.95rem;
+    color: var(--color-navy);
+  }
+
+  .pp-service-card p {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.78rem;
+    line-height: 1.4;
+  }
+
+  .pp-soft-icon {
+    display: grid;
+    place-items: center;
+    width: var(--soft-icon);
+    height: var(--soft-icon);
+    flex: 0 0 auto;
+    border-radius: 10px;
+    background: var(--color-accent-light);
+    color: var(--color-primary);
+  }
+
+  /* AI */
+  .pp-ai {
+    padding: var(--pp-gap) 0;
+    background: #fff;
+    border-top: 1px solid var(--color-border);
+  }
+
+  @media (min-width: 980px) {
+    .pp-ai-grid {
+      align-items: center;
+    }
+  }
+
+  .pp-ai-row {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1rem 0.85rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (min-width: 900px) {
+    .pp-ai-row {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .pp-ai-row {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 0.85rem 0.65rem;
+    }
+  }
+
+  .pp-ai-row li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.45rem;
+    text-align: center;
+    min-width: 0;
+  }
+
+  .pp-ai-cube {
+    display: grid;
+    place-items: center;
+    width: 4.75rem;
+    height: 4.75rem;
+    border-radius: 1.15rem;
+    background: linear-gradient(160deg, #5ea4ff 0%, #0a66ff 58%, #0854d6 100%);
+    color: #fff;
+    box-shadow:
+      0 14px 28px rgba(10, 102, 255, 0.28),
+      inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  }
+
+  .pp-ai-cube :global(.pp-ai-glyph) {
+    width: 2.15rem;
+    height: 2.15rem;
+    stroke-width: 2.25;
+    stroke: #fff;
+    filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.12));
+  }
+
+  .pp-ai-row strong {
+    font-size: 0.9rem;
+    font-weight: 750;
+    color: var(--color-navy);
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+
+  .pp-ai-note {
+    font-size: 0.78rem;
+    color: var(--color-muted);
+    line-height: 1.35;
+    max-width: 14ch;
+  }
+
+  @media (max-width: 640px) {
+    .pp-ai-cube {
+      width: 4.1rem;
+      height: 4.1rem;
+      border-radius: 1rem;
+    }
+
+    .pp-ai-cube :global(.pp-ai-glyph) {
+      width: 1.85rem;
+      height: 1.85rem;
+    }
+  }
+
+  /* Enterprise */
+  .pp-enterprise {
+    padding: var(--pp-gap) 0;
+    background: var(--color-gray);
+  }
+
+  .pp-enterprise-grid {
+    display: grid;
+    gap: 0.7rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 700px) {
+    .pp-enterprise-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .pp-enterprise-grid article {
+    display: flex;
+    gap: 0.7rem;
+    align-items: flex-start;
+    padding: 0.95rem 0.9rem;
+    border-radius: 14px;
+    background: #fff;
+    border: 1px solid var(--color-border);
+  }
+
+  .pp-enterprise-grid h3 {
+    margin: 0 0 0.25rem;
+    font-size: 0.95rem;
+    color: var(--color-navy);
+  }
+
+  .pp-enterprise-grid p {
+    margin: 0;
+    color: var(--color-muted);
+    font-size: 0.84rem;
+    line-height: 1.5;
+  }
+
+  /* Stack */
+  .pp-stack {
+    padding: var(--pp-gap) 0;
+    background: #fff;
+  }
+
+  .pp-stack-row-wrap {
+    display: grid;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  @media (min-width: 980px) {
+    .pp-stack-row-wrap {
+      grid-template-columns: 0.55fr 1.6fr;
+      gap: 1.25rem 1.5rem;
+    }
+  }
+
+  .pp-stack-row {
+    list-style: none;
+    margin: 0;
+    padding: 0.75rem 0.85rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.55rem 0.35rem;
+    border-radius: 14px;
+    background: var(--color-gray);
+    border: 1px solid var(--color-border);
+  }
+
+  .pp-stack-row li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.28rem;
+    min-width: 4.5rem;
+    padding: 0.25rem 0.4rem;
+    color: var(--color-primary);
+    font-weight: 700;
+    font-size: 0.78rem;
+  }
+
+  /* Bottom: trust + CTA */
+  .pp-bottom {
+    padding: 0 0 var(--pp-gap);
+    background: #fff;
+  }
+
+  .pp-bottom-grid {
+    display: grid;
+    gap: 1rem;
+    align-items: stretch;
+  }
+
+  @media (min-width: 980px) {
+    .pp-bottom-grid {
+      grid-template-columns: 0.95fr 1.2fr;
+      gap: 1rem;
+    }
+  }
+
+  .pp-trust {
+    padding: 1rem;
+    border-radius: 18px;
+    border: 1px solid var(--color-border);
+    background: #fff;
+  }
+
+  .pp-trust-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.55rem;
+    margin-top: 0.75rem;
+  }
+
+  .pp-trust-card {
+    display: grid;
+    place-content: center;
+    gap: 0.2rem;
+    min-height: 92px;
+    padding: 0.7rem;
+    border-radius: 14px;
+    border: 1px solid var(--color-border);
+    text-align: center;
+    text-decoration: none;
+    color: inherit;
+    background: #fff;
+  }
+
+  .pp-trust-card strong {
+    font-size: 0.95rem;
+  }
+
+  .pp-trust-card span {
+    font-size: 0.72rem;
+    color: var(--color-muted);
+  }
+
+  .pp-trust-card.tone-novixa strong {
+    color: #168a42;
+  }
+
+  .pp-trust-card.tone-famixa strong {
+    color: #ea580c;
+  }
+
+  .pp-trust-card.tone-soon {
+    background: #f8fafc;
+    color: #94a3b8;
+    font-size: 0.78rem;
+    font-weight: 650;
+    line-height: 1.35;
+  }
+
+  .pp-cta-box {
+    display: grid;
+    gap: 0.85rem;
+    align-items: center;
+    padding: 1.35rem 1.2rem;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #081b3a 0%, #0b2a5c 55%, #0a3a7a 100%);
+    color: #fff;
+    min-height: 100%;
+  }
+
+  @media (min-width: 700px) {
+    .pp-cta-box {
+      grid-template-columns: 1.35fr 0.75fr;
+      padding: 1.4rem 1.35rem;
+    }
+  }
+
+  .pp-cta-box h2 {
+    margin: 0 0 0.55rem;
+    font-size: clamp(1.15rem, 2.2vw, 1.45rem);
+    max-width: 24ch;
+    line-height: 1.25;
+  }
+
+  .pp-cta-box p {
+    margin: 0 0 1rem;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.88rem;
+    line-height: 1.55;
+    max-width: 42ch;
+  }
+
+  .pp-cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+  }
+
+  .btn-light {
+    background: #fff;
+    color: var(--color-navy);
+    border: 1px solid #fff;
+  }
+
+  .btn-light:hover {
+    background: #f1f5f9;
+    color: var(--color-navy);
+  }
+
+  .btn-ghost-light {
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+  }
+
+  .btn-ghost-light:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+  }
+
+  .pp-cta-art {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+</style>

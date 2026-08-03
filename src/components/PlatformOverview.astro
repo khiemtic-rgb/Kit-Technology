@@ -1,0 +1,111 @@
+---
+import Icon from './Icon.astro';
+import type { homeContent } from '../lib/home-content';
+
+interface Props {
+  platform: ReturnType<typeof homeContent>['platform'];
+  intro?: string;
+}
+
+const { platform, intro } = Astro.props;
+---
+
+<section class="platform-page">
+  {intro && <p class="platform-intro">{intro}</p>}
+
+  <ol class="arch">
+    {
+      platform.layers.map((layer, index) => (
+        <li class="arch-item">
+          <div class="arch-node">
+            <span class="arch-icon">
+              <Icon name={layer.icon} size={24} />
+            </span>
+            <span class="arch-label">{layer.label}</span>
+          </div>
+          {index < platform.layers.length - 1 && <span class="arch-dash" aria-hidden="true" />}
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  .platform-page {
+    margin-top: 0.5rem;
+  }
+
+  .platform-intro {
+    margin: 0 auto 2.5rem;
+    max-width: 46ch;
+    text-align: center;
+    color: var(--color-muted);
+    font-size: 1.05rem;
+    line-height: 1.65;
+  }
+
+  .arch {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0.35rem 0;
+  }
+
+  .arch-item {
+    display: flex;
+    align-items: center;
+  }
+
+  .arch-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.7rem;
+    min-width: 106px;
+  }
+
+  .arch-icon {
+    display: grid;
+    place-items: center;
+    width: 4.1rem;
+    height: 4.1rem;
+    border-radius: 16px;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    color: var(--color-primary);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .arch-label {
+    font-size: 0.88rem;
+    font-weight: 650;
+    color: var(--color-navy);
+  }
+
+  .arch-dash {
+    width: 2rem;
+    height: 0;
+    margin: 0 0.15rem 1.55rem;
+    border-top: 2px dashed #c9d4e6;
+  }
+
+  @media (max-width: 800px) {
+    .arch {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.25rem 0.75rem;
+    }
+
+    .arch-item {
+      justify-content: center;
+    }
+
+    .arch-dash {
+      display: none;
+    }
+  }
+</style>

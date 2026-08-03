@@ -1,0 +1,624 @@
+---
+import Icon from '../Icon.astro';
+import type { Locale } from '../../i18n';
+import { companyContent } from '../../lib/company-content';
+import CompanyHeroHub from './CompanyHeroHub.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const p = companyContent(locale);
+---
+
+<div class="co">
+  <section class="co-hero">
+    <div class="container co-hero-grid">
+      <div class="co-hero-copy">
+        <h1>{p.hero.title}</h1>
+        <p>{p.hero.lead}</p>
+        <a class="co-btn-outline" href={p.hero.ctaHref}>
+          {p.hero.cta}
+          <Icon name="arrowRight" size={15} />
+        </a>
+      </div>
+      <div class="co-hero-visual">
+        <CompanyHeroHub />
+      </div>
+    </div>
+  </section>
+
+  <section class="co-beliefs">
+    <div class="container">
+      <p class="co-eyebrow center">{p.beliefs.eyebrow}</p>
+      <ul class="co-beliefs-grid">
+        {
+          p.beliefs.items.map((item) => (
+            <li>
+              <span class="co-soft-icon" aria-hidden="true">
+                <Icon name={item.icon} size={24} strokeWidth={2} />
+              </span>
+              <strong>{item.title}</strong>
+              <span>{item.desc}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="co-mv">
+    <div class="container co-mv-grid">
+      <article class="co-mv-card">
+        <p class="co-eyebrow">{p.missionVision.mission.eyebrow}</p>
+        <h2>{p.missionVision.mission.title}</h2>
+        <div class="co-mv-art mission" aria-hidden="true">
+          <Icon name="target" size={56} strokeWidth={1.6} />
+        </div>
+      </article>
+      <article class="co-mv-card">
+        <p class="co-eyebrow">{p.missionVision.vision.eyebrow}</p>
+        <h2>{p.missionVision.vision.title}</h2>
+        <div class="co-mv-art vision" aria-hidden="true">
+          <Icon name="recommendation" size={56} strokeWidth={1.6} />
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="co-values">
+    <div class="container">
+      <p class="co-eyebrow center">{p.values.eyebrow}</p>
+      <ol class="co-values-grid">
+        {
+          p.values.items.map((item) => (
+            <li>
+              <span class="co-value-no">{item.no}</span>
+              <strong>{item.title}</strong>
+              <span>{item.desc}</span>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="co-journey">
+    <div class="container">
+      <p class="co-eyebrow center">{p.journey.eyebrow}</p>
+      <ol class="co-timeline">
+        {
+          p.journey.items.map((item) => (
+            <li>
+              <span class="co-year">{item.year}</span>
+              <span class="co-dot" aria-hidden="true">
+                <Icon name={item.icon} size={18} strokeWidth={2} />
+              </span>
+              <strong>{item.title}</strong>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="co-products">
+    <div class="container">
+      <p class="co-eyebrow center">{p.products.eyebrow}</p>
+      <div class="co-product-grid">
+        {
+          p.products.items.map((item) => (
+            <article class={`co-product tone-${item.tone}`}>
+              <div class="co-product-body">
+                <span class="co-product-icon" aria-hidden="true">
+                  <Icon name={item.icon} size={22} strokeWidth={2} />
+                </span>
+                <h3>{item.name}</h3>
+                <p class="co-product-kind">{item.kind}</p>
+                <p class="co-product-desc">{item.desc}</p>
+                <a
+                  class="co-product-cta"
+                  href={item.href}
+                  target={item.external ? '_blank' : undefined}
+                  rel={item.external ? 'noopener noreferrer' : undefined}
+                >
+                  {item.cta}
+                  <Icon name="arrowRight" size={15} />
+                </a>
+              </div>
+              <div class="co-product-art" aria-hidden="true">
+                <img src={item.art} alt="" width="280" height="220" loading="lazy" decoding="async" />
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="co-promise">
+    <div class="container">
+      <div class="co-promise-card">
+        <span class="co-quote" aria-hidden="true">“</span>
+        <div>
+          <p class="co-eyebrow">{p.promise.eyebrow}</p>
+          <p class="co-promise-text">{p.promise.quote}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="co-cta">
+    <div class="container co-cta-grid">
+      <h2>{p.cta.title}</h2>
+      <div class="co-cta-actions">
+        <a class="co-btn-light" href={p.cta.primaryHref}>
+          {p.cta.primary}
+          <Icon name="arrowRight" size={15} />
+        </a>
+        <a class="co-btn-ghost" href={p.cta.secondaryHref}>
+          {p.cta.secondary}
+          <Icon name="arrowRight" size={15} />
+        </a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style>
+  .co-eyebrow {
+    margin: 0 0 1rem;
+    color: var(--color-primary);
+    font-size: var(--eyebrow-size);
+    font-weight: var(--eyebrow-weight);
+    letter-spacing: var(--eyebrow-tracking);
+    text-transform: uppercase;
+  }
+
+  .co-eyebrow.center {
+    text-align: center;
+  }
+
+  .co-soft-icon {
+    display: inline-grid;
+    place-items: center;
+    width: var(--soft-icon);
+    height: var(--soft-icon);
+    border-radius: 0.85rem;
+    color: var(--color-primary);
+    background: #eff6ff;
+  }
+
+  .co-hero {
+    padding: var(--hero-pad-y);
+    background: linear-gradient(180deg, #f4f8ff 0%, #ffffff 72%);
+  }
+
+  .co-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(260px, 0.95fr);
+    gap: clamp(1.25rem, 3.5vw, 2.25rem);
+    align-items: start;
+  }
+
+  .co-hero-copy h1 {
+    margin: 0 0 1rem;
+    max-width: 18ch;
+    font-size: var(--hero-title);
+    line-height: 1.18;
+    letter-spacing: -0.03em;
+    color: var(--color-navy);
+  }
+
+  .co-hero-copy p {
+    margin: 0 0 1.25rem;
+    max-width: 36rem;
+    color: var(--color-muted);
+    line-height: 1.7;
+    font-size: var(--hero-lead);
+  }
+
+  .co-btn-outline,
+  .co-btn-light,
+  .co-btn-ghost,
+  .co-product-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    text-decoration: none;
+    font-weight: 700;
+  }
+
+  .co-btn-outline {
+    padding: 0.75rem 1.15rem;
+    border-radius: 0.75rem;
+    border: 1.5px solid rgba(10, 102, 255, 0.35);
+    color: var(--color-primary);
+    background: #fff;
+  }
+
+  .co-btn-outline:hover {
+    background: #eff6ff;
+    text-decoration: none;
+  }
+
+  .co-beliefs {
+    padding: 0.25rem 0 2.25rem;
+  }
+
+  .co-beliefs-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .co-beliefs-grid li {
+    display: grid;
+    gap: 0.55rem;
+    justify-items: start;
+  }
+
+  .co-beliefs-grid strong {
+    color: #081b3a;
+    font-size: 0.98rem;
+    line-height: 1.35;
+  }
+
+  .co-beliefs-grid span:last-child {
+    color: #64748b;
+    font-size: 0.88rem;
+    line-height: 1.55;
+  }
+
+  .co-mv {
+    padding: 0 0 3rem;
+  }
+
+  .co-mv-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.1rem;
+  }
+
+  .co-mv-card {
+    padding: 1.5rem 1.5rem 1.25rem;
+    border-radius: 1.25rem;
+    background: #eef5ff;
+    min-height: 16rem;
+    display: grid;
+    grid-template-rows: auto auto 1fr;
+  }
+
+  .co-mv-card h2 {
+    margin: 0;
+    max-width: 28ch;
+    color: #081b3a;
+    font-size: clamp(1.15rem, 2vw, 1.4rem);
+    line-height: 1.35;
+  }
+
+  .co-mv-art {
+    display: grid;
+    place-items: end;
+    justify-items: end;
+    color: var(--color-primary);
+    opacity: 0.85;
+    margin-top: 1rem;
+  }
+
+  .co-values {
+    padding: 0 0 3rem;
+  }
+
+  .co-values-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .co-values-grid li {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .co-value-no {
+    color: #bfdbfe;
+    font-size: 1.7rem;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .co-values-grid strong {
+    color: #081b3a;
+  }
+
+  .co-values-grid span:last-child {
+    color: #64748b;
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  .co-journey {
+    padding: 0 0 3.25rem;
+  }
+
+  .co-timeline {
+    list-style: none;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+    position: relative;
+  }
+
+  .co-timeline::before {
+    content: '';
+    position: absolute;
+    left: 8%;
+    right: 8%;
+    top: 3.35rem;
+    height: 2px;
+    background: #dbe7f8;
+  }
+
+  .co-timeline li {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    justify-items: center;
+    text-align: center;
+    gap: 0.65rem;
+  }
+
+  .co-year {
+    color: var(--color-primary);
+    font-weight: 800;
+    font-size: 0.95rem;
+  }
+
+  .co-dot {
+    display: grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    color: #fff;
+    background: linear-gradient(145deg, #4d93ff, #0a66ff);
+    box-shadow: 0 8px 18px rgba(10, 102, 255, 0.22);
+  }
+
+  .co-timeline strong {
+    max-width: 14ch;
+    color: #081b3a;
+    font-size: 0.95rem;
+    line-height: 1.35;
+  }
+
+  .co-products {
+    padding: 0 0 3rem;
+  }
+
+  .co-product-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.1rem;
+  }
+
+  .co-product {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(140px, 0.9fr);
+    gap: 0.75rem;
+    align-items: center;
+    padding: 1.15rem;
+    border-radius: 1.2rem;
+    background: #fff;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
+  }
+
+  .co-product.tone-novixa {
+    background: linear-gradient(135deg, #f3fbf6, #fff);
+  }
+
+  .co-product.tone-famixa {
+    background: linear-gradient(135deg, #fff8f2, #fff);
+  }
+
+  .co-product-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 0.7rem;
+    margin-bottom: 0.55rem;
+  }
+
+  .tone-novixa .co-product-icon {
+    color: #0f9f6e;
+    background: #dff7eb;
+  }
+
+  .tone-famixa .co-product-icon {
+    color: #ea580c;
+    background: #ffedd5;
+  }
+
+  .co-product h3 {
+    margin: 0;
+    color: #081b3a;
+    font-size: 1.25rem;
+  }
+
+  .co-product-kind {
+    margin: 0.2rem 0 0.55rem;
+    color: #64748b;
+    font-size: 0.88rem;
+    font-weight: 600;
+  }
+
+  .co-product-desc {
+    margin: 0 0 0.9rem;
+    color: #475569;
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+
+  .co-product-cta {
+    color: var(--color-primary);
+  }
+
+  .tone-novixa .co-product-cta {
+    color: #0f9f6e;
+  }
+
+  .tone-famixa .co-product-cta {
+    color: #ea580c;
+  }
+
+  .co-product-art img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .co-promise {
+    padding: 0 0 3rem;
+  }
+
+  .co-promise-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    align-items: start;
+    padding: 1.6rem 1.75rem;
+    border-radius: 1.25rem;
+    background: #eef5ff;
+  }
+
+  .co-quote {
+    color: var(--color-primary);
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 0.8;
+  }
+
+  .co-promise-text {
+    margin: 0;
+    color: #081b3a;
+    font-size: clamp(1.1rem, 2vw, 1.35rem);
+    font-weight: 700;
+    line-height: 1.45;
+    max-width: 40ch;
+  }
+
+  .co-cta {
+    margin-bottom: 3rem;
+    padding: 2rem 0;
+    background:
+      radial-gradient(circle at 88% 50%, rgba(77, 163, 255, 0.28), transparent 28%),
+      linear-gradient(115deg, #081b3a 0%, #0b274f 55%, #0a356e 100%);
+  }
+
+  .co-cta-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) auto;
+    gap: 1.25rem;
+    align-items: center;
+  }
+
+  .co-cta h2 {
+    margin: 0;
+    max-width: 22ch;
+    color: #fff;
+    font-size: clamp(1.35rem, 2.5vw, 1.85rem);
+    line-height: 1.3;
+  }
+
+  .co-cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
+
+  .co-btn-light {
+    padding: 0.8rem 1.15rem;
+    border-radius: 0.8rem;
+    background: #fff;
+    color: #081b3a;
+  }
+
+  .co-btn-ghost {
+    padding: 0.8rem 1.15rem;
+    border-radius: 0.8rem;
+    border: 1.5px solid rgba(255, 255, 255, 0.45);
+    color: #fff;
+  }
+
+  .co-btn-light:hover,
+  .co-btn-ghost:hover {
+    text-decoration: none;
+    opacity: 0.92;
+  }
+
+  @media (max-width: 1100px) {
+    .co-beliefs-grid,
+    .co-values-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 900px) {
+    .co-hero-grid,
+    .co-mv-grid,
+    .co-product-grid,
+    .co-cta-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .co-hero {
+      padding-top: 1rem;
+      padding-bottom: 1.25rem;
+    }
+
+    .co-timeline {
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem 1rem;
+    }
+
+    .co-timeline::before {
+      display: none;
+    }
+
+    .co-hero-visual {
+      order: -1;
+    }
+
+    .co-product {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .co-beliefs-grid,
+    .co-values-grid,
+    .co-timeline {
+      grid-template-columns: 1fr;
+    }
+
+    .co-promise-card {
+      grid-template-columns: 1fr;
+    }
+
+    .co-quote {
+      font-size: 3rem;
+    }
+  }
+</style>

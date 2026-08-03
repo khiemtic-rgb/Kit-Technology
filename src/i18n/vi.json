@@ -1,16 +1,16 @@
 {
   "meta": {
     "siteName": "KIT Technology",
-    "tagline": "AI Platform for Enterprise Digital Solutions",
-    "description": "KIT Technology xây dựng nền tảng AI giúp doanh nghiệp phát triển các ứng dụng và giải pháp số trên cùng một Platform thống nhất.",
-    "keywords": "KIT Technology, kittech.vn, AI First, phần mềm nhà thuốc, Novixa, SaaS y tế, chuyển đổi số nhà thuốc, doanh nghiệp AI, Flutter, Cloud Native"
+    "tagline": "AI Platform for Digital Solutions",
+    "description": "KIT Technology xây dựng nền tảng AI và các giải pháp số giúp doanh nghiệp và gia đình vận hành hiệu quả hơn.",
+    "keywords": "KIT Technology, kittech.vn, AI Platform, Novixa, Famixa, nền tảng AI, giải pháp số"
   },
   "nav": {
-    "home": "Trang chủ",
+    "home": "Home",
     "platform": "Platform",
     "login": "Đăng nhập",
     "contact": "Liên hệ",
-    "contactCta": "Liên hệ",
+    "contactCta": "Liên hệ ngay",
     "menuOpen": "Mở menu",
     "menuClose": "Đóng menu",
     "langVi": "Tiếng Việt",
@@ -144,7 +144,7 @@
     "addressLines": ["KĐT Hồ Xương Rồng, phường Phan Đình Phùng, tỉnh Thái Nguyên"],
     "mapTitle": "Bản đồ",
     "mapNote": "Văn phòng Thái Nguyên — liên hệ trước khi ghé thăm.",
-    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3720.276!2d105.844119!3d21.5831444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31352771aa783d2f%3A0xd008864f40919e38!2sBING%20COFFEE!5e0!3m2!1svi!2s!4v1740000000000",
+    "mapEmbedUrl": "https://www.google.com/maps?q=21.5831444,105.844119+(KIT+Technology)&hl=vi&z=16&output=embed",
     "demoCta": "Đăng ký Demo",
     "demoFormTitle": "Đăng ký Demo sản phẩm",
     "demoIntro": "Để lại thông tin — chúng tôi sẽ liên hệ demo Novixa hoặc giải pháp phù hợp.",
@@ -163,18 +163,18 @@
   "footer": {
     "since": "Từ 2015",
     "tagline": "AI Platform & Digital Solutions",
-    "desc": "KIT Technology xây dựng nền tảng AI và các giải pháp số chuyên biệt cho từng ngành.",
+    "desc": "KIT Technology đồng hành cùng doanh nghiệp và gia đình trên hành trình chuyển đổi số.",
     "locations": ["Hà Nội", "Thái Nguyên"],
-    "rights": "Bản quyền thuộc KIT Technology.",
+    "rights": "KIT Technology. All rights reserved.",
     "columns": {
-      "products": "Sản phẩm",
-      "platform": "Platform",
+      "products": "Products",
+      "platform": "Nền tảng",
       "solutions": "Giải pháp",
       "company": "Công ty"
     },
     "newsletter": {
-      "title": "Nhận tin tức",
-      "desc": "Đăng ký nhận tin mới nhất từ KIT Technology.",
+      "title": "Nhận tin từ KIT",
+      "desc": "Đăng ký để nhận những cập nhật mới nhất về sản phẩm và công nghệ.",
       "placeholder": "Email của bạn",
       "cta": "Đăng ký",
       "subject": "Đăng ký bản tin từ kittech.vn"
@@ -182,6 +182,7 @@
     "social": {
       "linkedin": "LinkedIn",
       "facebook": "Facebook",
+      "youtube": "YouTube",
       "github": "GitHub"
     }
   }

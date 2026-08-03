@@ -3,13 +3,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Header from '../../components/Header.astro';
 import Footer from '../../components/Footer.astro';
 import HomeHero from '../../components/home/HomeHero.astro';
-import PlatformMap from '../../components/home/PlatformMap.astro';
-import ProductsSection from '../../components/home/ProductsSection.astro';
-import WhyKitSection from '../../components/home/WhyKitSection.astro';
+import FlagshipSolutions from '../../components/home/FlagshipSolutions.astro';
+import PlatformArchitecture from '../../components/home/PlatformArchitecture.astro';
+import TechLogos from '../../components/home/TechLogos.astro';
 import HomeInsights from '../../components/home/HomeInsights.astro';
 import { t } from '../../i18n';
 import { homeContent } from '../../lib/home-content';
-import '../../styles/global.css';
 
 const m = t('en');
 const home = homeContent('en');
@@ -19,9 +18,9 @@ const home = homeContent('en');
   <Header slot="header" locale="en" />
 
   <HomeHero hero={home.hero} />
-  <PlatformMap platform={home.platform} />
-  <ProductsSection products={home.products} />
-  <WhyKitSection why={home.why} />
+  <FlagshipSolutions flagship={home.flagship} />
+  <PlatformArchitecture platform={home.platform} />
+  <TechLogos technology={home.technology} />
   <HomeInsights insights={home.insights} locale="en" />
 
   <Footer slot="footer" locale="en" />

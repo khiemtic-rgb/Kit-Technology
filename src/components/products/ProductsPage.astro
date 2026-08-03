@@ -1,0 +1,663 @@
+---
+import Icon from '../Icon.astro';
+import type { Locale } from '../../i18n';
+import { productsContent } from '../../lib/products-content';
+import ProductsHeroHub from './ProductsHeroHub.astro';
+import PlatformCtaCube from '../platform/PlatformCtaCube.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const p = productsContent(locale);
+---
+
+<div class="prd">
+  <section class="prd-hero">
+    <div class="container prd-hero-grid">
+      <div class="prd-hero-copy">
+        <p class="prd-eyebrow">{p.hero.eyebrow}</p>
+        <h1>
+          <span class="prd-hero-title">{p.hero.title}</span>
+          <span class="prd-hero-accent">{p.hero.titleAccent}</span>
+        </h1>
+        <p class="prd-hero-lead">{p.hero.lead}</p>
+      </div>
+      <div class="prd-hero-visual">
+        <ProductsHeroHub />
+      </div>
+    </div>
+  </section>
+
+  <section class="prd-flagship">
+    <div class="container">
+      <div class="prd-section-head center">
+        <p class="prd-eyebrow">{p.flagship.eyebrow}</p>
+        <h2>{p.flagship.title}</h2>
+      </div>
+
+      <div class="prd-flag-grid">
+        {
+          p.flagship.cards.map((card) => (
+            <article class={`prd-card tone-${card.tone}`}>
+              <div class="prd-card-body">
+                <div class="prd-card-top">
+                  <span class="prd-card-icon" aria-hidden="true">
+                    <Icon name={card.icon} size={22} strokeWidth={2} />
+                  </span>
+                  <div>
+                    <h3>{card.name}</h3>
+                    <p class="prd-card-kind">{card.kind}</p>
+                  </div>
+                </div>
+                <p class="prd-card-desc">{card.desc}</p>
+                <ul class="prd-card-points">
+                  {card.points.map((point) => (
+                    <li>
+                      <Icon name="check" size={14} strokeWidth={2.4} />
+                      <span>{point}</span>
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  class="prd-card-cta"
+                  href={card.href}
+                  target={card.external ? '_blank' : undefined}
+                  rel={card.external ? 'noopener noreferrer' : undefined}
+                >
+                  {card.cta}
+                  <Icon name="arrowRight" size={15} />
+                </a>
+              </div>
+              <div class="prd-card-art" aria-hidden="true">
+                <img src={card.art} alt="" width="280" height="240" loading="lazy" decoding="async" />
+              </div>
+            </article>
+          ))
+        }
+      </div>
+
+      <div class="prd-roadmap">
+        <p>{p.roadmap.text}</p>
+        <a class="prd-roadmap-cta" href={p.roadmap.href}>
+          {p.roadmap.cta}
+          <Icon name="arrowRight" size={15} />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="prd-why">
+    <div class="container">
+      <div class="prd-section-head center">
+        <p class="prd-eyebrow">{p.why.eyebrow}</p>
+        <h2>{p.why.title}</h2>
+      </div>
+      <ul class="prd-why-grid">
+        {
+          p.why.items.map((item) => (
+            <li>
+              <span class="prd-why-icon" aria-hidden="true">
+                <Icon name={item.icon} size={28} strokeWidth={2} />
+              </span>
+              <strong>{item.title}</strong>
+              <span>{item.desc}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="prd-services">
+    <div class="container">
+      <div class="prd-section-head center">
+        <p class="prd-eyebrow">{p.services.eyebrow}</p>
+        <h2>{p.services.title}</h2>
+      </div>
+      <ul class="prd-svc-grid">
+        {
+          p.services.items.map((item) => (
+            <li>
+              <span class="prd-svc-icon" aria-hidden="true">
+                <Icon name={item.icon} size={24} strokeWidth={2.1} />
+              </span>
+              <strong>{item.title}</strong>
+              <span>{item.desc}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="prd-cta">
+    <div class="container">
+      <div class="prd-cta-box">
+        <div>
+          <h2>{p.cta.title}</h2>
+          <p>{p.cta.lead}</p>
+          <div class="prd-cta-actions">
+            <a class="btn btn-light" href={p.cta.primaryHref}>
+              {p.cta.primaryCta}
+              <Icon name="arrowRight" size={15} />
+            </a>
+            <a class="btn btn-ghost-light" href={p.cta.secondaryHref}>
+              {p.cta.secondaryCta}
+              <Icon name="arrowRight" size={15} />
+            </a>
+          </div>
+        </div>
+        <div class="prd-cta-art">
+          <PlatformCtaCube />
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style>
+  .prd {
+    --prd-gap: clamp(2rem, 4.5vw, 3.25rem);
+    --prd-novixa: #16a34a;
+    --prd-novixa-deep: #15803d;
+    --prd-novixa-soft: #f0fdf4;
+    --prd-novixa-border: rgba(22, 163, 74, 0.16);
+    --prd-famixa: #ea580c;
+    --prd-famixa-deep: #c2410c;
+    --prd-famixa-soft: #fff7ed;
+    --prd-famixa-border: rgba(234, 88, 12, 0.16);
+    --prd-ink: #081b3a;
+    --prd-muted: #5b6b86;
+    --prd-line: var(--color-border);
+    --prd-wash: #f0f5ff;
+    --prd-blue: var(--color-primary);
+    --prd-blue-deep: var(--color-primary-dark);
+  }
+
+  .prd-eyebrow {
+    margin: 0 0 0.4rem;
+    font-size: var(--eyebrow-size);
+    font-weight: var(--eyebrow-weight);
+    letter-spacing: var(--eyebrow-tracking);
+    text-transform: uppercase;
+    color: var(--prd-blue);
+  }
+
+  .prd-section-head {
+    margin-bottom: 1.5rem;
+  }
+
+  .prd-section-head.center {
+    text-align: center;
+  }
+
+  .prd-section-head h2 {
+    margin: 0;
+    font-size: var(--section-title);
+    letter-spacing: -0.03em;
+    color: var(--prd-ink);
+  }
+
+  /* Hero — original mock palette */
+  .prd-hero {
+    padding: var(--hero-pad-y);
+    background: linear-gradient(180deg, #f3f7ff 0%, #ffffff 72%);
+  }
+
+  .prd-hero-grid {
+    display: grid;
+    gap: 1.25rem;
+    align-items: start;
+  }
+
+  @media (min-width: 960px) {
+    .prd-hero-grid {
+      grid-template-columns: 0.9fr 1.15fr;
+      gap: 1.25rem 1.75rem;
+    }
+  }
+
+  .prd-hero h1 {
+    margin: 0 0 0.85rem;
+    font-size: var(--hero-title);
+    line-height: 1.14;
+    letter-spacing: -0.035em;
+    max-width: 16ch;
+  }
+
+  .prd-hero-title,
+  .prd-hero-accent {
+    display: block;
+  }
+
+  .prd-hero-title {
+    color: var(--prd-ink);
+  }
+
+  .prd-hero-accent {
+    color: var(--prd-blue);
+  }
+
+  .prd-hero-lead {
+    margin: 0;
+    max-width: 42ch;
+    color: var(--prd-muted);
+    line-height: 1.65;
+    font-size: var(--hero-lead);
+  }
+
+  .prd-hero-visual {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    min-height: clamp(280px, 40vw, 440px);
+  }
+
+  /* Flagship cards */
+  .prd-flagship {
+    padding: var(--prd-gap) 0;
+    background: #fff;
+  }
+
+  .prd-flag-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  @media (min-width: 900px) {
+    .prd-flag-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 1.15rem;
+    }
+  }
+
+  .prd-card {
+    display: grid;
+    gap: 0.75rem;
+    padding: 1.25rem 1.15rem 1.15rem;
+    border-radius: 18px;
+    border: 1px solid var(--prd-line);
+    background: #fff;
+    box-shadow: 0 8px 24px rgba(11, 31, 58, 0.05);
+    overflow: hidden;
+  }
+
+  @media (min-width: 640px) {
+    .prd-card {
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.9fr);
+      align-items: stretch;
+      gap: 0.5rem 0.75rem;
+    }
+  }
+
+  .prd-card.tone-novixa {
+    background: linear-gradient(165deg, var(--prd-novixa-soft) 0%, #fff 58%);
+    border-color: var(--prd-novixa-border);
+  }
+
+  .prd-card.tone-famixa {
+    background: linear-gradient(165deg, var(--prd-famixa-soft) 0%, #fff 58%);
+    border-color: var(--prd-famixa-border);
+  }
+
+  .prd-card-top {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .prd-card-icon {
+    display: grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 999px;
+    flex: 0 0 auto;
+  }
+
+  .tone-novixa .prd-card-icon {
+    background: var(--prd-novixa);
+    color: #fff;
+  }
+
+  .tone-famixa .prd-card-icon {
+    background: var(--prd-famixa);
+    color: #fff;
+  }
+
+  .prd-card h3 {
+    margin: 0;
+    font-size: 1.35rem;
+    letter-spacing: -0.02em;
+  }
+
+  .tone-novixa h3 {
+    color: var(--prd-novixa-deep);
+  }
+
+  .tone-famixa h3 {
+    color: var(--prd-famixa-deep);
+  }
+
+  .prd-card-kind {
+    margin: 0.15rem 0 0;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--prd-ink);
+  }
+
+  .prd-card-desc {
+    margin: 0 0 0.85rem;
+    color: var(--prd-muted);
+    font-size: 0.9rem;
+    line-height: 1.55;
+  }
+
+  .prd-card-points {
+    list-style: none;
+    margin: 0 0 1rem;
+    padding: 0;
+    display: grid;
+    gap: 0.45rem;
+  }
+
+  .prd-card-points li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.45rem;
+    font-size: 0.86rem;
+    line-height: 1.4;
+    color: #334155;
+  }
+
+  .tone-novixa .prd-card-points :global(svg) {
+    color: var(--prd-novixa);
+    flex: 0 0 auto;
+    margin-top: 0.12rem;
+  }
+
+  .tone-famixa .prd-card-points :global(svg) {
+    color: var(--prd-famixa);
+    flex: 0 0 auto;
+    margin-top: 0.12rem;
+  }
+
+  .prd-card-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.55rem 0.95rem;
+    border-radius: 999px;
+    border: 1.5px solid currentColor;
+    background: #fff;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+  }
+
+  .prd-card-cta:hover {
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.72);
+  }
+
+  .tone-novixa .prd-card-cta {
+    color: var(--prd-novixa);
+  }
+
+  .tone-famixa .prd-card-cta {
+    color: var(--prd-famixa);
+  }
+
+  .prd-card-art {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    min-height: 160px;
+  }
+
+  .prd-card-art img {
+    width: 100%;
+    max-width: 220px;
+    max-height: 200px;
+    object-fit: contain;
+  }
+
+  .prd-roadmap {
+    margin-top: 1.15rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.85rem 1.25rem;
+    padding: 1rem 1.15rem;
+    border-radius: 16px;
+    background: linear-gradient(90deg, #eef5ff, #f5f9ff);
+    border: 1px solid rgba(10, 102, 255, 0.1);
+  }
+
+  .prd-roadmap p {
+    margin: 0;
+    color: #1e4d9c;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    max-width: 62ch;
+  }
+
+  .prd-roadmap-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.6rem 1rem;
+    border-radius: 999px;
+    background: #fff;
+    color: var(--prd-blue);
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+    border: 1px solid rgba(10, 102, 255, 0.12);
+    box-shadow: 0 4px 12px rgba(10, 102, 255, 0.08);
+    white-space: nowrap;
+  }
+
+  .prd-roadmap-cta:hover {
+    text-decoration: none;
+    color: var(--prd-blue-deep);
+  }
+
+  /* Why */
+  .prd-why {
+    padding: var(--prd-gap) 0;
+    background: var(--prd-wash);
+  }
+
+  .prd-why-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 700px) {
+    .prd-why-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1000px) {
+    .prd-why-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1.25rem;
+    }
+  }
+
+  .prd-why-grid li {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.45rem;
+    text-align: left;
+  }
+
+  .prd-why-icon {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 12px;
+    background: #fff;
+    color: var(--prd-blue);
+    border: 1px solid rgba(10, 102, 255, 0.12);
+    box-shadow: 0 6px 14px rgba(10, 102, 255, 0.06);
+  }
+
+  .prd-why-grid strong {
+    font-size: 1rem;
+    color: var(--prd-ink);
+  }
+
+  .prd-why-grid span {
+    font-size: 0.88rem;
+    color: var(--prd-muted);
+    line-height: 1.5;
+  }
+
+  /* Services */
+  .prd-services {
+    padding: var(--prd-gap) 0;
+    background: #fff;
+  }
+
+  .prd-svc-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (min-width: 760px) {
+    .prd-svc-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .prd-svc-grid {
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+    }
+  }
+
+  .prd-svc-grid li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.4rem;
+    padding: 1.1rem 0.75rem;
+    border-radius: 14px;
+    border: 1px solid var(--prd-line);
+    background: #fff;
+    min-height: 100%;
+    box-shadow: 0 4px 14px rgba(8, 27, 58, 0.03);
+  }
+
+  .prd-svc-icon {
+    display: grid;
+    place-items: center;
+    width: 2.55rem;
+    height: 2.55rem;
+    border-radius: 999px;
+    background: #eaf2ff;
+    color: var(--prd-blue);
+  }
+
+  .prd-svc-grid strong {
+    font-size: 0.92rem;
+    color: var(--prd-ink);
+  }
+
+  .prd-svc-grid span {
+    font-size: 0.78rem;
+    color: var(--prd-muted);
+    line-height: 1.4;
+  }
+
+  /* CTA */
+  .prd-cta {
+    padding: 0 0 var(--prd-gap);
+    background: #fff;
+  }
+
+  .prd-cta-box {
+    display: grid;
+    gap: 1rem;
+    align-items: center;
+    padding: 1.45rem 1.25rem;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #081b3a 0%, #0b2a5c 50%, #0a3f8f 100%);
+    color: #fff;
+  }
+
+  @media (min-width: 860px) {
+    .prd-cta-box {
+      grid-template-columns: 1.35fr 0.75fr;
+      padding: 1.6rem 1.6rem 1.6rem 1.9rem;
+    }
+  }
+
+  .prd-cta-box h2 {
+    margin: 0 0 0.55rem;
+    font-size: clamp(1.25rem, 2.4vw, 1.65rem);
+    max-width: 24ch;
+    line-height: 1.25;
+  }
+
+  .prd-cta-box p {
+    margin: 0 0 1rem;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.92rem;
+    line-height: 1.55;
+    max-width: 46ch;
+  }
+
+  .prd-cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+  }
+
+  .btn-light {
+    background: #fff;
+    color: var(--prd-ink);
+    border: 1px solid #fff;
+  }
+
+  .btn-light:hover {
+    background: #eef5ff;
+    color: var(--prd-ink);
+  }
+
+  .btn-ghost-light {
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+  }
+
+  .btn-ghost-light:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+  }
+
+  .prd-cta-art {
+    display: flex;
+    justify-content: center;
+    filter: none;
+    opacity: 1;
+  }
+</style>

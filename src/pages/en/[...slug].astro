@@ -5,6 +5,11 @@ import Footer from '../../components/Footer.astro';
 import ArticleBody from '../../components/ArticleBody.astro';
 import ContactSection from '../../components/ContactSection.astro';
 import InsightGrid from '../../components/InsightGrid.astro';
+import PlatformPage from '../../components/platform/PlatformPage.astro';
+import ProductsPage from '../../components/products/ProductsPage.astro';
+import TechnologyPage from '../../components/technology/TechnologyPage.astro';
+import InsightsPage from '../../components/insights/InsightsPage.astro';
+import CompanyPage from '../../components/company/CompanyPage.astro';
 import { getArticleContent } from '../../content';
 import { t } from '../../i18n';
 import {
@@ -15,7 +20,6 @@ import {
 import { insightHubFilter, isInsightCategoryHub, isInsightsHub } from '../../lib/insight-hubs';
 import { pageInsightFilter } from '../../lib/page-insights';
 import { getHubChildren, getPage, getStaticSlugs, pageUrl } from '../../lib/site-map';
-import '../../styles/global.css';
 
 export function getStaticPaths() {
   return getStaticSlugs('en').map((slug) => ({ params: { slug } }));
@@ -30,6 +34,11 @@ const url = pageUrl('en', slug);
 const children = page.hub ? getHubChildren('en', page.key) : [];
 const article = getArticleContent('en', page.key);
 const isContact = page.key === 'company-contact';
+const isPlatform = page.key === 'platform';
+const isProducts = page.key === 'products';
+const isTechnology = page.key === 'technology';
+const isInsights = isInsightsHub(page.key);
+const isCompany = page.key === 'company';
 
 let insightEntries = [];
 const hubFilter = insightHubFilter(page.key);
@@ -48,10 +57,19 @@ if (hubFilter?.type === 'all') {
 }
 
 const showInsightGrid =
-  insightEntries.length > 0 ||
-  isInsightsHub(page.key) ||
-  isInsightCategoryHub(page.key) ||
-  page.key === 'faq';
+  !isInsights &&
+  (insightEntries.length > 0 ||
+    isInsightCategoryHub(page.key) ||
+    page.key === 'faq');
+
+const showHubChildren =
+  page.hub &&
+  children.length > 0 &&
+  !isPlatform &&
+  !isProducts &&
+  !isTechnology &&
+  !isInsights &&
+  !isCompany;
 ---
 
 <BaseLayout
@@ -61,74 +79,86 @@ const showInsightGrid =
   canonicalPath={url}
 >
   <Header slot="header" locale="en" />
-  <section class="section">
-    <div class="container">
-      <h1 class="section-title">{page.title.en}</h1>
-      {page.intro?.en && !article && <p class="section-intro">{page.intro.en}</p>}
+  {
+    isPlatform ? (
+      <PlatformPage locale="en" />
+    ) : isProducts ? (
+      <ProductsPage locale="en" />
+    ) : isTechnology ? (
+      <TechnologyPage locale="en" />
+    ) : isInsights ? (
+      <InsightsPage locale="en" entries={insightEntries} />
+    ) : isCompany ? (
+      <CompanyPage locale="en" />
+    ) : (
+      <section class="section">
+        <div class="container">
+          <h1 class="section-title">{page.title.en}</h1>
+          {page.intro?.en && !article && <p class="section-intro">{page.intro.en}</p>}
 
-      {
-        page.key === 'novixa' && (
-          <p class="section-intro">
-            <a class="btn btn-primary" href="https://novixa.vn/en" target="_blank" rel="noopener noreferrer">
-              novixa.vn
-            </a>
-          </p>
-        )
-      }
+          {
+            page.key === 'novixa' && (
+              <p class="section-intro">
+                <a class="btn btn-primary" href="https://novixa.vn/en" target="_blank" rel="noopener noreferrer">
+                  novixa.vn
+                </a>
+              </p>
+            )
+          }
 
-      {
-        page.hub && children.length > 0 && (
-          <div class="hub-grid">
-            {children.map((child) => (
-              <a class="hub-card" href={pageUrl('en', child.paths.en)}>
-                <h3>{child.title.en}</h3>
-                {child.intro?.en && <p>{child.intro.en}</p>}
-              </a>
-            ))}
-          </div>
-        )
-      }
-
-      {article && <ArticleBody article={article} />}
-
-      {
-        pageFilter && insightEntries.length > 0 && (
-          <h2 class="insight-related-title">{m.insights.relatedTitle}</h2>
-        )
-      }
-
-      {
-        showInsightGrid ? (
-          <InsightGrid
-            entries={insightEntries}
-            locale="en"
-            emptyMessage={m.insights.emptyCategory}
-          />
-        ) : null
-      }
-
-      {
-        isContact && <ContactSection locale="en" canonicalPath={url} />
-      }
-
-      {
-        !page.hub && !article && !isContact && insightEntries.length === 0 && (
-          <div class="card prose">
-            <p>{m.content.comingSoon}</p>
-            {
-              page.key.startsWith('novixa') && (
-                <p>
-                  <a href="https://novixa.vn/en" target="_blank" rel="noopener noreferrer">
-                    {m.content.novixaExternal}
+          {
+            showHubChildren && (
+              <div class="hub-grid">
+                {children.map((child) => (
+                  <a class="hub-card" href={pageUrl('en', child.paths.en)}>
+                    <h3>{child.title.en}</h3>
+                    {child.intro?.en && <p>{child.intro.en}</p>}
                   </a>
-                </p>
-              )
-            }
-          </div>
-        )
-      }
-    </div>
-  </section>
+                ))}
+              </div>
+            )
+          }
+
+          {article && <ArticleBody article={article} />}
+
+          {
+            pageFilter && insightEntries.length > 0 && (
+              <h2 class="insight-related-title">{m.insights.relatedTitle}</h2>
+            )
+          }
+
+          {
+            showInsightGrid ? (
+              <InsightGrid
+                entries={insightEntries}
+                locale="en"
+                emptyMessage={m.insights.emptyCategory}
+              />
+            ) : null
+          }
+
+          {isContact && <ContactSection locale="en" canonicalPath={url} />}
+
+          {
+            !page.hub && !article && !isContact && insightEntries.length === 0 && (
+              <div class="card prose">
+                <p>{m.content.comingSoon}</p>
+                {
+                  page.key.startsWith('novixa') && (
+                    <p>
+                      <a href="https://novixa.vn/en" target="_blank" rel="noopener noreferrer">
+                        {m.content.novixaExternal}
+                      </a>
+                    </p>
+                  )
+                }
+              </div>
+            )
+          }
+        </div>
+      </section>
+    )
+  }
   <Footer slot="footer" locale="en" />
 </BaseLayout>
 

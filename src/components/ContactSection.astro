@@ -113,10 +113,11 @@ const formSubject = isDemo ? c.demoFormSubject : c.formSubject;
     <p class="contact-form-note">{c.mapNote}</p>
     <div class="contact-map">
       <iframe
-        title={c.mapTitle}
+        title={`${m.meta.siteName} — ${c.mapTitle}`}
         loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"
         src={c.mapEmbedUrl}
+        allowfullscreen
       />
     </div>
   </div>

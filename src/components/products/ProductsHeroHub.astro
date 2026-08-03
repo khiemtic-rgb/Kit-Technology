@@ -1,0 +1,271 @@
+---
+import Icon from '../Icon.astro';
+import type { IconName } from '../../lib/icons';
+
+/** Match san-pham mock: rounded-square tiles around KIT Platform cube */
+const nodes: { icon: IconName; angle: number }[] = [
+  { icon: 'users', angle: -125 },
+  { icon: 'analytics', angle: -45 },
+  { icon: 'security', angle: 20 },
+  { icon: 'database', angle: 70 },
+  { icon: 'bell', angle: 145 },
+  { icon: 'code', angle: -175 },
+];
+const radius = 40;
+---
+
+<div class="prhub" aria-hidden="true">
+  <svg class="prhub-grid" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <radialGradient id="prhubFade" cx="50%" cy="50%" r="48%">
+        <stop offset="0%" stop-color="rgba(10,102,255,0.14)" />
+        <stop offset="70%" stop-color="rgba(10,102,255,0.04)" />
+        <stop offset="100%" stop-color="rgba(10,102,255,0)" />
+      </radialGradient>
+    </defs>
+    <circle cx="50" cy="50" r="46" fill="url(#prhubFade)" />
+    {
+      [18, 28, 38, 46].map((r) => (
+        <circle cx="50" cy="50" r={r} fill="none" stroke="rgba(10,102,255,0.12)" stroke-width="0.35" />
+      ))
+    }
+    {
+      Array.from({ length: 12 }, (_, i) => {
+        const a = (i * 30 * Math.PI) / 180;
+        const x2 = 50 + Math.cos(a) * 46;
+        const y2 = 50 + Math.sin(a) * 46;
+        return (
+          <line
+            x1="50"
+            y1="50"
+            x2={x2.toFixed(2)}
+            y2={y2.toFixed(2)}
+            stroke="rgba(10,102,255,0.08)"
+            stroke-width="0.3"
+          />
+        );
+      })
+    }
+  </svg>
+
+  <div class="prhub-orbit"></div>
+
+  <svg class="prhub-spokes" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+    {
+      nodes.map((node) => {
+        const rad = (node.angle * Math.PI) / 180;
+        const x2 = 50 + Math.cos(rad) * radius;
+        const y2 = 50 + Math.sin(rad) * radius;
+        return (
+          <line
+            x1="50"
+            y1="50"
+            x2={x2.toFixed(2)}
+            y2={y2.toFixed(2)}
+            stroke="rgba(10, 102, 255, 0.32)"
+            stroke-width="0.45"
+            stroke-dasharray="1.4 1.2"
+          />
+        );
+      })
+    }
+  </svg>
+
+  <div class="prhub-core">
+    <div class="prhub-pedestal">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="prhub-cube">
+      <span>KIT<br />Platform</span>
+    </div>
+  </div>
+
+  <ul class="prhub-nodes">
+    {
+      nodes.map((node) => {
+        const rad = (node.angle * Math.PI) / 180;
+        const left = 50 + Math.cos(rad) * radius;
+        const top = 50 + Math.sin(rad) * radius;
+        return (
+          <li style={`left:${left.toFixed(2)}%;top:${top.toFixed(2)}%`}>
+            <span class="prhub-tile">
+              <Icon name={node.icon} size={36} strokeWidth={2} />
+            </span>
+          </li>
+        );
+      })
+    }
+  </ul>
+</div>
+
+<style>
+  .prhub {
+    --hub: min(100%, 520px);
+    position: relative;
+    width: var(--hub);
+    aspect-ratio: 1.08 / 1;
+    margin-left: auto;
+  }
+
+  .prhub-grid,
+  .prhub-spokes {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .prhub-orbit {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 80%;
+    height: 80%;
+    translate: -50% -50%;
+    border: 1.5px dashed rgba(10, 102, 255, 0.22);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .prhub-core {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -48%;
+    display: grid;
+    place-items: center;
+    z-index: 2;
+  }
+
+  .prhub-pedestal {
+    position: relative;
+    width: 7.4rem;
+    height: 7.4rem;
+    display: grid;
+    place-items: center;
+  }
+
+  .prhub-pedestal span {
+    position: absolute;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 10px 24px rgba(10, 102, 255, 0.14);
+  }
+
+  .prhub-pedestal span:nth-child(1) {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(180deg, #eef5ff, #d7e8ff);
+  }
+
+  .prhub-pedestal span:nth-child(2) {
+    width: 82%;
+    height: 82%;
+    background: linear-gradient(180deg, #fff, #e8f1ff);
+  }
+
+  .prhub-pedestal span:nth-child(3) {
+    width: 64%;
+    height: 64%;
+    background: #fff;
+    box-shadow:
+      0 0 0 1px rgba(10, 102, 255, 0.08),
+      0 12px 28px rgba(10, 102, 255, 0.16);
+  }
+
+  .prhub-cube {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -68%;
+    width: var(--hub-cube);
+    height: var(--hub-cube);
+    border-radius: 0.9rem;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    color: #fff;
+    font-weight: 800;
+    font-size: var(--hub-cube-font);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    background: linear-gradient(145deg, #4d93ff 0%, #0a66ff 48%, #084fc7 100%);
+    box-shadow:
+      0 18px 32px rgba(10, 102, 255, 0.4),
+      0 0 36px rgba(77, 163, 255, 0.32),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  }
+
+  .prhub-cube::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.28), transparent 45%);
+    pointer-events: none;
+  }
+
+  .prhub-nodes {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    inset: 0;
+  }
+
+  .prhub-nodes li {
+    position: absolute;
+    width: 0;
+    height: 0;
+    z-index: 3;
+  }
+
+  .prhub-tile {
+    display: grid;
+    place-items: center;
+    width: var(--hub-node-tile);
+    height: var(--hub-node-tile);
+    margin: calc(var(--hub-node-tile) / -2) 0 0 calc(var(--hub-node-tile) / -2);
+    border-radius: 1.05rem;
+    background: #fff;
+    border: 1px solid rgba(10, 102, 255, 0.12);
+    box-shadow: 0 10px 22px rgba(15, 23, 42, 0.08);
+    color: var(--color-primary);
+  }
+
+  .prhub-tile :global(svg) {
+    width: var(--hub-node-icon);
+    height: var(--hub-node-icon);
+  }
+
+  @media (max-width: 640px) {
+    .prhub {
+      --hub: min(100%, 320px);
+      margin-inline: auto;
+    }
+
+    .prhub-tile {
+      width: 3.35rem;
+      height: 3.35rem;
+      margin: -1.675rem 0 0 -1.675rem;
+      border-radius: 0.9rem;
+    }
+
+    .prhub-tile :global(svg) {
+      width: 1.75rem;
+      height: 1.75rem;
+    }
+
+    .prhub-cube {
+      width: 4.3rem;
+      height: 4.3rem;
+      font-size: 0.64rem;
+    }
+
+    .prhub-pedestal {
+      width: 5.8rem;
+      height: 5.8rem;
+    }
+  }
+</style>

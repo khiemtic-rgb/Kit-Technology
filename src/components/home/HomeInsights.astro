@@ -2,22 +2,15 @@
 import Icon from '../Icon.astro';
 import type { Locale } from '../../i18n';
 import type { homeContent } from '../../lib/home-content';
-import { getInsightSlug, getPublishedInsightsForLocale, insightBasePath, insightPostPath } from '../../lib/insights';
-import { formatPublishDate } from '../../lib/publish';
-import { getPage } from '../../lib/site-map';
+import { getHomeNewsCards } from '../../lib/partner-news';
 
 interface Props {
   insights: ReturnType<typeof homeContent>['insights'];
   locale: Locale;
-  limit?: number;
 }
 
-const { insights, locale, limit = 3 } = Astro.props;
-const posts = (await getPublishedInsightsForLocale(locale)).slice(0, limit);
-
-function categoryLabel(category: string): string {
-  return getPage(locale, `${insightBasePath(locale)}/${category}`)?.title[locale] ?? category;
-}
+const { insights, locale } = Astro.props;
+const posts = await getHomeNewsCards(locale);
 ---
 
 {
@@ -25,7 +18,10 @@ function categoryLabel(category: string): string {
     <section class="section insights">
       <div class="container">
         <div class="insights-head">
-          <h2 class="section-title">{insights.title}</h2>
+          <div>
+            <p class="eyebrow">{insights.eyebrow}</p>
+            <h2 class="section-title">{insights.title}</h2>
+          </div>
           <a class="insights-all" href={insights.href}>
             {insights.cta}
             <Icon name="arrowRight" size={16} />
@@ -34,23 +30,28 @@ function categoryLabel(category: string): string {
 
         <div class="insights-grid">
           {posts.map((post) => (
-            <a class="insight-tile" href={insightPostPath(locale, post.data.category, getInsightSlug(post))}>
+            <a
+              class="insight-tile"
+              href={post.href}
+              target={post.external ? '_blank' : undefined}
+              rel={post.external ? 'noopener noreferrer' : undefined}
+            >
               <span class="insight-thumb">
-                {post.data.heroImage ? (
-                  <img src={post.data.heroImage} alt="" width="420" height="240" loading="lazy" decoding="async" />
+                {post.image ? (
+                  <img src={post.image} alt="" width="320" height="240" loading="lazy" decoding="async" />
                 ) : (
-                  <span class="insight-thumb-fallback" aria-hidden="true" />
+                  <span class={`insight-thumb-fallback tone-${post.badgeTone}`} aria-hidden="true" />
                 )}
               </span>
               <span class="insight-body">
-                <span class="insight-badge">{categoryLabel(post.data.category)}</span>
-                <span class="insight-title">{post.data.title}</span>
-                <span class="insight-meta">
-                  <span class="insight-date">{formatPublishDate(post.data.publishDate, locale)}</span>
-                  <span class="insight-more">
-                    {insights.readMore}
-                    <Icon name="arrowRight" size={14} />
-                  </span>
+                <span class={`insight-badge tone-${post.badgeTone}`}>{post.badge}</span>
+                <span class="insight-title">{post.title}</span>
+                <time class="insight-date" datetime={post.datetime}>
+                  {post.dateLabel}
+                </time>
+                <span class="insight-more">
+                  {insights.readMore}
+                  <Icon name="arrowRight" size={14} />
                 </span>
               </span>
             </a>
@@ -69,10 +70,19 @@ function categoryLabel(category: string): string {
   .insights-head {
     display: flex;
     flex-wrap: wrap;
-    align-items: baseline;
+    align-items: flex-end;
     justify-content: space-between;
-    gap: 0.75rem;
-    margin-bottom: 1.5rem;
+    gap: 1rem;
+    margin-bottom: 1.35rem;
+  }
+
+  .eyebrow {
+    margin: 0 0 0.55rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-primary);
   }
 
   .insights-head .section-title {
@@ -83,108 +93,159 @@ function categoryLabel(category: string): string {
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    font-size: 0.9rem;
-    font-weight: 600;
+    font-size: 0.95rem;
+    font-weight: 650;
   }
 
   .insights-grid {
     display: grid;
     gap: 1.15rem;
     grid-template-columns: 1fr;
+    align-items: stretch;
   }
 
-  @media (min-width: 720px) {
+  @media (min-width: 900px) {
     .insights-grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.25rem;
     }
   }
 
   .insight-tile {
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--color-border);
-    border-radius: 16px;
-    overflow: hidden;
-    background: #fff;
+    display: grid;
+    grid-template-columns: 42% minmax(0, 1fr);
+    align-items: stretch;
+    min-height: 9.75rem;
+    height: 100%;
+    padding: 0.7rem;
+    gap: 0.85rem;
+    border-radius: 18px;
+    background: #f4f7fb;
     text-decoration: none;
     color: inherit;
-    transition: transform 0.15s, box-shadow 0.15s;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease,
+      background 0.2s ease;
   }
 
   .insight-tile:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 16px 34px rgba(11, 37, 69, 0.1);
+    transform: translateY(-2px);
+    background: #eef3fa;
+    box-shadow: 0 10px 28px rgba(8, 27, 58, 0.08);
     text-decoration: none;
   }
 
   .insight-thumb {
+    position: relative;
     display: block;
-    aspect-ratio: 16 / 10;
-    background: #0b2545;
+    min-height: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--color-navy);
   }
 
-  .insight-thumb img {
+  .insight-thumb img,
+  .insight-thumb-fallback {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
   }
 
-  .insight-thumb-fallback {
-    display: block;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #123256, #1668dc);
+  .insight-thumb-fallback.tone-tech {
+    background: linear-gradient(135deg, #081b3a, #0a66ff);
+  }
+
+  .insight-thumb-fallback.tone-novixa {
+    background: linear-gradient(135deg, #14532d, #16a34a);
+  }
+
+  .insight-thumb-fallback.tone-famixa {
+    background: linear-gradient(135deg, #9a3412, #ea580c);
   }
 
   .insight-body {
-    display: flex;
-    flex-direction: column;
-    gap: 0.55rem;
-    padding: 1rem 1.05rem 1.15rem;
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    align-content: start;
+    min-width: 0;
+    padding: 0.15rem 0.35rem 0.15rem 0;
   }
 
   .insight-badge {
-    display: inline-flex;
-    align-self: flex-start;
-    padding: 0.15rem 0.55rem;
-    border-radius: 999px;
-    background: #eef4ff;
+    margin: 0 0 0.4rem;
+    font-size: 0.72rem;
+    font-weight: 750;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 1.2;
+  }
+
+  .insight-badge.tone-tech,
+  .insight-badge.tone-novixa {
     color: var(--color-primary);
-    font-size: 0.68rem;
-    font-weight: 700;
+  }
+
+  .insight-badge.tone-famixa {
+    color: #ea580c;
   }
 
   .insight-title {
-    font-size: 1rem;
-    font-weight: 650;
-    line-height: 1.4;
+    margin: 0;
+    font-size: 0.98rem;
+    font-weight: 750;
+    line-height: 1.35;
+    letter-spacing: -0.02em;
     color: var(--color-navy);
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
+    height: calc(0.98rem * 1.35 * 2);
     overflow: hidden;
-  }
-
-  .insight-meta {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 0.5rem;
-    margin-top: 0.25rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
   }
 
   .insight-date {
+    margin-top: 0.55rem;
     font-size: 0.78rem;
     color: var(--color-muted);
+    line-height: 1.2;
   }
 
   .insight-more {
     display: inline-flex;
     align-items: center;
     gap: 0.25rem;
-    font-size: 0.82rem;
-    font-weight: 600;
+    margin-top: 0.45rem;
+    font-size: 0.88rem;
+    font-weight: 650;
     color: var(--color-primary);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 560px) {
+    .insight-tile {
+      grid-template-columns: 1fr;
+      min-height: 0;
+      padding: 0.75rem;
+    }
+
+    .insight-thumb {
+      aspect-ratio: 16 / 10;
+      min-height: 0;
+    }
+
+    .insight-body {
+      padding: 0.15rem 0.1rem 0.2rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .insight-tile:hover {
+      transform: none;
+    }
   }
 </style>

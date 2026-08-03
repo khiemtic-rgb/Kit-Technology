@@ -2,167 +2,116 @@ import type { Locale } from '../i18n';
 import type { IconName } from './icons';
 import { pageUrl } from './site-map';
 
-export type Chip = {
+export type ArchitectureLayer = {
   icon: IconName;
   label: string;
 };
 
-export type ProductCard = {
-  icon: IconName;
+export type FlagshipCard = {
   name: string;
   kind: string;
+  desc: string;
   href: string;
   external?: boolean;
-  accent: string;
-  tone: 'green' | 'orange' | 'pink' | 'cyan' | 'teal';
+  cta: string;
+  tone: 'novixa' | 'famixa';
 };
 
-export type FeatureItem = {
-  icon: IconName;
-  title: string;
-  desc: string;
-};
-
+const platformHref = (locale: Locale) => pageUrl(locale, locale === 'vi' ? 'nen-tang' : 'platform');
 const productsHref = (locale: Locale) => pageUrl(locale, locale === 'vi' ? 'san-pham' : 'products');
 const insightsHref = (locale: Locale) => pageUrl(locale, locale === 'vi' ? 'blog' : 'insights');
+const contactHref = (locale: Locale) => (locale === 'vi' ? '/vi/lien-he/' : '/en/contact/');
+const companyHref = (locale: Locale) => pageUrl(locale, locale === 'vi' ? 'gioi-thieu' : 'company');
+const techHref = (locale: Locale) => pageUrl(locale, locale === 'vi' ? 'cong-nghe' : 'technology');
 
 export function homeContent(locale: Locale) {
   const vi = locale === 'vi';
 
   const hero = {
-    badge: 'AI PLATFORM',
-    title: 'AI Platform for Enterprise Digital Solutions',
+    brand: 'KIT Technology',
+    titleAccent: 'AI Platform',
+    titleRest: 'for Digital Solutions',
     lead: vi
-      ? 'KIT Technology xây dựng nền tảng AI giúp doanh nghiệp phát triển các ứng dụng và giải pháp số trên cùng một nền tảng thống nhất.'
-      : 'KIT Technology builds an AI platform that helps enterprises develop applications and digital solutions on one unified foundation.',
-    primaryCta: vi ? 'Khám phá Platform' : 'Explore Platform',
-    primaryHref: `${vi ? '/vi/' : '/en/'}#platform`,
-    secondaryCta: vi ? 'Xem sản phẩm' : 'View Products',
-    secondaryHref: productsHref(locale),
-    coreLabel: 'KIT Platform',
-    orbit: [
-      { icon: 'ai', label: 'AI Gateway' },
-      { icon: 'workflow', label: 'Workflow' },
-      { icon: 'identity', label: 'Identity' },
-      { icon: 'api', label: 'API' },
-      { icon: 'database', label: 'Data & Storage' },
-      { icon: 'security', label: 'Security' },
-    ] satisfies Chip[],
+      ? 'Chúng tôi xây dựng nền tảng AI và các giải pháp số giúp doanh nghiệp và gia đình vận hành hiệu quả hơn.'
+      : 'We build an AI platform and digital solutions that help businesses and families operate more effectively.',
+    primaryCta: vi ? 'Tìm hiểu thêm' : 'Learn more',
+    primaryHref: platformHref(locale),
+  };
+
+  const flagship = {
+    eyebrow: vi ? 'Giải pháp trọng tâm' : 'Flagship solutions',
+    title: vi ? 'Hai giải pháp, một sứ mệnh' : 'Two solutions, one mission',
+    cards: [
+      {
+        name: 'Novixa',
+        kind: 'Healthcare Platform',
+        desc: vi
+          ? 'Nền tảng quản trị nhà thuốc thông minh giúp tối ưu vận hành và tăng trưởng doanh thu.'
+          : 'Smart pharmacy platform that optimizes operations and grows revenue.',
+        href: vi ? 'https://novixa.vn/vi' : 'https://novixa.vn/en',
+        external: true,
+        cta: vi ? 'Tìm hiểu Novixa' : 'Explore Novixa',
+        tone: 'novixa',
+      },
+      {
+        name: 'Famixa',
+        kind: 'Family Operating System',
+        desc: vi
+          ? 'Nền tảng đồng hành cùng gia đình hiện đại, giúp trẻ tự giác hơn và gia đình hạnh phúc hơn.'
+          : 'A companion platform for modern families — helping kids build habits and families thrive.',
+        href: 'https://famixa.vn',
+        external: true,
+        cta: vi ? 'Tìm hiểu Famixa' : 'Explore Famixa',
+        tone: 'famixa',
+      },
+    ] satisfies FlagshipCard[],
+    moreHref: productsHref(locale),
   };
 
   const platform = {
-    title: vi ? 'Một Platform.' : 'One Platform.',
-    titleAccent: vi ? 'Vô hạn giải pháp.' : 'Unlimited Solutions.',
-    caption: vi ? 'Nền tảng cho mọi sản phẩm' : 'Powering Every Product',
-    capabilities: [
+    eyebrow: vi ? 'Nền tảng công nghệ' : 'Technology platform',
+    title: 'KIT Platform',
+    layers: [
+      { icon: 'ai', label: 'AI' },
       { icon: 'identity', label: 'Identity' },
       { icon: 'workflow', label: 'Workflow' },
-      { icon: 'ai', label: 'AI Gateway' },
-      { icon: 'api', label: 'API' },
-      { icon: 'database', label: 'Data & Storage' },
       { icon: 'bell', label: 'Notification' },
-      { icon: 'monitoring', label: 'Monitoring' },
-      { icon: 'security', label: 'Security' },
-      { icon: 'billing', label: 'Billing' },
-    ] satisfies Chip[],
+      { icon: 'api', label: 'API' },
+      { icon: 'database', label: 'Storage' },
+    ] satisfies ArchitectureLayer[],
+    href: platformHref(locale),
   };
 
-  const products = {
-    eyebrow: vi ? 'SẢN PHẨM' : 'OUR PRODUCTS',
-    title: vi ? 'Giải pháp xây trên KIT Platform' : 'Solutions built on KIT Platform',
-    intro: vi
-      ? 'Mỗi ngành một sản phẩm chuyên biệt, tất cả chia sẻ cùng lõi Platform — Identity, Workflow, AI, API và dữ liệu.'
-      : 'Industry-specific products sharing one Platform core — Identity, Workflow, AI, API and data.',
-    more: vi ? 'Tìm hiểu thêm' : 'Learn more',
-    allCta: vi ? 'Xem tất cả sản phẩm' : 'View all products',
-    allHref: productsHref(locale),
-    cards: [
-      {
-        icon: 'pharmacy',
-        name: 'Novixa',
-        kind: vi ? 'Nền tảng y tế' : 'Healthcare Platform',
-        href: vi ? 'https://novixa.vn/vi' : 'https://novixa.vn/en',
-        external: true,
-        accent: '#16a34a',
-        tone: 'green',
-      },
-      {
-        icon: 'family',
-        name: 'Famixa',
-        kind: 'Family OS',
-        href: 'https://famixa.vn',
-        external: true,
-        accent: '#f97316',
-        tone: 'orange',
-      },
-      {
-        icon: 'spa',
-        name: 'Spa OS',
-        kind: vi ? 'Nền tảng làm đẹp' : 'Beauty Platform',
-        href: pageUrl(locale, vi ? 'san-pham/tuong-lai' : 'products/future'),
-        accent: '#db2777',
-        tone: 'pink',
-      },
-      {
-        icon: 'clinic',
-        name: 'Clinic OS',
-        kind: vi ? 'Nền tảng phòng khám' : 'Medical Platform',
-        href: pageUrl(locale, vi ? 'san-pham/tuong-lai' : 'products/future'),
-        accent: '#0ea5e9',
-        tone: 'cyan',
-      },
-      {
-        icon: 'agriculture',
-        name: 'Vân Đình Trà',
-        kind: vi ? 'Nông nghiệp số' : 'Digital Agriculture',
-        href: 'https://vandinhtra.vn',
-        external: true,
-        accent: '#0f766e',
-        tone: 'teal',
-      },
-    ] satisfies ProductCard[],
-  };
-
-  const why = {
-    title: vi ? 'Vì sao chọn KIT' : 'Why Choose KIT',
-    items: [
-      {
-        icon: 'ai',
-        title: 'AI First',
-        desc: vi
-          ? 'AI được tích hợp sâu trong nền tảng và mọi sản phẩm.'
-          : 'AI integrated deep within the platform and every product.',
-      },
-      {
-        icon: 'platform',
-        title: 'Platform First',
-        desc: vi
-          ? 'Một nền tảng thống nhất cho nhiều giải pháp ngành.'
-          : 'A unified platform powering multiple industry solutions.',
-      },
-      {
-        icon: 'enterprise',
-        title: 'Enterprise Ready',
-        desc: vi
-          ? 'Đáp ứng tiêu chuẩn bảo mật và mở rộng doanh nghiệp.'
-          : 'Built for enterprise security and scalability standards.',
-      },
-      {
-        icon: 'cloud',
-        title: 'Cloud Native',
-        desc: vi
-          ? 'Kiến trúc hiện đại, linh hoạt và dễ triển khai.'
-          : 'Modern architecture, flexible and easy to deploy.',
-      },
-    ] satisfies FeatureItem[],
+  const technology = {
+    eyebrow: vi ? 'Công nghệ' : 'Technology',
+    title: vi ? 'Kiến tạo bằng công nghệ hiện đại' : 'Built with modern technology',
+    logos: [
+      { label: '.NET', icon: 'code' as const },
+      { label: 'Flutter', icon: 'mobile' as const },
+      { label: 'PostgreSQL', icon: 'database' as const },
+      { label: 'Cloud', icon: 'cloud' as const },
+      { label: 'AI', icon: 'ai' as const },
+      { label: 'Docker', icon: 'container' as const },
+    ],
+    href: techHref(locale),
   };
 
   const insights = {
-    title: vi ? 'Bài viết mới nhất' : 'Latest Insights',
-    cta: vi ? 'Xem tất cả bài viết' : 'View all insights',
+    eyebrow: vi ? 'Tin tức & Kiến thức' : 'News & Insights',
+    title: vi ? 'Cập nhật mới nhất' : 'Latest updates',
+    cta: vi ? 'Xem tất cả' : 'View all',
     href: insightsHref(locale),
-    readMore: vi ? 'Đọc tiếp' : 'Read more',
+    readMore: vi ? 'Đọc thêm' : 'Read more',
   };
 
-  return { hero, platform, products, why, insights };
+  const links = {
+    platform: platformHref(locale),
+    products: productsHref(locale),
+    technology: techHref(locale),
+    insights: insightsHref(locale),
+    company: companyHref(locale),
+    contact: contactHref(locale),
+  };
+
+  return { hero, flagship, platform, technology, insights, links };
 }

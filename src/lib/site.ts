@@ -1,6 +1,6 @@
 export const SITE_URL = 'https://kittech.vn';
 export const SITE_NAME = 'KIT Technology';
-export const LOGO_PATH = '/images/logo-kit.png';
+export const LOGO_PATH = '/images/logo-kit-mark.png';
 export const DEFAULT_OG_IMAGE = '/images/banner-1.png';
 
 /** Absolute URL; HTML pages use trailing slash to match live Cloudflare hosting. */

@@ -1,0 +1,589 @@
+---
+import Icon from '../Icon.astro';
+import type { Locale } from '../../i18n';
+import { technologyContent } from '../../lib/technology-content';
+import TechnologyHeroHub from './TechnologyHeroHub.astro';
+import PlatformCtaCube from '../platform/PlatformCtaCube.astro';
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const p = technologyContent(locale);
+---
+
+<div class="techp">
+  <section class="techp-hero">
+    <div class="container techp-hero-grid">
+      <div class="techp-hero-copy">
+        <h1>
+          <span class="techp-hero-title">{p.hero.title}</span>
+          <span class="techp-hero-accent">{p.hero.accent1}</span>
+          <span class="techp-hero-accent">{p.hero.accent2}</span>
+        </h1>
+        <p class="techp-hero-lead">{p.hero.lead}</p>
+        <ul class="techp-highlights">
+          {
+            p.hero.highlights.map((item) => (
+              <li>
+                <span class="techp-hi-icon" aria-hidden="true">
+                  <Icon name={item.icon} size={20} strokeWidth={2} />
+                </span>
+                <strong>{item.title}</strong>
+                <span>{item.desc}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="techp-hero-visual">
+        <TechnologyHeroHub />
+      </div>
+    </div>
+  </section>
+
+  <section class="techp-stack">
+    <div class="container">
+      <div class="techp-head center">
+        <p class="techp-eyebrow">{p.stack.eyebrow}</p>
+        <h2>{p.stack.title}</h2>
+      </div>
+      <ul class="techp-stack-grid">
+        {
+          p.stack.items.map((item) => (
+            <li>
+              <span class="techp-soft-icon" aria-hidden="true">
+                <Icon name={item.icon} size={26} strokeWidth={2} />
+              </span>
+              <strong>{item.title}</strong>
+              <span>{item.desc}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="techp-arch" id={p.architecture.id}>
+    <div class="container">
+      <div class="techp-head center">
+        <p class="techp-eyebrow">{p.architecture.eyebrow}</p>
+        <h2>{p.architecture.title}</h2>
+      </div>
+
+      <div class="techp-arch-grid">
+        <ul class="techp-principles">
+          {
+            p.architecture.principles.map((item) => (
+              <li>
+                <span class="techp-soft-icon" aria-hidden="true">
+                  <Icon name={item.icon} size={22} strokeWidth={2} />
+                </span>
+                <div>
+                  <strong>{item.title}</strong>
+                  <p>{item.desc}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ul>
+
+        <div class="techp-layers">
+          {
+            p.architecture.layers.map((layer) => (
+              <div class="techp-layer">
+                <strong>{layer.name}</strong>
+                <ul>
+                  {layer.items.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </div>
+            ))
+          }
+        </div>
+
+        <aside class="techp-cross">
+          <h3>{p.architecture.crossCutting.title}</h3>
+          <ul>
+            {
+              p.architecture.crossCutting.items.map((item) => (
+                <li>
+                  <strong>{item.title}</strong>
+                  <span>{item.points.join(' · ')}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="techp-cap">
+    <div class="container">
+      <div class="techp-head center">
+        <p class="techp-eyebrow">{p.capabilities.eyebrow}</p>
+        <h2>{p.capabilities.title}</h2>
+      </div>
+      <ul class="techp-cap-grid">
+        {
+          p.capabilities.items.map((item) => (
+            <li>
+              <span class="techp-soft-icon" aria-hidden="true">
+                <Icon name={item.icon} size={24} strokeWidth={2} />
+              </span>
+              <strong>{item.title}</strong>
+              <span>{item.desc}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="techp-cta">
+    <div class="container">
+      <div class="techp-cta-box">
+        <div>
+          <h2>{p.cta.title}</h2>
+          <p>{p.cta.lead}</p>
+          <div class="techp-cta-actions">
+            <a class="btn btn-primary" href={p.cta.primaryHref}>
+              {p.cta.primaryCta}
+              <Icon name="arrowRight" size={15} />
+            </a>
+            <a class="btn btn-ghost-light" href={p.cta.secondaryHref}>
+              {p.cta.secondaryCta}
+              <Icon name="arrowRight" size={15} />
+            </a>
+          </div>
+        </div>
+        <div class="techp-cta-art">
+          <PlatformCtaCube />
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style>
+  .techp {
+    --t-gap: clamp(2rem, 4.5vw, 3.25rem);
+    --t-ink: var(--color-navy);
+    --t-muted: var(--color-muted);
+    --t-line: var(--color-border);
+    --t-blue: var(--color-primary);
+  }
+
+  .techp-eyebrow {
+    margin: 0 0 0.4rem;
+    font-size: var(--eyebrow-size);
+    font-weight: var(--eyebrow-weight);
+    letter-spacing: var(--eyebrow-tracking);
+    text-transform: uppercase;
+    color: var(--t-blue);
+  }
+
+  .techp-head {
+    margin-bottom: 1.45rem;
+  }
+
+  .techp-head.center {
+    text-align: center;
+  }
+
+  .techp-head h2 {
+    margin: 0;
+    font-size: var(--section-title);
+    letter-spacing: -0.03em;
+    color: var(--t-ink);
+  }
+
+  .techp-soft-icon {
+    display: grid;
+    place-items: center;
+    width: var(--soft-icon);
+    height: var(--soft-icon);
+    border-radius: 12px;
+    background: var(--color-accent-light);
+    color: var(--t-blue);
+    flex: 0 0 auto;
+  }
+
+  /* Hero */
+  .techp-hero {
+    padding: var(--hero-pad-y);
+    background: linear-gradient(180deg, #f3f7ff 0%, #fff 72%);
+  }
+
+  .techp-hero-grid {
+    display: grid;
+    gap: 1.25rem;
+    align-items: start;
+  }
+
+  @media (min-width: 980px) {
+    .techp-hero-grid {
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 1.25rem 1.75rem;
+    }
+  }
+
+  .techp-hero h1 {
+    margin: 0 0 0.85rem;
+    font-size: var(--hero-title);
+    line-height: 1.12;
+    letter-spacing: -0.035em;
+  }
+
+  .techp-hero-title,
+  .techp-hero-accent {
+    display: block;
+  }
+
+  .techp-hero-title {
+    color: var(--t-ink);
+  }
+
+  .techp-hero-accent {
+    color: var(--t-blue);
+  }
+
+  .techp-hero-lead {
+    margin: 0 0 1.2rem;
+    max-width: 44ch;
+    color: #555;
+    line-height: 1.65;
+    font-size: var(--hero-lead);
+  }
+
+  .techp-highlights {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.65rem;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .techp-highlights li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    column-gap: 0.55rem;
+    row-gap: 0.1rem;
+    padding: 0.7rem 0.75rem;
+    border-radius: 14px;
+    background: #fff;
+    border: 1px solid var(--t-line);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .techp-hi-icon {
+    grid-row: 1 / span 2;
+    align-self: center;
+    display: grid;
+    place-items: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 10px;
+    background: var(--color-accent-light);
+    color: var(--t-blue);
+  }
+
+  .techp-highlights strong {
+    font-size: 0.9rem;
+    color: var(--t-ink);
+  }
+
+  .techp-highlights span {
+    font-size: 0.78rem;
+    color: var(--t-muted);
+    line-height: 1.35;
+  }
+
+  .techp-hero-visual {
+    display: flex;
+    justify-content: flex-end;
+    min-height: clamp(280px, 40vw, 430px);
+    align-items: center;
+  }
+
+  /* Stack */
+  .techp-stack {
+    padding: var(--t-gap) 0;
+    background: #fff;
+  }
+
+  .techp-stack-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.85rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 700px) {
+    .techp-stack-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1000px) {
+    .techp-stack-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .techp-stack-grid li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    padding: 1.1rem 1rem;
+    border-radius: 16px;
+    border: 1px solid var(--t-line);
+    background: #fff;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .techp-stack-grid strong {
+    font-size: 1.05rem;
+    color: var(--t-ink);
+  }
+
+  .techp-stack-grid span {
+    font-size: 0.86rem;
+    color: var(--t-muted);
+    line-height: 1.5;
+  }
+
+  /* Architecture */
+  .techp-arch {
+    padding: var(--t-gap) 0;
+    background: #f6f8fc;
+  }
+
+  .techp-arch-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  @media (min-width: 1000px) {
+    .techp-arch-grid {
+      grid-template-columns: 0.9fr 1.25fr 0.85fr;
+      gap: 1rem;
+      align-items: start;
+    }
+  }
+
+  .techp-principles {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  .techp-principles li {
+    display: flex;
+    gap: 0.7rem;
+    padding: 0.85rem 0.9rem;
+    border-radius: 14px;
+    background: #fff;
+    border: 1px solid var(--t-line);
+  }
+
+  .techp-principles strong {
+    display: block;
+    font-size: 0.92rem;
+    color: var(--t-ink);
+  }
+
+  .techp-principles p {
+    margin: 0.25rem 0 0;
+    font-size: 0.82rem;
+    color: var(--t-muted);
+    line-height: 1.45;
+  }
+
+  .techp-layers {
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .techp-layer {
+    padding: 0.75rem 0.85rem;
+    border-radius: 14px;
+    background: #fff;
+    border: 1px solid var(--t-line);
+  }
+
+  .techp-layer strong {
+    display: block;
+    margin-bottom: 0.45rem;
+    font-size: 0.88rem;
+    color: var(--t-blue);
+  }
+
+  .techp-layer ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+
+  .techp-layer li {
+    padding: 0.28rem 0.6rem;
+    border-radius: 999px;
+    background: #eaf2ff;
+    color: #0b3a8a;
+    font-size: 0.75rem;
+    font-weight: 650;
+  }
+
+  .techp-cross {
+    padding: 1rem;
+    border-radius: 16px;
+    background: #081b3a;
+    color: #fff;
+  }
+
+  .techp-cross h3 {
+    margin: 0 0 0.75rem;
+    font-size: 1rem;
+  }
+
+  .techp-cross ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  .techp-cross strong {
+    display: block;
+    font-size: 0.9rem;
+    margin-bottom: 0.15rem;
+  }
+
+  .techp-cross span {
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.4;
+  }
+
+  /* Capabilities */
+  .techp-cap {
+    padding: var(--t-gap) 0;
+    background: #fff;
+  }
+
+  .techp-cap-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.85rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 700px) {
+    .techp-cap-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1000px) {
+    .techp-cap-grid {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+  }
+
+  .techp-cap-grid li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    padding: 1.05rem 0.95rem;
+    border-radius: 16px;
+    border: 1px solid var(--t-line);
+    background: #fff;
+    box-shadow: var(--shadow-soft);
+  }
+
+  .techp-cap-grid strong {
+    font-size: 0.95rem;
+    color: var(--t-ink);
+  }
+
+  .techp-cap-grid span {
+    font-size: 0.84rem;
+    color: var(--t-muted);
+    line-height: 1.5;
+  }
+
+  /* CTA */
+  .techp-cta {
+    padding: 0 0 var(--t-gap);
+    background: #fff;
+  }
+
+  .techp-cta-box {
+    display: grid;
+    gap: 1rem;
+    align-items: center;
+    padding: 1.5rem 1.25rem;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #081b3a 0%, #0b2a5c 50%, #0a3f8f 100%);
+    color: #fff;
+  }
+
+  @media (min-width: 860px) {
+    .techp-cta-box {
+      grid-template-columns: 1.35fr 0.75fr;
+      padding: 1.7rem 1.7rem 1.7rem 2rem;
+    }
+  }
+
+  .techp-cta-box h2 {
+    margin: 0 0 0.55rem;
+    font-size: clamp(1.25rem, 2.4vw, 1.7rem);
+    max-width: 22ch;
+    line-height: 1.25;
+  }
+
+  .techp-cta-box p {
+    margin: 0 0 1rem;
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 0.92rem;
+    line-height: 1.55;
+    max-width: 48ch;
+  }
+
+  .techp-cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+  }
+
+  .btn-ghost-light {
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+  }
+
+  .btn-ghost-light:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+  }
+
+  .techp-cta-art {
+    display: flex;
+    justify-content: center;
+  }
+</style>

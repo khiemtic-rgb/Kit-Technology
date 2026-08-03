@@ -1,0 +1,859 @@
+---
+import Icon from '../Icon.astro';
+import type { Locale } from '../../i18n';
+import type { InsightEntry } from '../../lib/insights';
+import { getInsightSlug, insightPostPath } from '../../lib/insights';
+import {
+  formatInsightShortDate,
+  insightCategoryMeta,
+  insightsHubContent,
+} from '../../lib/insights-hub-content';
+import { absoluteUrl } from '../../lib/site';
+import { t } from '../../i18n';
+import InsightsHeroHub from './InsightsHeroHub.astro';
+
+interface Props {
+  locale: Locale;
+  entries: InsightEntry[];
+}
+
+const { locale, entries } = Astro.props;
+const p = insightsHubContent(locale);
+const m = t(locale);
+
+const featured =
+  entries.find((e) => e.data.translationId === 'bl-dx-pharmacy') ??
+  entries.find((e) => e.data.category === 'digital-transformation') ??
+  entries.find((e) => e.data.category === 'healthcare') ??
+  entries[0];
+
+const latest = entries.filter((e) => e.id !== featured?.id).slice(0, 3);
+
+const featuredHref = featured
+  ? insightPostPath(locale, featured.data.category, getInsightSlug(featured))
+  : undefined;
+const featuredMeta = featured ? insightCategoryMeta(featured.data.category, locale) : null;
+const featuredTags = featured
+  ? [
+      featuredMeta!.label,
+      ...(featured.data.tags.includes('nha-thuoc')
+        ? [locale === 'vi' ? 'Nhà thuốc' : 'Pharmacy']
+        : featured.data.tags.slice(0, 1).map((tag) => tag.replace(/-/g, ' '))),
+    ].slice(0, 2)
+  : [...p.featured.fallbackTags];
+
+const newsletterNext = absoluteUrl(p.newsletter.nextPath);
+---
+
+<div class="khub">
+  <section class="khub-hero">
+    <svg class="khub-hero-mountains" viewBox="0 0 1440 180" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 110C160 78 300 55 460 72C640 92 780 130 960 118C1140 106 1280 70 1440 88V180H0V110Z" fill="#d4e6ff" />
+      <path d="M0 130C200 100 360 95 540 118C740 144 900 156 1100 132C1260 114 1360 108 1440 120V180H0V130Z" fill="#e3efff" />
+      <path d="M0 152C240 138 500 132 760 146C1020 160 1240 154 1440 148V180H0V152Z" fill="#f3f8ff" />
+    </svg>
+    <div class="container khub-hero-shell">
+      <div class="khub-hero-grid">
+        <div class="khub-hero-copy">
+          <h1>
+            {p.hero.titleLines[0]}
+            <br />
+            {p.hero.titleLines[1]}
+          </h1>
+          <p>{p.hero.lead}</p>
+        </div>
+        <div class="khub-hero-visual">
+          <InsightsHeroHub />
+        </div>
+      </div>
+
+      <nav class="khub-filters" aria-label={locale === 'vi' ? 'Danh mục bài viết' : 'Article categories'}>
+        {
+          p.filters.map((filter) => (
+            <a
+              class:list={['khub-filter', { active: filter.id === 'all' }]}
+              href={filter.href}
+              aria-current={filter.id === 'all' ? 'page' : undefined}
+            >
+              <span class="khub-filter-icon" aria-hidden="true">
+                <Icon name={filter.icon} size={18} strokeWidth={2} />
+              </span>
+              <span>{filter.label}</span>
+            </a>
+          ))
+        }
+      </nav>
+    </div>
+  </section>
+
+  <div class="container">
+    {
+      featured && featuredHref ? (
+        <article class="khub-featured">
+          <a class="khub-featured-media" href={featuredHref} tabindex="-1" aria-hidden="true">
+            {featured.data.heroImage ? (
+              <img
+                src={featured.data.heroImage}
+                alt=""
+                width="640"
+                height="400"
+                loading="eager"
+                decoding="async"
+              />
+            ) : (
+              <span class="khub-featured-fallback" />
+            )}
+          </a>
+          <div class="khub-featured-body">
+            <div class="khub-tags">
+              {featuredTags.map((tag) => (
+                <span>{tag}</span>
+              ))}
+            </div>
+            <h2>
+              <a href={featuredHref}>{featured.data.title}</a>
+            </h2>
+            <p>{featured.data.description}</p>
+            <a class="khub-read" href={featuredHref}>
+              {p.featured.readMore}
+              <Icon name="arrowRight" size={15} />
+            </a>
+          </div>
+        </article>
+      ) : null
+    }
+
+    <section class="khub-latest">
+      <div class="khub-latest-head">
+        <h2>
+          <span class="khub-rule" aria-hidden="true" />
+          <span>{p.latest.title}</span>
+          <span class="khub-rule" aria-hidden="true" />
+        </h2>
+        <a class="khub-view-all" href={p.latest.viewAllHref}>
+          {p.latest.viewAll}
+          <Icon name="arrowRight" size={15} />
+        </a>
+      </div>
+
+      {
+        latest.length > 0 ? (
+          <ul class="khub-grid">
+            {latest.map((entry) => {
+              const href = insightPostPath(locale, entry.data.category, getInsightSlug(entry));
+              const meta = insightCategoryMeta(entry.data.category, locale);
+              const dateLabel = formatInsightShortDate(entry.data.publishDate, locale);
+              return (
+                <li>
+                  <article class="khub-card">
+                    <a class="khub-card-media" href={href} tabindex="-1" aria-hidden="true">
+                      {entry.data.heroImage ? (
+                        <img
+                          src={entry.data.heroImage}
+                          alt=""
+                          width="400"
+                          height="240"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      ) : (
+                        <span class="khub-card-fallback" />
+                      )}
+                      <span class="khub-card-badge">
+                        <Icon name={meta.icon} size={13} strokeWidth={2.2} />
+                        {meta.label}
+                      </span>
+                    </a>
+                    <div class="khub-card-body">
+                      <h3>
+                        <a href={href}>{entry.data.title}</a>
+                      </h3>
+                      <p>{entry.data.description}</p>
+                      <div class="khub-card-meta">
+                        <time datetime={entry.data.publishDate.toISOString()}>
+                          <Icon name="calendar" size={14} strokeWidth={2} />
+                          {dateLabel}
+                        </time>
+                      </div>
+                    </div>
+                  </article>
+                </li>
+              );
+            })}
+          </ul>
+        ) : (
+          <div class="khub-empty">
+            <p>{p.empty}</p>
+          </div>
+        )
+      }
+    </section>
+
+    <section class="khub-topics" aria-label={p.topics.title}>
+      <div class="khub-topics-label">
+        <span class="khub-topics-icon" aria-hidden="true">
+          <Icon name="target" size={18} strokeWidth={2} />
+        </span>
+        <div>
+          <strong>{p.topics.title}</strong>
+          <p>{p.topics.lead}</p>
+        </div>
+      </div>
+      <ul>
+        {
+          p.topics.items.map((topic) => (
+            <li>
+              <a href={topic.href}>
+                <Icon name={topic.icon} size={15} strokeWidth={2} />
+                {topic.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <section class="khub-news">
+      <div class="khub-news-icon" aria-hidden="true">
+        <Icon name="mail" size={34} strokeWidth={1.8} />
+      </div>
+      <div class="khub-news-copy">
+        <h2>{p.newsletter.title}</h2>
+        <p>{p.newsletter.desc}</p>
+      </div>
+      <form
+        class="khub-news-form"
+        method="POST"
+        action={`https://formsubmit.co/${encodeURIComponent(m.contact.emailAddress)}`}
+      >
+        <input type="hidden" name="_subject" value={p.newsletter.subject} />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_next" value={newsletterNext} />
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" />
+        <label class="sr-only" for="khub-newsletter-email">{p.newsletter.placeholder}</label>
+        <input
+          id="khub-newsletter-email"
+          type="email"
+          name="email"
+          required
+          autocomplete="email"
+          placeholder={p.newsletter.placeholder}
+        />
+        <button type="submit">
+          {p.newsletter.cta}
+          <Icon name="arrowRight" size={15} />
+        </button>
+      </form>
+    </section>
+  </div>
+</div>
+
+<style>
+  .khub {
+    overflow: visible;
+  }
+
+  .khub-hero {
+    position: relative;
+    padding: var(--hero-pad-y);
+    overflow: visible;
+    background: linear-gradient(180deg, #ffffff 0%, #f7fbff 55%, #eef5ff 100%);
+  }
+
+  .khub-hero-mountains {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 2.5rem;
+    width: 100%;
+    height: clamp(5.5rem, 13vw, 9rem);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .khub-hero-shell {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.25rem, 3vw, 2rem);
+    padding-bottom: 0;
+  }
+
+  .khub-hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(280px, 1.15fr);
+    gap: clamp(1.25rem, 3.5vw, 2.5rem);
+    align-items: start;
+  }
+
+  .khub-hero-copy {
+    max-width: 28rem;
+  }
+
+  .khub-hero-copy h1 {
+    margin: 0 0 1rem;
+    font-size: var(--hero-title);
+    line-height: 1.16;
+    letter-spacing: -0.035em;
+    font-weight: 800;
+    color: var(--color-navy);
+  }
+
+  .khub-hero-copy p {
+    margin: 0;
+    max-width: 34ch;
+    font-size: var(--hero-lead);
+    line-height: 1.75;
+    color: var(--color-muted);
+  }
+
+  .khub-hero-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 0;
+    background: transparent;
+  }
+
+  .khub-hero-visual :global(.kth) {
+    width: min(100%, 520px);
+  }
+
+  .khub-filters {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.25rem;
+    margin: 0 0 2.25rem;
+    padding: 0.55rem 0.55rem;
+    border-radius: 1.15rem;
+    background: #fff;
+    border: 1px solid rgba(10, 102, 255, 0.08);
+    box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+  }
+
+  .khub-filter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 0.55rem 0.55rem;
+    border-radius: 0.8rem;
+    color: #475569;
+    font-size: clamp(0.82rem, 1.05vw, 0.9rem);
+    font-weight: 600;
+    white-space: nowrap;
+    text-decoration: none;
+    transition:
+      background 0.15s,
+      color 0.15s;
+  }
+
+  .khub-filter:hover {
+    background: #f1f7ff;
+    color: var(--color-primary);
+    text-decoration: none;
+  }
+
+  .khub-filter.active {
+    background: var(--color-primary);
+    color: #fff;
+  }
+
+  .khub-filter-icon {
+    display: grid;
+    place-items: center;
+    width: 1.75rem;
+    height: 1.75rem;
+    flex-shrink: 0;
+    border-radius: 0.45rem;
+    background: #eff6ff;
+    color: var(--color-primary);
+  }
+
+  .khub-filter.active .khub-filter-icon {
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+  }
+
+  .khub-featured {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: clamp(1.25rem, 3vw, 2rem);
+    align-items: center;
+    margin-bottom: 2.75rem;
+    padding: 1.1rem;
+    border-radius: 1.25rem;
+    background: #fff;
+    border: 1px solid rgba(10, 102, 255, 0.08);
+    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.05);
+  }
+
+  .khub-featured-media {
+    display: block;
+    overflow: hidden;
+    border-radius: 1rem;
+    background: #e8f1ff;
+    aspect-ratio: 16 / 11;
+  }
+
+  .khub-featured-media img,
+  .khub-featured-fallback,
+  .khub-card-media img,
+  .khub-card-fallback {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .khub-featured-fallback,
+  .khub-card-fallback {
+    background:
+      radial-gradient(circle at 30% 30%, rgba(10, 102, 255, 0.28), transparent 45%),
+      linear-gradient(145deg, #dbeafe, #bfdbfe 55%, #93c5fd);
+  }
+
+  .khub-featured-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0.5rem 1.1rem 0.5rem 0.15rem;
+    min-width: 0;
+  }
+
+  .khub-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+    margin-bottom: 0.9rem;
+  }
+
+  .khub-tags span {
+    display: inline-flex;
+    padding: 0.28rem 0.7rem;
+    border-radius: 999px;
+    background: #eff6ff;
+    color: var(--color-primary);
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  .khub-featured-body h2 {
+    margin: 0 0 0.75rem;
+    font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    color: var(--color-navy);
+  }
+
+  .khub-featured-body h2 a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .khub-featured-body h2 a:hover {
+    color: var(--color-primary);
+  }
+
+  .khub-featured-body p {
+    margin: 0 0 1.15rem;
+    max-width: 42ch;
+    color: var(--color-muted);
+    line-height: 1.65;
+  }
+
+  .khub-read {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--color-primary);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .khub-read:hover {
+    text-decoration: underline;
+  }
+
+  .khub-latest {
+    margin-bottom: 2.25rem;
+  }
+
+  .khub-latest-head {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.35rem;
+  }
+
+  .khub-latest-head h2 {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 0.85rem;
+    margin: 0;
+    font-size: 1.35rem;
+    color: var(--color-navy);
+    text-align: center;
+  }
+
+  .khub-rule {
+    display: block;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #cbd5e1, transparent);
+  }
+
+  .khub-view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    white-space: nowrap;
+    color: var(--color-primary);
+    font-weight: 700;
+    font-size: 0.92rem;
+    text-decoration: none;
+  }
+
+  .khub-view-all:hover {
+    text-decoration: underline;
+  }
+
+  .khub-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .khub-card {
+    height: 100%;
+    overflow: hidden;
+    border-radius: 1rem;
+    background: #fff;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    box-shadow: 0 8px 22px rgba(15, 23, 42, 0.04);
+    transition:
+      transform 0.15s,
+      box-shadow 0.15s;
+  }
+
+  .khub-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 28px rgba(15, 23, 42, 0.08);
+  }
+
+  .khub-card-media {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 10;
+    background: #e8f1ff;
+    overflow: hidden;
+  }
+
+  .khub-card-badge {
+    position: absolute;
+    left: 0.75rem;
+    top: 0.75rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.94);
+    color: var(--color-primary);
+    font-size: 0.72rem;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+  }
+
+  .khub-card-body {
+    padding: 1rem 1.05rem 1.15rem;
+  }
+
+  .khub-card-body h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.02rem;
+    line-height: 1.35;
+    color: var(--color-navy);
+  }
+
+  .khub-card-body h3 a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .khub-card-body h3 a:hover {
+    color: var(--color-primary);
+  }
+
+  .khub-card-body p {
+    margin: 0 0 0.85rem;
+    color: var(--color-muted);
+    font-size: 0.9rem;
+    line-height: 1.55;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .khub-card-meta {
+    display: flex;
+    gap: 0.85rem;
+    color: #94a3b8;
+    font-size: 0.82rem;
+  }
+
+  .khub-card-meta time {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .khub-empty {
+    padding: 1.5rem;
+    border-radius: 1rem;
+    background: #f8fafc;
+    color: var(--color-muted);
+  }
+
+  .khub-topics {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.95rem 1.25rem;
+    margin-bottom: 2.25rem;
+    padding: 1.05rem 1.2rem;
+    border-radius: 1rem;
+    background: #eff6ff;
+    border: 1px solid rgba(10, 102, 255, 0.08);
+  }
+
+  .khub-topics-label {
+    display: inline-flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    color: var(--color-navy);
+    max-width: 18rem;
+  }
+
+  .khub-topics-label strong {
+    display: block;
+    font-size: 0.98rem;
+  }
+
+  .khub-topics-label p {
+    margin: 0.15rem 0 0;
+    color: #64748b;
+    font-size: 0.82rem;
+    line-height: 1.4;
+  }
+
+  .khub-topics-icon {
+    display: grid;
+    place-items: center;
+    width: 2.15rem;
+    height: 2.15rem;
+    border-radius: 0.6rem;
+    color: var(--color-primary);
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+    flex-shrink: 0;
+  }
+
+  .khub-topics ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.55rem;
+  }
+
+  .khub-topics a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.55rem 0.95rem;
+    border-radius: 999px;
+    background: #fff;
+    color: #1e40af;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+  }
+
+  .khub-topics a:hover {
+    background: #dbeafe;
+    text-decoration: none;
+  }
+
+  .khub-news {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) minmax(16rem, 22rem);
+    gap: 1.25rem;
+    align-items: center;
+    margin-bottom: 3.5rem;
+    padding: 1.4rem 1.5rem;
+    border-radius: 1.25rem;
+    color: #fff;
+    background: linear-gradient(115deg, #0a66ff 0%, #2780ff 48%, #4d9bff 100%);
+    box-shadow: 0 16px 36px rgba(10, 102, 255, 0.28);
+  }
+
+  .khub-news-icon {
+    display: grid;
+    place-items: center;
+    width: 4rem;
+    height: 4rem;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.16);
+  }
+
+  .khub-news-copy h2 {
+    margin: 0 0 0.35rem;
+    font-size: 1.25rem;
+  }
+
+  .khub-news-copy p {
+    margin: 0;
+    opacity: 0.92;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .khub-news-form {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.3rem 0.3rem 0.3rem 0.9rem;
+    border-radius: 999px;
+    background: #fff;
+  }
+
+  .khub-news-form input[type='email'] {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--color-navy);
+    font: inherit;
+    font-size: 0.92rem;
+  }
+
+  .khub-news-form button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    border: 0;
+    border-radius: 999px;
+    padding: 0.7rem 1rem;
+    background: var(--color-primary);
+    color: #fff;
+    font: inherit;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+
+  .khub-news-form button:hover {
+    background: #0854d4;
+  }
+
+  @media (max-width: 960px) {
+    .khub-hero {
+      padding: 1.15rem 0 0;
+    }
+
+    .khub-hero-grid {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+      align-items: start;
+    }
+
+    .khub-hero-visual {
+      order: -1;
+      justify-content: center;
+    }
+
+    .khub-hero-visual :global(.kth) {
+      width: min(100%, 380px);
+    }
+
+    .khub-hero-copy h1 {
+      font-size: clamp(1.7rem, 6vw, 2.1rem);
+    }
+
+    .khub-filters {
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+
+    .khub-filters::-webkit-scrollbar {
+      display: none;
+    }
+
+    .khub-filter {
+      flex: 0 0 auto;
+    }
+
+    .khub-featured,
+    .khub-news {
+      grid-template-columns: 1fr;
+    }
+
+    .khub-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .khub-latest-head {
+      grid-template-columns: 1fr;
+    }
+
+    .khub-latest-head h2 {
+      grid-template-columns: 1fr auto 1fr;
+    }
+
+    .khub-view-all {
+      justify-self: end;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .khub-news {
+      padding: 1.2rem;
+    }
+
+    .khub-news-form {
+      flex-direction: column;
+      align-items: stretch;
+      border-radius: 1rem;
+      padding: 0.55rem;
+    }
+
+    .khub-news-form input[type='email'] {
+      padding: 0.55rem 0.5rem;
+    }
+
+    .khub-news-form button {
+      justify-content: center;
+    }
+  }
+</style>

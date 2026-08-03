@@ -1,0 +1,231 @@
+---
+import Icon from '../Icon.astro';
+import type { IconName } from '../../lib/icons';
+
+const nodes: { label: string; icon: IconName; angle: number }[] = [
+  { label: 'AI', icon: 'ai', angle: -90 },
+  { label: 'Cloud', icon: 'cloud', angle: -30 },
+  { label: 'Security', icon: 'security', angle: 30 },
+  { label: 'Data', icon: 'database', angle: 90 },
+  { label: 'Integration', icon: 'puzzle', angle: 150 },
+  { label: 'Performance', icon: 'scalable', angle: 210 },
+];
+const radius = 40;
+---
+
+<div class="thub" aria-hidden="true">
+  <div class="thub-glow"></div>
+  <div class="thub-orbit"></div>
+  <svg class="thub-spokes" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet">
+    {
+      nodes.map((node) => {
+        const rad = (node.angle * Math.PI) / 180;
+        const x2 = 50 + Math.cos(rad) * radius;
+        const y2 = 50 + Math.sin(rad) * radius;
+        return (
+          <line
+            x1="50"
+            y1="50"
+            x2={x2.toFixed(2)}
+            y2={y2.toFixed(2)}
+            stroke="rgba(10,102,255,0.3)"
+            stroke-width="0.4"
+            stroke-dasharray="1.3 1.2"
+          />
+        );
+      })
+    }
+  </svg>
+
+  <div class="thub-core">
+    <div class="thub-pedestal"></div>
+    <div class="thub-cube">
+      <span>KIT<br />Platform</span>
+    </div>
+  </div>
+
+  <ul class="thub-nodes">
+    {
+      nodes.map((node) => {
+        const rad = (node.angle * Math.PI) / 180;
+        const left = 50 + Math.cos(rad) * radius;
+        const top = 50 + Math.sin(rad) * radius;
+        return (
+          <li style={`left:${left.toFixed(2)}%;top:${top.toFixed(2)}%`}>
+            <span class="thub-tile">
+              <span class="thub-icon">
+                <Icon name={node.icon} size={34} strokeWidth={2} />
+              </span>
+              <em>{node.label}</em>
+            </span>
+          </li>
+        );
+      })
+    }
+  </ul>
+</div>
+
+<style>
+  .thub {
+    --hub: min(100%, 500px);
+    position: relative;
+    width: var(--hub);
+    aspect-ratio: 1.05 / 1;
+    margin-left: auto;
+  }
+
+  .thub-glow {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 44%;
+    height: 44%;
+    translate: -50% -50%;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(10, 102, 255, 0.2), transparent 70%);
+  }
+
+  .thub-orbit {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 78%;
+    height: 78%;
+    translate: -50% -50%;
+    border: 1.5px dashed rgba(10, 102, 255, 0.22);
+    border-radius: 50%;
+  }
+
+  .thub-spokes {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .thub-core {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    translate: -50% -52%;
+    display: grid;
+    place-items: center;
+    z-index: 2;
+  }
+
+  .thub-pedestal {
+    width: 6.8rem;
+    height: 6.8rem;
+    border-radius: 1rem;
+    background: linear-gradient(180deg, #fff, #dbeafe);
+    box-shadow: 0 16px 28px rgba(10, 102, 255, 0.18);
+    transform: rotateX(50deg) rotateZ(45deg);
+  }
+
+  .thub-cube {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -66%;
+    width: var(--hub-cube);
+    height: var(--hub-cube);
+    border-radius: 0.9rem;
+    display: grid;
+    place-items: center;
+    text-align: center;
+    color: #fff;
+    font-weight: 800;
+    font-size: var(--hub-cube-font);
+    line-height: 1.15;
+    background: linear-gradient(145deg, #4d93ff, #0a66ff 52%, #084fc7);
+    box-shadow:
+      0 16px 28px rgba(10, 102, 255, 0.38),
+      0 0 28px rgba(77, 163, 255, 0.28);
+  }
+
+  .thub-nodes {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    inset: 0;
+  }
+
+  .thub-nodes li {
+    position: absolute;
+    width: 0;
+    height: 0;
+    z-index: 3;
+  }
+
+  .thub-tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    width: 5.2rem;
+    margin: -2.9rem 0 0 -2.6rem;
+    color: var(--color-primary);
+  }
+
+  .thub-icon {
+    display: grid;
+    place-items: center;
+    width: var(--hub-node-tile);
+    height: var(--hub-node-tile);
+    flex-shrink: 0;
+    clip-path: polygon(25% 6%, 75% 6%, 100% 50%, 75% 94%, 25% 94%, 0 50%);
+    background: #fff;
+    box-shadow:
+      0 10px 20px rgba(15, 23, 42, 0.08),
+      0 0 0 1px rgba(10, 102, 255, 0.12);
+  }
+
+  .thub-icon :global(svg) {
+    width: calc(var(--hub-node-icon) * 0.95);
+    height: calc(var(--hub-node-icon) * 0.95);
+  }
+
+  .thub-tile em {
+    font-style: normal;
+    font-size: var(--hub-label-font);
+    font-weight: 700;
+    color: var(--color-navy);
+    line-height: 1.1;
+    text-align: center;
+    max-width: 5.2rem;
+  }
+
+  @media (max-width: 640px) {
+    .thub {
+      --hub: min(100%, 310px);
+      margin-inline: auto;
+    }
+
+    .thub-tile {
+      width: 4.2rem;
+      margin: -2.4rem 0 0 -2.1rem;
+      gap: 0.25rem;
+    }
+
+    .thub-icon {
+      width: 2.9rem;
+      height: 2.9rem;
+    }
+
+    .thub-icon :global(svg) {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
+    .thub-tile em {
+      font-size: 0.58rem;
+    }
+
+    .thub-cube {
+      width: 4.2rem;
+      height: 4.2rem;
+      font-size: 0.62rem;
+    }
+  }
+</style>

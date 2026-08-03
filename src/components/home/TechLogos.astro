@@ -1,0 +1,153 @@
+---
+import Icon from '../Icon.astro';
+import type { homeContent } from '../../lib/home-content';
+
+interface Props {
+  technology: ReturnType<typeof homeContent>['technology'];
+  embedded?: boolean;
+}
+
+const { technology, embedded = false } = Astro.props;
+---
+
+<section class:list={['tech', { 'tech-embedded': embedded }]} id={embedded ? undefined : 'technology'}>
+  <div class="container">
+    {
+      !embedded && (
+        <div class="tech-head">
+          <p class="eyebrow">{technology.eyebrow}</p>
+          <h2>{technology.title}</h2>
+        </div>
+      )
+    }
+    {embedded && <h2 class="sr-only">{technology.title}</h2>}
+    <ul class="tech-row">
+      {
+        technology.logos.map((logo) => (
+          <li>
+            <span class="tech-icon" aria-hidden="true">
+              <Icon name={logo.icon} size={28} />
+            </span>
+            <span class="tech-label">{logo.label}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .tech {
+    background: #081b3a;
+    padding: clamp(2.25rem, 4.5vw, 3.5rem) 0;
+    color: #fff;
+  }
+
+  .tech-embedded {
+    background: var(--color-gray);
+    color: var(--color-navy);
+    border-radius: var(--radius);
+    padding: 1.5rem 1.25rem;
+    margin-top: 0.75rem;
+  }
+
+  .tech-head {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .eyebrow {
+    margin: 0 0 0.6rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #8fb6ff;
+  }
+
+  .tech-embedded .eyebrow {
+    color: var(--color-primary);
+  }
+
+  h2 {
+    margin: 0;
+    font-size: clamp(1.55rem, 3.2vw, 2rem);
+    letter-spacing: -0.02em;
+    font-weight: 750;
+    color: #fff;
+  }
+
+  .tech-embedded h2 {
+    color: var(--color-navy);
+  }
+
+  .tech-row {
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+    max-width: 68rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .tech-row li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 0.55rem 1.35rem;
+    color: rgba(255, 255, 255, 0.95);
+    position: relative;
+  }
+
+  .tech-row li + li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 22%;
+    bottom: 22%;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.22);
+  }
+
+  .tech-embedded .tech-row li {
+    color: var(--color-navy);
+  }
+
+  .tech-embedded .tech-row li + li::before {
+    background: rgba(8, 27, 58, 0.14);
+  }
+
+  .tech-icon {
+    display: grid;
+    place-items: center;
+    color: inherit;
+    opacity: 0.95;
+  }
+
+  .tech-label {
+    font-size: 1rem;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 700px) {
+    .tech-row {
+      gap: 0.35rem 0;
+    }
+
+    .tech-row li {
+      padding: 0.45rem 0.95rem;
+    }
+
+    .tech-row li + li::before {
+      display: none;
+    }
+
+    .tech-label {
+      font-size: 0.95rem;
+    }
+  }
+</style>

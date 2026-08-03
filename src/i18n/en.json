@@ -1,16 +1,16 @@
 {
   "meta": {
     "siteName": "KIT Technology",
-    "tagline": "AI Platform for Enterprise Digital Solutions",
-    "description": "KIT Technology builds the AI platform that lets businesses ship digital applications and solutions on one unified foundation.",
-    "keywords": "kit technology, ai first, saas, healthcare, novixa, enterprise platform"
+    "tagline": "AI Platform for Digital Solutions",
+    "description": "KIT Technology builds an AI platform and digital solutions that help businesses and families operate more effectively.",
+    "keywords": "kit technology, ai platform, novixa, famixa, digital solutions"
   },
   "nav": {
     "home": "Home",
     "platform": "Platform",
     "login": "Login",
     "contact": "Contact",
-    "contactCta": "Contact Us",
+    "contactCta": "Contact us",
     "menuOpen": "Open menu",
     "menuClose": "Close menu",
     "langVi": "Tiếng Việt",
@@ -101,7 +101,7 @@
     "addressLines": ["Ho Xhuong Rong Urban Area, Phan Dinh Phung Ward, Thai Nguyen Province"],
     "mapTitle": "Map",
     "mapNote": "Thai Nguyen office — please contact us before visiting.",
-    "mapEmbedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3720.276!2d105.844119!3d21.5831444!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31352771aa783d2f%3A0xd008864f40919e38!2sBING%20COFFEE!5e0!3m2!1sen!2s!4v1740000000000",
+    "mapEmbedUrl": "https://www.google.com/maps?q=21.5831444,105.844119+(KIT+Technology)&hl=en&z=16&output=embed",
     "demoCta": "Request a Demo",
     "demoFormTitle": "Product demo request",
     "demoIntro": "Leave your details — we will contact you for a Novixa or platform demo.",
@@ -120,9 +120,9 @@
   "footer": {
     "since": "Since 2015",
     "tagline": "AI Platform & Digital Solutions",
-    "desc": "KIT Technology builds the AI platform and industry-specific digital solutions on top of it.",
+    "desc": "KIT Technology partners with businesses and families on their digital transformation journey.",
     "locations": ["Hanoi", "Thai Nguyen"],
-    "rights": "All rights reserved by KIT Technology.",
+    "rights": "KIT Technology. All rights reserved.",
     "columns": {
       "products": "Products",
       "platform": "Platform",
@@ -130,8 +130,8 @@
       "company": "Company"
     },
     "newsletter": {
-      "title": "Stay in touch",
-      "desc": "Get the latest news from KIT Technology.",
+      "title": "News from KIT",
+      "desc": "Subscribe for the latest product and technology updates.",
       "placeholder": "Your email address",
       "cta": "Subscribe",
       "subject": "Newsletter signup from kittech.vn"
@@ -139,6 +139,7 @@
     "social": {
       "linkedin": "LinkedIn",
       "facebook": "Facebook",
+      "youtube": "YouTube",
       "github": "GitHub"
     }
   }

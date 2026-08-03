@@ -1,0 +1,229 @@
+---
+interface Props {
+  tone: 'novixa' | 'famixa' | 'future';
+}
+
+const { tone } = Astro.props;
+---
+
+{
+  tone === 'novixa' && (
+    <div class="sa sa-novixa" aria-hidden="true">
+      <div class="sa-shelf">
+        <span /><span /><span />
+      </div>
+      <div class="sa-cross"></div>
+    </div>
+  )
+}
+
+{
+  tone === 'famixa' && (
+    <div class="sa sa-famixa" aria-hidden="true">
+      <div class="sa-tree sa-tree-l"></div>
+      <div class="sa-house">
+        <div class="sa-roof"></div>
+        <div class="sa-wall">
+          <i></i><i></i>
+        </div>
+      </div>
+      <div class="sa-tree sa-tree-r"></div>
+    </div>
+  )
+}
+
+{
+  tone === 'future' && (
+    <div class="sa sa-future" aria-hidden="true">
+      <div class="sa-cube">
+        <span class="face face-front"></span>
+        <span class="face face-top"></span>
+        <span class="face face-side"></span>
+      </div>
+    </div>
+  )
+}
+
+<style>
+  .sa {
+    position: relative;
+    width: 100%;
+    max-width: 7.5rem;
+    aspect-ratio: 1.15 / 1;
+    margin-inline: auto;
+  }
+
+  /* Novixa */
+  .sa-novixa {
+    display: grid;
+    grid-template-columns: 1.2fr 0.7fr;
+    align-items: end;
+    gap: 0.25rem;
+  }
+
+  .sa-shelf {
+    display: grid;
+    gap: 0.28rem;
+    padding: 0.45rem 0.4rem;
+    border-radius: 0.55rem 0.55rem 0.4rem 0.4rem;
+    background: linear-gradient(180deg, #dff7f4, #c6ebe7);
+    border: 1px solid rgba(22, 163, 74, 0.12);
+  }
+
+  .sa-shelf span {
+    display: block;
+    height: 0.55rem;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #86efac, #67e8f9 40%, #fda4af 70%, #fff 100%);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.7);
+  }
+
+  .sa-cross {
+    width: 2.35rem;
+    height: 2.35rem;
+    margin-bottom: 0.35rem;
+    border-radius: 0.45rem;
+    background: #22c55e;
+    box-shadow: 0 8px 16px rgba(34, 197, 94, 0.28);
+    position: relative;
+  }
+
+  .sa-cross::before,
+  .sa-cross::after {
+    content: '';
+    position: absolute;
+    inset: 50% auto auto 50%;
+    translate: -50% -50%;
+    background: #fff;
+    border-radius: 2px;
+  }
+
+  .sa-cross::before {
+    width: 58%;
+    height: 18%;
+  }
+
+  .sa-cross::after {
+    width: 18%;
+    height: 58%;
+  }
+
+  /* Famixa */
+  .sa-famixa {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 0.2rem;
+    padding-bottom: 0.2rem;
+  }
+
+  .sa-house {
+    width: 3.4rem;
+    z-index: 1;
+  }
+
+  .sa-roof {
+    width: 0;
+    height: 0;
+    margin: 0 auto;
+    border-left: 1.9rem solid transparent;
+    border-right: 1.9rem solid transparent;
+    border-bottom: 1.35rem solid #f97316;
+    filter: drop-shadow(0 2px 0 #ea580c);
+  }
+
+  .sa-wall {
+    position: relative;
+    height: 2.1rem;
+    margin-top: -1px;
+    border-radius: 0 0 0.35rem 0.35rem;
+    background: linear-gradient(180deg, #fef3c7, #fde68a);
+    border: 1px solid rgba(234, 88, 12, 0.18);
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 0.35rem;
+    padding: 0.35rem;
+  }
+
+  .sa-wall i {
+    display: block;
+    width: 0.55rem;
+    height: 0.7rem;
+    border-radius: 0.12rem;
+    background: #38bdf8;
+    opacity: 0.9;
+  }
+
+  .sa-wall i:last-child {
+    width: 0.7rem;
+    height: 1.05rem;
+    background: #fb923c;
+  }
+
+  .sa-tree {
+    width: 1.15rem;
+    height: 1.9rem;
+    border-radius: 999px 999px 0.3rem 0.3rem;
+    background: linear-gradient(180deg, #4ade80, #16a34a);
+    position: relative;
+  }
+
+  .sa-tree::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 0.28rem;
+    height: 0.55rem;
+    translate: -50% 0;
+    background: #92400e;
+    border-radius: 2px;
+  }
+
+  .sa-tree-l {
+    height: 1.55rem;
+    transform: translateY(0.15rem);
+  }
+
+  .sa-tree-r {
+    height: 2.15rem;
+  }
+
+  /* Future cube */
+  .sa-future {
+    display: grid;
+    place-items: center;
+  }
+
+  .sa-cube {
+    position: relative;
+    width: 3.4rem;
+    height: 3.4rem;
+    transform-style: preserve-3d;
+    transform: rotateX(-18deg) rotateY(-28deg);
+  }
+
+  .face {
+    position: absolute;
+    inset: 0;
+    border-radius: 0.45rem;
+    border: 1px solid rgba(167, 139, 250, 0.55);
+    background: linear-gradient(145deg, rgba(196, 181, 253, 0.55), rgba(124, 58, 237, 0.28));
+    box-shadow: inset 0 0 18px rgba(167, 139, 250, 0.35);
+  }
+
+  .face-front {
+    transform: translateZ(1.1rem);
+  }
+
+  .face-top {
+    transform: rotateX(90deg) translateZ(1.1rem);
+    background: linear-gradient(145deg, rgba(237, 233, 254, 0.8), rgba(196, 181, 253, 0.45));
+  }
+
+  .face-side {
+    transform: rotateY(90deg) translateZ(1.1rem);
+    background: linear-gradient(145deg, rgba(167, 139, 250, 0.45), rgba(91, 33, 182, 0.35));
+  }
+</style>
