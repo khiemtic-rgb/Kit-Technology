@@ -23,47 +23,135 @@
     "ctaProducts": "Explore products",
     "ctaConsult": "Book a consultation",
     "heroProducts": [
-      { "name": "Novixa", "tagline": "Healthcare SaaS", "href": "/en/products/novixa" },
-      { "name": "AI Automation", "tagline": "Workflow Automation", "href": "/en/products/ai-automation" },
-      { "name": "Enterprise Platform", "tagline": "Custom Digital Platform", "href": "/en/solutions/enterprise-platform" }
+      {
+        "name": "Novixa",
+        "tagline": "Healthcare SaaS",
+        "href": "/en/products/novixa/"
+      },
+      {
+        "name": "AI Automation",
+        "tagline": "Workflow Automation",
+        "href": "/en/products/ai-automation/"
+      },
+      {
+        "name": "Enterprise Platform",
+        "tagline": "Custom Digital Platform",
+        "href": "/en/solutions/enterprise-platform/"
+      }
     ],
     "whatWeDoTitle": "What we do",
     "whatWeDo": [
-      { "title": "Healthcare Platform", "desc": "Management platforms for healthcare.", "href": "/en/solutions/healthcare" },
-      { "title": "AI Automation", "desc": "Process automation powered by AI.", "href": "/en/products/ai-automation" },
-      { "title": "Enterprise Platform", "desc": "Custom digital platforms on demand.", "href": "/en/solutions/enterprise-platform" }
+      {
+        "title": "Healthcare Platform",
+        "desc": "Management platforms for healthcare.",
+        "href": "/en/solutions/healthcare/"
+      },
+      {
+        "title": "AI Automation",
+        "desc": "Process automation powered by AI.",
+        "href": "/en/products/ai-automation/"
+      },
+      {
+        "title": "Enterprise Platform",
+        "desc": "Custom digital platforms on demand.",
+        "href": "/en/solutions/enterprise-platform/"
+      }
     ],
     "featuredTitle": "Featured product",
     "featuredName": "NOVIXA",
-    "featuredTags": ["Dashboard", "Mobile", "POS", "AI", "API", "QR", "ERP"],
+    "featuredTags": [
+      "Dashboard",
+      "Mobile",
+      "POS",
+      "AI",
+      "API",
+      "QR",
+      "ERP"
+    ],
     "featuredDesc": "Next-gen pharmacy platform — POS, inventory, CRM, customer app and AI Assistant.",
     "featuredCta": "Visit Novixa",
     "featuredUrl": "https://novixa.vn/en",
     "processTitle": "Development process",
-    "processSteps": ["Discovery", "Analysis", "UX Design", "AI Assisted Development", "Testing", "Cloud Deployment", "Support"],
+    "processSteps": [
+      "Discovery",
+      "Analysis",
+      "UX Design",
+      "AI Assisted Development",
+      "Testing",
+      "Cloud Deployment",
+      "Support"
+    ],
     "processNote": "AI is integrated throughout our software development lifecycle.",
     "techTitle": "Technology",
-    "techStack": ["Flutter", "Node.js", "NestJS", "PostgreSQL", "Redis", "Docker", "Kubernetes", "AI", "LLM", "AWS", "Azure"],
+    "techStack": [
+      "Flutter",
+      "Node.js",
+      "NestJS",
+      "PostgreSQL",
+      "Redis",
+      "Docker",
+      "Kubernetes",
+      "AI",
+      "LLM",
+      "AWS",
+      "Azure"
+    ],
     "whyTitle": "Why KIT",
     "whyItems": [
-      { "value": "10+", "label": "Years of experience" },
-      { "value": "AI First", "label": "Development process" },
-      { "value": "Cloud Native", "label": "Modern architecture" },
-      { "value": "Healthcare", "label": "Industry focus" }
+      {
+        "value": "10+",
+        "label": "Years of experience"
+      },
+      {
+        "value": "AI First",
+        "label": "Development process"
+      },
+      {
+        "value": "Cloud Native",
+        "label": "Modern architecture"
+      },
+      {
+        "value": "Healthcare",
+        "label": "Industry focus"
+      }
     ],
     "caseTitle": "Case Study — NOVIXA",
     "caseSubtitle": "Pharmacy · POS · CRM · App · AI · Cloud",
-    "caseTimeline": ["Idea", "Prototype", "MVP", "Pilot", "Commercial"],
+    "caseTimeline": [
+      "Idea",
+      "Prototype",
+      "MVP",
+      "Pilot",
+      "Commercial"
+    ],
     "caseCta": "View Novixa project",
     "caseHref": "/en/projects/novixa",
     "blogTitle": "Insights",
     "blogTopics": [
-      { "label": "AI", "href": "/en/insights/ai" },
-      { "label": "Digital Transformation", "href": "/en/insights/digital-transformation" },
-      { "label": "Healthcare", "href": "/en/insights/healthcare" },
-      { "label": "Flutter", "href": "/en/technology/flutter" },
-      { "label": "Cloud", "href": "/en/technology/cloud" },
-      { "label": "SaaS", "href": "/en/products" }
+      {
+        "label": "AI",
+        "href": "/en/insights/ai/"
+      },
+      {
+        "label": "Digital Transformation",
+        "href": "/en/insights/digital-transformation/"
+      },
+      {
+        "label": "Healthcare",
+        "href": "/en/insights/healthcare/"
+      },
+      {
+        "label": "Flutter",
+        "href": "/en/technology/flutter/"
+      },
+      {
+        "label": "Cloud",
+        "href": "/en/technology/cloud/"
+      },
+      {
+        "label": "SaaS",
+        "href": "/en/products/"
+      }
     ],
     "blogCta": "View all articles"
   },
@@ -98,7 +186,9 @@
     "successMessage": "Thank you! We will reply via the phone number or email you provided.",
     "formSubject": "Contact from kittech.vn",
     "addressLabel": "Address",
-    "addressLines": ["Ho Xhuong Rong Urban Area, Phan Dinh Phung Ward, Thai Nguyen Province"],
+    "addressLines": [
+      "Ho Xhuong Rong Urban Area, Phan Dinh Phung Ward, Thai Nguyen Province"
+    ],
     "mapTitle": "Map",
     "mapNote": "Thai Nguyen office — please contact us before visiting.",
     "mapEmbedUrl": "https://www.google.com/maps?q=21.5831444,105.844119+(KIT+Technology)&hl=en&z=16&output=embed",
@@ -121,7 +211,10 @@
     "since": "Since 2015",
     "tagline": "AI Platform & Digital Solutions",
     "desc": "KIT Technology partners with businesses and families on their digital transformation journey.",
-    "locations": ["Hanoi", "Thai Nguyen"],
+    "locations": [
+      "Hanoi",
+      "Thai Nguyen"
+    ],
     "rights": "KIT Technology. All rights reserved.",
     "columns": {
       "products": "Products",

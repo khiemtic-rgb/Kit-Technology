@@ -181,7 +181,7 @@ export function getStaticSlugs(locale: Locale): string[] {
 
 export function getAlternatePath(locale: Locale, slug: string): string {
   const page = getPage(locale, slug);
-  if (!page) return locale === 'vi' ? '/en' : '/vi';
+  if (!page) return locale === 'vi' ? '/en/' : '/vi/';
   const other: Locale = locale === 'vi' ? 'en' : 'vi';
   return pageUrl(other, page.paths[other]);
 }

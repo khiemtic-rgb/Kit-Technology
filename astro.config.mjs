@@ -42,7 +42,8 @@ function sitemapItem(page) {
 // https://astro.build/config
 export default defineConfig({
   site: 'https://kittech.vn',
-  trailingSlash: 'always',
+  // Accept both /en and /en/ in local preview; Workers still 301 → trailing slash in prod.
+  trailingSlash: 'ignore',
   integrations: [
     sitemap({
       // EN pages are noindex — keep them out of the sitemap.

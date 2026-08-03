@@ -26,17 +26,17 @@
       {
         "name": "Novixa",
         "tagline": "SaaS ngành y tế",
-        "href": "/vi/san-pham/novixa"
+        "href": "/vi/san-pham/novixa/"
       },
       {
         "name": "Tự động hóa AI",
         "tagline": "Tự động hóa quy trình",
-        "href": "/vi/san-pham/ai-automation"
+        "href": "/vi/san-pham/ai-automation/"
       },
       {
         "name": "Nền tảng doanh nghiệp",
         "tagline": "Nền tảng số theo yêu cầu",
-        "href": "/vi/giai-phap/enterprise-platform"
+        "href": "/vi/giai-phap/enterprise-platform/"
       }
     ],
     "whatWeDoTitle": "Chúng tôi làm gì?",
@@ -44,22 +44,30 @@
       {
         "title": "Nền tảng ngành y tế",
         "desc": "Xây dựng nền tảng quản lý cho ngành y tế và nhà thuốc.",
-        "href": "/vi/giai-phap/healthcare"
+        "href": "/vi/giai-phap/healthcare/"
       },
       {
         "title": "Tự động hóa AI",
         "desc": "Tự động hóa quy trình bằng AI.",
-        "href": "/vi/san-pham/ai-automation"
+        "href": "/vi/san-pham/ai-automation/"
       },
       {
         "title": "Nền tảng doanh nghiệp",
         "desc": "Phát triển nền tảng số theo yêu cầu.",
-        "href": "/vi/giai-phap/enterprise-platform"
+        "href": "/vi/giai-phap/enterprise-platform/"
       }
     ],
     "featuredTitle": "Sản phẩm nổi bật",
     "featuredName": "NOVIXA",
-    "featuredTags": ["Dashboard", "Mobile", "POS", "AI", "API", "QR", "ERP"],
+    "featuredTags": [
+      "Dashboard",
+      "Mobile",
+      "POS",
+      "AI",
+      "API",
+      "QR",
+      "ERP"
+    ],
     "featuredDesc": "Nền tảng quản trị nhà thuốc thế hệ mới — POS, tồn kho, CRM, app khách hàng và trợ lý AI.",
     "featuredCta": "Xem Novixa",
     "featuredUrl": "https://novixa.vn/vi",
@@ -90,23 +98,56 @@
     ],
     "whyTitle": "Vì sao chọn KIT",
     "whyItems": [
-      { "value": "10+", "label": "Năm kinh nghiệm" },
-      { "value": "AI First", "label": "Quy trình phát triển" },
-      { "value": "Cloud Native", "label": "Kiến trúc hiện đại" },
-      { "value": "Y tế", "label": "Chuyên sâu ngành y tế" }
+      {
+        "value": "10+",
+        "label": "Năm kinh nghiệm"
+      },
+      {
+        "value": "AI First",
+        "label": "Quy trình phát triển"
+      },
+      {
+        "value": "Cloud Native",
+        "label": "Kiến trúc hiện đại"
+      },
+      {
+        "value": "Y tế",
+        "label": "Chuyên sâu ngành y tế"
+      }
     ],
     "caseTitle": "Dự án tiêu biểu — Novixa",
     "caseSubtitle": "Quản lý nhà thuốc · POS · CRM · App · AI · Cloud",
-    "caseTimeline": ["Ý tưởng", "Prototype", "MVP", "Pilot", "Thương mại hóa"],
+    "caseTimeline": [
+      "Ý tưởng",
+      "Prototype",
+      "MVP",
+      "Pilot",
+      "Thương mại hóa"
+    ],
     "caseCta": "Xem dự án Novixa",
     "caseHref": "/vi/du-an/novixa",
     "blogTitle": "Kiến thức",
     "blogTopics": [
-      { "label": "AI", "href": "/vi/blog/ai" },
-      { "label": "Ngành y tế", "href": "/vi/blog/healthcare" },
-      { "label": "Công nghệ", "href": "/vi/blog/technology" },
-      { "label": "Novixa", "href": "/vi/blog/products" },
-      { "label": "Câu hỏi thường gặp", "href": "/vi/faq" }
+      {
+        "label": "AI",
+        "href": "/vi/blog/ai/"
+      },
+      {
+        "label": "Ngành y tế",
+        "href": "/vi/blog/healthcare/"
+      },
+      {
+        "label": "Công nghệ",
+        "href": "/vi/blog/technology/"
+      },
+      {
+        "label": "Novixa",
+        "href": "/vi/blog/products/"
+      },
+      {
+        "label": "Câu hỏi thường gặp",
+        "href": "/vi/faq/"
+      }
     ],
     "blogCta": "Xem tất cả bài viết"
   },
@@ -141,7 +182,9 @@
     "successMessage": "Cảm ơn bạn! Chúng tôi sẽ phản hồi qua số điện thoại hoặc email bạn cung cấp.",
     "formSubject": "Liên hệ từ kittech.vn",
     "addressLabel": "Địa chỉ",
-    "addressLines": ["KĐT Hồ Xương Rồng, phường Phan Đình Phùng, tỉnh Thái Nguyên"],
+    "addressLines": [
+      "KĐT Hồ Xương Rồng, phường Phan Đình Phùng, tỉnh Thái Nguyên"
+    ],
     "mapTitle": "Bản đồ",
     "mapNote": "Văn phòng Thái Nguyên — liên hệ trước khi ghé thăm.",
     "mapEmbedUrl": "https://www.google.com/maps?q=21.5831444,105.844119+(KIT+Technology)&hl=vi&z=16&output=embed",
@@ -164,7 +207,10 @@
     "since": "Từ 2015",
     "tagline": "AI Platform & Digital Solutions",
     "desc": "KIT Technology đồng hành cùng doanh nghiệp và gia đình trên hành trình chuyển đổi số.",
-    "locations": ["Hà Nội", "Thái Nguyên"],
+    "locations": [
+      "Hà Nội",
+      "Thái Nguyên"
+    ],
     "rights": "KIT Technology. All rights reserved.",
     "columns": {
       "products": "Products",
