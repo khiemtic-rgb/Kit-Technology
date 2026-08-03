@@ -1,4 +1,6 @@
 ---
+import { STATS_VIEW_PASSWORD } from '../../lib/stats-config';
+
 interface Props {
   locale: 'vi' | 'en';
 }
@@ -9,7 +11,12 @@ const vi = locale === 'vi';
 const copy = vi
   ? {
       title: 'Thống kê truy cập',
-      lead: 'Số liệu thực từ Cloudflare cho kittech.vn (làm mới khoảng 15 phút).',
+      lead: 'Số liệu Cloudflare cho kittech.vn — chỉ dành cho quản trị (làm mới khoảng 15 phút).',
+      passwordLabel: 'Mật khẩu xem thống kê',
+      passwordPlaceholder: 'Nhập mật khẩu',
+      loginBtn: 'Xem thống kê',
+      needPassword: 'Vui lòng nhập mật khẩu.',
+      wrongPassword: 'Mật khẩu không đúng.',
       today: 'Hôm nay',
       d7: '7 ngày gần nhất',
       d30: '30 ngày gần nhất',
@@ -19,11 +26,18 @@ const copy = vi
       loading: 'Đang tải số liệu…',
       error: 'Chưa lấy được số liệu. Thử lại sau trên bản production.',
       chart: 'Lượt xem theo ngày',
-      note: 'Nguồn: Cloudflare Zone Analytics · không dùng cookie theo dõi bên thứ ba trên trang này ngoài beacon đo lường.',
+      note: 'Nguồn: Cloudflare Web Analytics · trang này không hiện trên menu công khai.',
+      refresh: 'Tải lại',
+      refreshing: 'Đang tải…',
     }
   : {
       title: 'Traffic statistics',
-      lead: 'Live metrics from Cloudflare for kittech.vn (refreshed about every 15 minutes).',
+      lead: 'Cloudflare metrics for kittech.vn — admin only (refreshed about every 15 minutes).',
+      passwordLabel: 'Password to view stats',
+      passwordPlaceholder: 'Enter password',
+      loginBtn: 'View stats',
+      needPassword: 'Please enter the password.',
+      wrongPassword: 'Incorrect password.',
       today: 'Today',
       d7: 'Last 7 days',
       d30: 'Last 30 days',
@@ -33,99 +47,178 @@ const copy = vi
       loading: 'Loading metrics…',
       error: 'Could not load metrics. Try again later on the live site.',
       chart: 'Page views by day',
-      note: 'Source: Cloudflare Zone Analytics · no third-party tracking cookies beyond the measurement beacon.',
+      note: 'Source: Cloudflare Web Analytics · this page is not linked in the public menu.',
+      refresh: 'Refresh',
+      refreshing: 'Loading…',
     };
 ---
 
-<section class="stats-page">
+<section
+  class="stats-page"
+  data-stats-root
+  data-expected={STATS_VIEW_PASSWORD}
+  data-msg-need={copy.needPassword}
+  data-msg-wrong={copy.wrongPassword}
+  data-msg-loading={copy.loading}
+  data-msg-error={copy.error}
+  data-msg-refresh={copy.refresh}
+  data-msg-refreshing={copy.refreshing}
+>
   <div class="container">
     <header class="stats-head">
       <h1>{copy.title}</h1>
       <p>{copy.lead}</p>
     </header>
 
-    <p class="stats-status" data-stats-status>{copy.loading}</p>
-
-    <div class="stats-grid" data-stats-cards hidden>
-      <article class="stats-card">
-        <p class="stats-card-label">{copy.today}</p>
-        <dl>
-          <div>
-            <dt>{copy.visitors}</dt>
-            <dd data-k="today.visitors">—</dd>
-          </div>
-          <div>
-            <dt>{copy.pageViews}</dt>
-            <dd data-k="today.pageViews">—</dd>
-          </div>
-          <div>
-            <dt>{copy.requests}</dt>
-            <dd data-k="today.requests">—</dd>
-          </div>
-        </dl>
-      </article>
-      <article class="stats-card">
-        <p class="stats-card-label">{copy.d7}</p>
-        <dl>
-          <div>
-            <dt>{copy.visitors}</dt>
-            <dd data-k="last7Days.visitors">—</dd>
-          </div>
-          <div>
-            <dt>{copy.pageViews}</dt>
-            <dd data-k="last7Days.pageViews">—</dd>
-          </div>
-          <div>
-            <dt>{copy.requests}</dt>
-            <dd data-k="last7Days.requests">—</dd>
-          </div>
-        </dl>
-      </article>
-      <article class="stats-card">
-        <p class="stats-card-label">{copy.d30}</p>
-        <dl>
-          <div>
-            <dt>{copy.visitors}</dt>
-            <dd data-k="last30Days.visitors">—</dd>
-          </div>
-          <div>
-            <dt>{copy.pageViews}</dt>
-            <dd data-k="last30Days.pageViews">—</dd>
-          </div>
-          <div>
-            <dt>{copy.requests}</dt>
-            <dd data-k="last30Days.requests">—</dd>
-          </div>
-        </dl>
-      </article>
+    <div class="stats-login" data-stats-login>
+      <label for="stats-key">{copy.passwordLabel}</label>
+      <div class="stats-login-row">
+        <input
+          id="stats-key"
+          data-stats-key
+          type="password"
+          autocomplete="current-password"
+          placeholder={copy.passwordPlaceholder}
+        />
+        <button type="button" class="btn btn-primary" data-stats-login-btn>{copy.loginBtn}</button>
+      </div>
+      <p class="stats-login-error" data-stats-login-error hidden></p>
     </div>
 
-    <div class="stats-chart-wrap" data-stats-chart hidden>
-      <h2>{copy.chart}</h2>
-      <div class="stats-bars" data-stats-bars></div>
-    </div>
+    <div class="stats-panel" data-stats-panel hidden>
+      <div class="stats-toolbar">
+        <p class="stats-status" data-stats-status></p>
+        <button type="button" class="btn btn-secondary" data-stats-refresh>{copy.refresh}</button>
+      </div>
 
-    <p class="stats-note">{copy.note}</p>
+      <div class="stats-grid" data-stats-cards hidden>
+        <article class="stats-card">
+          <p class="stats-card-label">{copy.today}</p>
+          <dl>
+            <div>
+              <dt>{copy.visitors}</dt>
+              <dd data-k="today.visitors">—</dd>
+            </div>
+            <div>
+              <dt>{copy.pageViews}</dt>
+              <dd data-k="today.pageViews">—</dd>
+            </div>
+            <div>
+              <dt>{copy.requests}</dt>
+              <dd data-k="today.requests">—</dd>
+            </div>
+          </dl>
+        </article>
+        <article class="stats-card">
+          <p class="stats-card-label">{copy.d7}</p>
+          <dl>
+            <div>
+              <dt>{copy.visitors}</dt>
+              <dd data-k="last7Days.visitors">—</dd>
+            </div>
+            <div>
+              <dt>{copy.pageViews}</dt>
+              <dd data-k="last7Days.pageViews">—</dd>
+            </div>
+            <div>
+              <dt>{copy.requests}</dt>
+              <dd data-k="last7Days.requests">—</dd>
+            </div>
+          </dl>
+        </article>
+        <article class="stats-card">
+          <p class="stats-card-label">{copy.d30}</p>
+          <dl>
+            <div>
+              <dt>{copy.visitors}</dt>
+              <dd data-k="last30Days.visitors">—</dd>
+            </div>
+            <div>
+              <dt>{copy.pageViews}</dt>
+              <dd data-k="last30Days.pageViews">—</dd>
+            </div>
+            <div>
+              <dt>{copy.requests}</dt>
+              <dd data-k="last30Days.requests">—</dd>
+            </div>
+          </dl>
+        </article>
+      </div>
+
+      <div class="stats-chart-wrap" data-stats-chart hidden>
+        <h2>{copy.chart}</h2>
+        <div class="stats-bars" data-stats-bars></div>
+      </div>
+
+      <p class="stats-note">{copy.note}</p>
+    </div>
   </div>
 </section>
 
-<script define:vars={{ errMsg: copy.error }}>
-  (async () => {
-    const status = document.querySelector('[data-stats-status]');
-    const cards = document.querySelector('[data-stats-cards]');
-    const chart = document.querySelector('[data-stats-chart]');
-    const bars = document.querySelector('[data-stats-bars]');
-    const fmt = new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 });
+<script is:inline>
+  (function () {
+    var root = document.querySelector('[data-stats-root]');
+    if (!root) return;
+
+    var STORAGE_KEY = 'kittech-stats-key';
+    var expected = root.getAttribute('data-expected') || '';
+    var msgNeed = root.getAttribute('data-msg-need') || '';
+    var msgWrong = root.getAttribute('data-msg-wrong') || '';
+    var msgLoading = root.getAttribute('data-msg-loading') || '';
+    var msgError = root.getAttribute('data-msg-error') || '';
+    var msgRefresh = root.getAttribute('data-msg-refresh') || 'Refresh';
+    var msgRefreshing = root.getAttribute('data-msg-refreshing') || '...';
+
+    var loginEl = root.querySelector('[data-stats-login]');
+    var panelEl = root.querySelector('[data-stats-panel]');
+    var keyInput = root.querySelector('[data-stats-key]');
+    var loginBtn = root.querySelector('[data-stats-login-btn]');
+    var refreshBtn = root.querySelector('[data-stats-refresh]');
+    var loginError = root.querySelector('[data-stats-login-error]');
+    var status = root.querySelector('[data-stats-status]');
+    var cards = root.querySelector('[data-stats-cards]');
+    var chart = root.querySelector('[data-stats-chart]');
+    var bars = root.querySelector('[data-stats-bars]');
+
+    var fmt = new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 });
+
+    function showLoginError(message) {
+      if (!loginError) return;
+      loginError.textContent = message || '';
+      loginError.hidden = !message;
+    }
 
     function setPath(path, value) {
-      const el = document.querySelector(`[data-k="${path}"]`);
+      var el = root.querySelector('[data-k="' + path + '"]');
       if (el) el.textContent = fmt.format(Number(value) || 0);
     }
 
-    try {
-      const res = await fetch('/api/stats/', { headers: { accept: 'application/json' } });
-      const data = await res.json();
-      if (!res.ok || !data.ok) throw new Error(data.message || 'fail');
+    function getKey() {
+      return sessionStorage.getItem(STORAGE_KEY) || '';
+    }
+
+    function setKey(value) {
+      sessionStorage.setItem(STORAGE_KEY, value);
+    }
+
+    async function loadStats(key) {
+      if (key !== expected) throw new Error(msgWrong);
+      if (status) status.textContent = msgLoading;
+      if (cards) cards.setAttribute('hidden', '');
+      if (chart) chart.setAttribute('hidden', '');
+
+      var res = await fetch('/api/stats/', {
+        headers: {
+          accept: 'application/json',
+          authorization: 'Bearer ' + key,
+        },
+        cache: 'no-store',
+      });
+      var data = await res.json().catch(function () {
+        return {};
+      });
+      if (res.status === 401) throw new Error(msgWrong);
+      if (!res.ok || !data.ok) throw new Error(data.message || msgError);
 
       setPath('today.visitors', data.today.visitors);
       setPath('today.pageViews', data.today.pageViews);
@@ -137,23 +230,84 @@ const copy = vi
       setPath('last30Days.pageViews', data.last30Days.pageViews);
       setPath('last30Days.requests', data.last30Days.requests);
 
-      const series = Array.isArray(data.series) ? data.series : [];
-      const max = Math.max(1, ...series.map((d) => d.pageViews || 0));
+      var series = Array.isArray(data.series) ? data.series : [];
+      var max = Math.max(
+        1,
+        ...series.map(function (d) {
+          return d.pageViews || 0;
+        }),
+      );
       if (bars) {
         bars.innerHTML = series
-          .map((d) => {
-            const h = Math.max(4, Math.round(((d.pageViews || 0) / max) * 100));
-            const label = String(d.date || '').slice(5);
-            return `<div class="stats-bar" title="${d.date}: ${d.pageViews} page views"><span style="height:${h}%"></span><em>${label}</em></div>`;
+          .map(function (d) {
+            var h = Math.max(4, Math.round(((d.pageViews || 0) / max) * 100));
+            var label = String(d.date || '').slice(5);
+            return (
+              '<div class="stats-bar" title="' +
+              d.date +
+              ': ' +
+              d.pageViews +
+              ' page views"><span style="height:' +
+              h +
+              '%"></span><em>' +
+              label +
+              '</em></div>'
+            );
           })
           .join('');
       }
 
-      status?.remove();
-      cards?.removeAttribute('hidden');
-      chart?.removeAttribute('hidden');
-    } catch {
-      if (status) status.textContent = errMsg;
+      if (status) status.textContent = '';
+      if (loginEl) loginEl.hidden = true;
+      if (panelEl) panelEl.hidden = false;
+      if (cards) cards.removeAttribute('hidden');
+      if (chart) chart.removeAttribute('hidden');
+    }
+
+    async function login() {
+      var key = keyInput && 'value' in keyInput ? String(keyInput.value).trim() : '';
+      if (!key) {
+        showLoginError(msgNeed);
+        return;
+      }
+      try {
+        showLoginError('');
+        await loadStats(key);
+        setKey(key);
+      } catch (err) {
+        showLoginError(err && err.message ? err.message : msgWrong);
+      }
+    }
+
+    if (loginBtn) loginBtn.addEventListener('click', login);
+    if (keyInput) {
+      keyInput.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') login();
+      });
+    }
+    if (refreshBtn) {
+      refreshBtn.addEventListener('click', async function () {
+        var key = getKey();
+        if (!key) return;
+        refreshBtn.disabled = true;
+        refreshBtn.textContent = msgRefreshing;
+        try {
+          await loadStats(key);
+        } catch (err) {
+          alert(err && err.message ? err.message : msgError);
+        } finally {
+          refreshBtn.disabled = false;
+          refreshBtn.textContent = msgRefresh;
+        }
+      });
+    }
+
+    var saved = getKey();
+    if (saved) {
+      if (keyInput && 'value' in keyInput) keyInput.value = saved;
+      loadStats(saved).catch(function () {
+        sessionStorage.removeItem(STORAGE_KEY);
+      });
     }
   })();
 </script>
@@ -180,15 +334,63 @@ const copy = vi
     line-height: 1.65;
   }
 
+  .stats-login {
+    margin-top: 1.75rem;
+    max-width: 28rem;
+    padding: 1.2rem 1.25rem;
+    border-radius: 1rem;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .stats-login label {
+    display: block;
+    margin: 0 0 0.55rem;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--color-navy);
+  }
+
+  .stats-login-row {
+    display: flex;
+    gap: 0.55rem;
+    flex-wrap: wrap;
+  }
+
+  .stats-login-row input {
+    flex: 1 1 12rem;
+    min-width: 0;
+    padding: 0.7rem 0.85rem;
+    border: 1px solid var(--color-border);
+    border-radius: 0.65rem;
+    font: inherit;
+  }
+
+  .stats-login-error {
+    margin: 0.7rem 0 0;
+    color: #b42318;
+    font-size: 0.9rem;
+  }
+
+  .stats-toolbar {
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
   .stats-status {
-    margin: 1.75rem 0 0;
+    margin: 0;
     color: var(--color-muted);
+    min-height: 1.25rem;
   }
 
   .stats-grid {
     display: grid;
     gap: 1rem;
-    margin-top: 1.75rem;
+    margin-top: 1.25rem;
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 

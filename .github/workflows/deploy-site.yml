@@ -39,7 +39,13 @@ jobs:
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          STATS_VIEW_KEY: ${{ secrets.STATS_VIEW_KEY }}
         run: |
-          # Worker secret for /api/stats/ (Zone Analytics GraphQL)
+          node scripts/ensure-stats-kv.mjs
+          # Secrets for /api/stats/ (Web Analytics GraphQL + zone fallback)
           printf '%s' "$CLOUDFLARE_API_TOKEN" | npx wrangler secret put CF_API_TOKEN --config wrangler.jsonc
+          printf '%s' "$CLOUDFLARE_ACCOUNT_ID" | npx wrangler secret put CF_ACCOUNT_ID --config wrangler.jsonc
+          # Same password as src/lib/stats-config.ts (override via repo secret STATS_VIEW_KEY)
+          VIEW_KEY="${STATS_VIEW_KEY:-kittech2026}"
+          printf '%s' "$VIEW_KEY" | npx wrangler secret put STATS_VIEW_KEY --config wrangler.jsonc
           npm run cf:deploy

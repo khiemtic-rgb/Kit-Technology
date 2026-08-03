@@ -47,7 +47,8 @@ export default defineConfig({
   integrations: [
     sitemap({
       // EN pages are noindex — keep them out of the sitemap.
-      filter: (page) => !page.includes('/en'),
+      filter: (page) =>
+        !page.includes('/en') && !page.includes('/thong-ke') && !page.includes('/stats'),
       serialize: (item) => sitemapItem(item.url),
     }),
   ],

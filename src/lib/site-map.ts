@@ -154,7 +154,7 @@ export const pages: PageEntry[] = [
   // Careers
   p('careers', 'tuyen-dung', 'careers', 'Tuyển dụng', 'Careers', 'Cơ hội nghề nghiệp tại KIT Technology.'),
 
-  // Public traffic stats (powered by Cloudflare Zone Analytics)
+  // Public traffic stats (Cloudflare Web Analytics / Worker counters)
   p(
     'stats',
     'thong-ke',

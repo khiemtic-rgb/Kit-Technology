@@ -2,9 +2,10 @@
  * Cloudflare Worker — static assets + SEO redirects + stats API + cron → GitHub Actions.
  * One-time setup: Cloudflare Dashboard → Workers → kittech → Settings → Variables
  *   GITHUB_PAT = fine-grained token with Actions: read + write on this repo
- *   CF_API_TOKEN = API token (Analytics Read + Zone Read) for /api/stats/
+ *   CF_API_TOKEN = API token (Account Analytics Read + Zone Read) for /api/stats/
+ *   CF_ACCOUNT_ID = Cloudflare account id (optional if token can resolve zone account)
  */
-import { handleStatsApi } from './stats-api.mjs';
+import { bumpPageView, handleStatsApi } from './stats-api.mjs';
 
 async function triggerGithubWorkflow(env) {
   if (!env.GITHUB_PAT) {
@@ -34,7 +35,7 @@ async function triggerGithubWorkflow(env) {
 }
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
 
     // Prefer apex host (avoid www + non-www duplicates in Google).
@@ -58,7 +59,9 @@ export default {
       return handleStatsApi(request, env);
     }
 
-    return env.ASSETS.fetch(request);
+    const response = await env.ASSETS.fetch(request);
+    ctx.waitUntil(bumpPageView(env, request).catch(() => {}));
+    return response;
   },
 
   async scheduled(event, env, ctx) {
