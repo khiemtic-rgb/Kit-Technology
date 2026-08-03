@@ -82,6 +82,8 @@ console.log(`[analytics] token ready ${mask(token)}`);
 const githubEnv = process.env.GITHUB_ENV;
 if (githubEnv) {
   const { appendFileSync } = await import('node:fs');
+  // Prevent token from appearing in subsequent step env dumps.
+  console.log(`::add-mask::${token}`);
   appendFileSync(githubEnv, `PUBLIC_CF_WEB_ANALYTICS_TOKEN=${token}\n`);
   console.log('[analytics] exported PUBLIC_CF_WEB_ANALYTICS_TOKEN to GITHUB_ENV');
 } else {
