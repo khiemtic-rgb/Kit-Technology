@@ -1,8 +1,11 @@
 /**
- * Cloudflare Worker — static assets + SEO redirects + cron → GitHub Actions.
+ * Cloudflare Worker — static assets + SEO redirects + stats API + cron → GitHub Actions.
  * One-time setup: Cloudflare Dashboard → Workers → kittech → Settings → Variables
  *   GITHUB_PAT = fine-grained token with Actions: read + write on this repo
+ *   CF_API_TOKEN = API token (Analytics Read + Zone Read) for /api/stats/
  */
+import { handleStatsApi } from './stats-api.mjs';
+
 async function triggerGithubWorkflow(env) {
   if (!env.GITHUB_PAT) {
     console.warn('GITHUB_PAT not set — skip workflow dispatch');
@@ -49,6 +52,10 @@ export default {
     if (!isFile && !url.pathname.endsWith('/')) {
       url.pathname = `${url.pathname}/`;
       return Response.redirect(url.toString(), 301);
+    }
+
+    if (url.pathname === '/api/stats/' || url.pathname === '/api/stats') {
+      return handleStatsApi(request, env);
     }
 
     return env.ASSETS.fetch(request);

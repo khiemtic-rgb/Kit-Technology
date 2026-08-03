@@ -10,6 +10,7 @@ import ProductsPage from '../../components/products/ProductsPage.astro';
 import TechnologyPage from '../../components/technology/TechnologyPage.astro';
 import InsightsPage from '../../components/insights/InsightsPage.astro';
 import CompanyPage from '../../components/company/CompanyPage.astro';
+import StatsPage from '../../components/stats/StatsPage.astro';
 import { getArticleContent } from '../../content';
 import { t } from '../../i18n';
 import {
@@ -39,6 +40,7 @@ const isProducts = page.key === 'products';
 const isTechnology = page.key === 'technology';
 const isInsights = isInsightsHub(page.key);
 const isCompany = page.key === 'company';
+const isStats = page.key === 'stats';
 
 let insightEntries = [];
 const hubFilter = insightHubFilter(page.key);
@@ -58,6 +60,7 @@ if (hubFilter?.type === 'all') {
 
 const showInsightGrid =
   !isInsights &&
+  !isStats &&
   (insightEntries.length > 0 ||
     isInsightCategoryHub(page.key) ||
     page.key === 'faq');
@@ -69,7 +72,8 @@ const showHubChildren =
   !isProducts &&
   !isTechnology &&
   !isInsights &&
-  !isCompany;
+  !isCompany &&
+  !isStats;
 ---
 
 <BaseLayout
@@ -90,6 +94,8 @@ const showHubChildren =
       <InsightsPage locale="en" entries={insightEntries} />
     ) : isCompany ? (
       <CompanyPage locale="en" />
+    ) : isStats ? (
+      <StatsPage locale="en" />
     ) : (
       <section class="section">
         <div class="container">

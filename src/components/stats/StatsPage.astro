@@ -1,0 +1,299 @@
+---
+interface Props {
+  locale: 'vi' | 'en';
+}
+
+const { locale } = Astro.props;
+const vi = locale === 'vi';
+
+const copy = vi
+  ? {
+      title: 'Thống kê truy cập',
+      lead: 'Số liệu thực từ Cloudflare cho kittech.vn (làm mới khoảng 15 phút).',
+      today: 'Hôm nay',
+      d7: '7 ngày gần nhất',
+      d30: '30 ngày gần nhất',
+      visitors: 'Người truy cập',
+      pageViews: 'Lượt xem trang',
+      requests: 'Yêu cầu',
+      loading: 'Đang tải số liệu…',
+      error: 'Chưa lấy được số liệu. Thử lại sau trên bản production.',
+      chart: 'Lượt xem theo ngày',
+      note: 'Nguồn: Cloudflare Zone Analytics · không dùng cookie theo dõi bên thứ ba trên trang này ngoài beacon đo lường.',
+    }
+  : {
+      title: 'Traffic statistics',
+      lead: 'Live metrics from Cloudflare for kittech.vn (refreshed about every 15 minutes).',
+      today: 'Today',
+      d7: 'Last 7 days',
+      d30: 'Last 30 days',
+      visitors: 'Visitors',
+      pageViews: 'Page views',
+      requests: 'Requests',
+      loading: 'Loading metrics…',
+      error: 'Could not load metrics. Try again later on the live site.',
+      chart: 'Page views by day',
+      note: 'Source: Cloudflare Zone Analytics · no third-party tracking cookies beyond the measurement beacon.',
+    };
+---
+
+<section class="stats-page">
+  <div class="container">
+    <header class="stats-head">
+      <h1>{copy.title}</h1>
+      <p>{copy.lead}</p>
+    </header>
+
+    <p class="stats-status" data-stats-status>{copy.loading}</p>
+
+    <div class="stats-grid" data-stats-cards hidden>
+      <article class="stats-card">
+        <p class="stats-card-label">{copy.today}</p>
+        <dl>
+          <div>
+            <dt>{copy.visitors}</dt>
+            <dd data-k="today.visitors">—</dd>
+          </div>
+          <div>
+            <dt>{copy.pageViews}</dt>
+            <dd data-k="today.pageViews">—</dd>
+          </div>
+          <div>
+            <dt>{copy.requests}</dt>
+            <dd data-k="today.requests">—</dd>
+          </div>
+        </dl>
+      </article>
+      <article class="stats-card">
+        <p class="stats-card-label">{copy.d7}</p>
+        <dl>
+          <div>
+            <dt>{copy.visitors}</dt>
+            <dd data-k="last7Days.visitors">—</dd>
+          </div>
+          <div>
+            <dt>{copy.pageViews}</dt>
+            <dd data-k="last7Days.pageViews">—</dd>
+          </div>
+          <div>
+            <dt>{copy.requests}</dt>
+            <dd data-k="last7Days.requests">—</dd>
+          </div>
+        </dl>
+      </article>
+      <article class="stats-card">
+        <p class="stats-card-label">{copy.d30}</p>
+        <dl>
+          <div>
+            <dt>{copy.visitors}</dt>
+            <dd data-k="last30Days.visitors">—</dd>
+          </div>
+          <div>
+            <dt>{copy.pageViews}</dt>
+            <dd data-k="last30Days.pageViews">—</dd>
+          </div>
+          <div>
+            <dt>{copy.requests}</dt>
+            <dd data-k="last30Days.requests">—</dd>
+          </div>
+        </dl>
+      </article>
+    </div>
+
+    <div class="stats-chart-wrap" data-stats-chart hidden>
+      <h2>{copy.chart}</h2>
+      <div class="stats-bars" data-stats-bars></div>
+    </div>
+
+    <p class="stats-note">{copy.note}</p>
+  </div>
+</section>
+
+<script define:vars={{ errMsg: copy.error }}>
+  (async () => {
+    const status = document.querySelector('[data-stats-status]');
+    const cards = document.querySelector('[data-stats-cards]');
+    const chart = document.querySelector('[data-stats-chart]');
+    const bars = document.querySelector('[data-stats-bars]');
+    const fmt = new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 });
+
+    function setPath(path, value) {
+      const el = document.querySelector(`[data-k="${path}"]`);
+      if (el) el.textContent = fmt.format(Number(value) || 0);
+    }
+
+    try {
+      const res = await fetch('/api/stats/', { headers: { accept: 'application/json' } });
+      const data = await res.json();
+      if (!res.ok || !data.ok) throw new Error(data.message || 'fail');
+
+      setPath('today.visitors', data.today.visitors);
+      setPath('today.pageViews', data.today.pageViews);
+      setPath('today.requests', data.today.requests);
+      setPath('last7Days.visitors', data.last7Days.visitors);
+      setPath('last7Days.pageViews', data.last7Days.pageViews);
+      setPath('last7Days.requests', data.last7Days.requests);
+      setPath('last30Days.visitors', data.last30Days.visitors);
+      setPath('last30Days.pageViews', data.last30Days.pageViews);
+      setPath('last30Days.requests', data.last30Days.requests);
+
+      const series = Array.isArray(data.series) ? data.series : [];
+      const max = Math.max(1, ...series.map((d) => d.pageViews || 0));
+      if (bars) {
+        bars.innerHTML = series
+          .map((d) => {
+            const h = Math.max(4, Math.round(((d.pageViews || 0) / max) * 100));
+            const label = String(d.date || '').slice(5);
+            return `<div class="stats-bar" title="${d.date}: ${d.pageViews} page views"><span style="height:${h}%"></span><em>${label}</em></div>`;
+          })
+          .join('');
+      }
+
+      status?.remove();
+      cards?.removeAttribute('hidden');
+      chart?.removeAttribute('hidden');
+    } catch {
+      if (status) status.textContent = errMsg;
+    }
+  })();
+</script>
+
+<style>
+  .stats-page {
+    padding: var(--hero-pad-y);
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+    background: linear-gradient(180deg, #f4f8ff 0%, #fff 48%);
+  }
+
+  .stats-head h1 {
+    margin: 0 0 0.65rem;
+    font-size: var(--hero-title);
+    letter-spacing: -0.03em;
+    color: var(--color-navy);
+  }
+
+  .stats-head p {
+    margin: 0;
+    max-width: 48ch;
+    color: var(--color-muted);
+    font-size: var(--hero-lead);
+    line-height: 1.65;
+  }
+
+  .stats-status {
+    margin: 1.75rem 0 0;
+    color: var(--color-muted);
+  }
+
+  .stats-grid {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.75rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .stats-card {
+    padding: 1.15rem 1.2rem;
+    border-radius: 1rem;
+    background: #fff;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .stats-card-label {
+    margin: 0 0 0.85rem;
+    font-size: var(--eyebrow-size);
+    font-weight: var(--eyebrow-weight);
+    letter-spacing: var(--eyebrow-tracking);
+    text-transform: uppercase;
+    color: var(--color-primary);
+  }
+
+  .stats-card dl {
+    margin: 0;
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  .stats-card dt {
+    margin: 0;
+    font-size: 0.86rem;
+    color: var(--color-muted);
+  }
+
+  .stats-card dd {
+    margin: 0.15rem 0 0;
+    font-size: clamp(1.45rem, 2.4vw, 1.85rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--color-navy);
+  }
+
+  .stats-chart-wrap {
+    margin-top: 2rem;
+    padding: 1.25rem 1.2rem 1rem;
+    border-radius: 1rem;
+    background: #fff;
+    border: 1px solid var(--color-border);
+  }
+
+  .stats-chart-wrap h2 {
+    margin: 0 0 1rem;
+    font-size: 1.05rem;
+    color: var(--color-navy);
+  }
+
+  .stats-bars {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
+    align-items: end;
+    gap: 0.28rem;
+    height: 10rem;
+  }
+
+  .stats-bar {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
+    min-width: 0;
+  }
+
+  .stats-bar span {
+    width: 100%;
+    max-width: 1.1rem;
+    border-radius: 0.35rem 0.35rem 0.15rem 0.15rem;
+    background: linear-gradient(180deg, #5a9cff, #0a66ff);
+  }
+
+  .stats-bar em {
+    margin-top: 0.35rem;
+    font-style: normal;
+    font-size: 0.58rem;
+    color: var(--color-muted);
+    transform: rotate(-55deg);
+    transform-origin: top center;
+    white-space: nowrap;
+  }
+
+  .stats-note {
+    margin: 1.25rem 0 0;
+    font-size: 0.88rem;
+    color: var(--color-muted);
+    max-width: 60ch;
+    line-height: 1.55;
+  }
+
+  @media (max-width: 900px) {
+    .stats-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .stats-bars {
+      overflow-x: auto;
+      grid-auto-columns: 1.4rem;
+    }
+  }
+</style>

@@ -153,6 +153,18 @@ export const pages: PageEntry[] = [
 
   // Careers
   p('careers', 'tuyen-dung', 'careers', 'Tuyển dụng', 'Careers', 'Cơ hội nghề nghiệp tại KIT Technology.'),
+
+  // Public traffic stats (powered by Cloudflare Zone Analytics)
+  p(
+    'stats',
+    'thong-ke',
+    'stats',
+    'Thống kê truy cập',
+    'Traffic statistics',
+    'Số liệu truy cập kittech.vn từ Cloudflare.',
+    'kittech.vn traffic metrics from Cloudflare.',
+    true,
+  ),
 ];
 
 const pathIndex = new Map<string, PageEntry>();

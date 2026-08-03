@@ -144,6 +144,7 @@ jobs:
             exit 0
           fi
           echo "configured=true" >> "$GITHUB_OUTPUT"
+          printf '%s' "$CLOUDFLARE_API_TOKEN" | npx wrangler secret put CF_API_TOKEN --config wrangler.jsonc
           if npm run cf:deploy; then
             echo "success=true" >> "$GITHUB_OUTPUT"
           else
