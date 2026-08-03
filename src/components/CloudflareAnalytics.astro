@@ -1,12 +1,18 @@
 ---
+/**
+ * Cloudflare Web Analytics beacon.
+ * Token from PUBLIC_CF_WEB_ANALYTICS_TOKEN (CI exports via scripts/ensure-cf-web-analytics.mjs).
+ */
 const token = import.meta.env.PUBLIC_CF_WEB_ANALYTICS_TOKEN?.trim();
-const beacon = token ? JSON.stringify({ token }) : null;
+const beacon = token ? JSON.stringify({ token, spa: false }) : null;
 ---
 
-{beacon && (
-  <script
-    defer
-    src="https://static.cloudflareinsights.com/beacon.min.js"
-    data-cf-beacon={beacon}
-  />
-)}
+{
+  beacon && (
+    <script
+      defer
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon={beacon}
+    />
+  )
+}

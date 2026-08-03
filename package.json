@@ -19,7 +19,8 @@
     "content:hero-reassign": "npx tsx scripts/reassign-hero-pool.ts",
     "content:publish:test": "npx tsx scripts/auto-publish.ts --id=tech-cloud-native --locale=vi --force",
     "content:status": "npx tsx scripts/content-status.ts",
-    "content:verify": "npx tsx scripts/verify-publish.ts"
+    "content:verify": "npx tsx scripts/verify-publish.ts",
+    "analytics:ensure": "node scripts/ensure-cf-web-analytics.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.0",
