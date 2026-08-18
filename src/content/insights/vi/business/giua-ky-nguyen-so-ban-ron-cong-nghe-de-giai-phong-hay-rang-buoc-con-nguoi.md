@@ -74,5 +74,3 @@ KIT Technology không chọn con đường tạo ra công nghệ hào nhoáng ha
 Bởi vì mục tiêu của chúng tôi chưa bao giờ là trở thành công ty lớn nhất. KIT hướng tới trở thành một thương hiệu được khách hàng tin tưởng bằng năng lực thực tế và sự nghiêm túc trong từng sản phẩm.
 
 Tìm hiểu thêm về định hướng và các giải pháp của chúng tôi tại [kittech.vn](https://kittech.vn/vi/).
-
-[Tìm hiểu thêm](https://kittech.vn/vi/)
