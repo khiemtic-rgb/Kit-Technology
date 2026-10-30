@@ -8,6 +8,15 @@
 </head>
 <body style="font-family:sans-serif;max-width:480px;margin:15vh auto;padding:0 16px">
 <h1>Da nhan phan hoi tu TikTok</h1>
-<p>Ban co the dong cua so nay va quay lai KIT Content Agent.</p>
+<p id="msg">Ban co the dong cua so nay va quay lai KIT Content Agent.</p>
+<script>
+(function () {
+  var q = location.search;
+  if (q.indexOf("code=") !== -1 || q.indexOf("error=") !== -1) {
+    document.getElementById("msg").textContent = "Dang hoan tat ket noi voi KIT Content Agent...";
+    location.replace("http://localhost:5173/content/tiktok/callback" + q);
+  }
+})();
+</script>
 </body>
 </html>
