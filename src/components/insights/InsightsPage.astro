@@ -21,11 +21,7 @@ const { locale, entries } = Astro.props;
 const p = insightsHubContent(locale);
 const m = t(locale);
 
-const featured =
-  entries.find((e) => e.data.translationId === 'bl-dx-pharmacy') ??
-  entries.find((e) => e.data.category === 'digital-transformation') ??
-  entries.find((e) => e.data.category === 'healthcare') ??
-  entries[0];
+const featured = entries[0];
 
 const latest = entries.filter((e) => e.id !== featured?.id).slice(0, 3);
 
